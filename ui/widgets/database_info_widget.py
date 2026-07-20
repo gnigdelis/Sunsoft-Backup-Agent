@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
 )
 
 
-class LogsWidget(QWidget):
+class DatabaseInfoWidget(QWidget):
 
     def __init__(self):
 
@@ -15,7 +15,7 @@ class LogsWidget(QWidget):
 
         layout.addWidget(
             QLabel(
-                "LOGS WIDGET"
+                "DATABASE INFO WIDGET"
             )
         )
 

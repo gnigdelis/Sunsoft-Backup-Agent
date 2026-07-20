@@ -1,118 +1,72 @@
-from core.installation_snapshot import InstallationSnapshot
-
-from installation.installation_manager import (
-    installation_exists,
-    discover_installation_paths,
-    discover_modules,
-)
-
-from configuration.configuration_manager import (
-    discover_configuration_files,
+from core.installation_snapshot import (
+    InstallationSnapshot,
 )
 
 
 class DiscoveryManager:
 
-    def __init__(self):
+    def start_discovery(
+        self,
+    ) -> InstallationSnapshot:
 
-        self.snapshot = InstallationSnapshot()
+        snapshot = InstallationSnapshot()
 
-    def start_discovery(self):
+        #
+        # STEP 1
+        # Installation Discovery
+        #
 
-        print()
-        print("=" * 60)
-        print("SUNSOFT BACKUP AGENT - DISCOVERY ENGINE")
-        print("=" * 60)
-        print()
-
-        print("Starting Discovery Engine...")
-        print()
-
-        self.run_installation_discovery()
-
-        self.run_configuration_discovery()
-
-        self.snapshot.discovery_completed = True
-
-        print()
-        print("Discovery Engine completed successfully.")
-        print()
-
-        return self.snapshot
-
-    def run_installation_discovery(self):
-
-        print("Running Installation Discovery...")
-        print()
-
-        self.snapshot.installation_found = (
-            installation_exists()
+        self.discover_installation(
+            snapshot
         )
 
-        self.snapshot.installation_paths = (
-            discover_installation_paths()
+        #
+        # STEP 2
+        # Configuration Discovery
+        #
+
+        self.discover_configuration_files(
+            snapshot
         )
 
-        self.snapshot.installed_modules = (
-            discover_modules()
+        #
+        # STEP 3
+        # Database Discovery
+        #
+
+        self.discover_databases(
+            snapshot
         )
 
-        print(
-            f"Installation Found : "
-            f"{self.snapshot.installation_found}"
-        )
+        #
+        # STEP 4
+        # Discovery Completed
+        #
 
-        print()
+        snapshot.discovery_completed = True
 
-        print("Installation Paths")
-        print("-" * 60)
+        return snapshot
 
-        for path in self.snapshot.installation_paths:
 
-            print(path)
+    def discover_installation(
+        self,
+        snapshot,
+    ):
 
-        print()
+        pass
 
-        print("Installed Modules")
-        print("-" * 60)
 
-        for module in self.snapshot.installed_modules:
+    def discover_configuration_files(
+        self,
+        snapshot,
+    ):
 
-            print()
+        pass
 
-            print(
-                f"Module Name      : "
-                f"{module.module_name}"
-            )
 
-            print(
-                f"Program Files    : "
-                f"{module.has_program_files}"
-            )
+    def discover_databases(
+        self,
+        snapshot,
+    ):
 
-            print(
-                f"Program Data     : "
-                f"{module.has_program_data}"
-            )
-
-        print()
-
-    def run_configuration_discovery(self):
-
-        print("Running Configuration Discovery...")
-        print()
-
-        configuration_files = (
-            discover_configuration_files()
-        )
-
-        self.snapshot.configuration_files = (
-            configuration_files
-        )
-
-        print(
-            f"Configuration Files Found : "
-            f"{len(configuration_files)}"
-        )
-
-        print()
+        pass

@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
 )
 
 
-class LogsWidget(QWidget):
+class SummaryWidget(QWidget):
 
     def __init__(self):
 
@@ -14,9 +14,7 @@ class LogsWidget(QWidget):
         layout = QVBoxLayout()
 
         layout.addWidget(
-            QLabel(
-                "LOGS WIDGET"
-            )
+            QLabel("SUMMARY WIDGET")
         )
 
         self.setLayout(layout)

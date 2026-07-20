@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
 )
 
 
-class LogsWidget(QWidget):
+class SystemInfoWidget(QWidget):
 
     def __init__(self):
 
@@ -15,7 +15,7 @@ class LogsWidget(QWidget):
 
         layout.addWidget(
             QLabel(
-                "LOGS WIDGET"
+                "SYSTEM INFO WIDGET"
             )
         )
 
