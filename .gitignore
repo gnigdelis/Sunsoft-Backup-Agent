@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+
+# Temporary Files
+temp/
+
+# Backup Files
+*.bak
+*.7z
+*.zip
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Local Configuration Files
+config.local.json
