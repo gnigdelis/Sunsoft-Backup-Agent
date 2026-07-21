@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import (
     QWidget,
     QLabel,
+    QHBoxLayout,
     QVBoxLayout,
 )
 
@@ -11,17 +12,70 @@ class HeaderWidget(QWidget):
 
         super().__init__()
 
-        layout = QVBoxLayout()
+        self.setup_ui()
 
-        self.title = QLabel(
+    def setup_ui(self):
+
+        main_layout = QHBoxLayout()
+
+        #
+        # LEFT SIDE
+        #
+
+        left_layout = QVBoxLayout()
+
+        self.title_label = QLabel(
             "Golden Backup"
         )
 
-        self.subtitle = QLabel(
-            "Πλήρες backup αρχείων, Registry και βάσης δεδομένων."
+        self.subtitle_label = QLabel(
+            "Πλήρες backup αρχείων, Registry και βάσης δεδομένων"
         )
 
-        layout.addWidget(self.title)
-        layout.addWidget(self.subtitle)
+        left_layout.addWidget(
+            self.title_label
+        )
 
-        self.setLayout(layout)
+        left_layout.addWidget(
+            self.subtitle_label
+        )
+
+        #
+        # RIGHT SIDE
+        #
+
+        right_layout = QVBoxLayout()
+
+        self.datetime_label = QLabel(
+            "20/07/2026 16:45"
+        )
+
+        self.version_label = QLabel(
+            "Version 1.0.0.0"
+        )
+
+        right_layout.addWidget(
+            self.datetime_label
+        )
+
+        right_layout.addWidget(
+            self.version_label
+        )
+
+        #
+        # ADD LAYOUTS
+        #
+
+        main_layout.addLayout(
+            left_layout,
+            4
+        )
+
+        main_layout.addLayout(
+            right_layout,
+            1
+        )
+
+        self.setLayout(
+            main_layout
+        )

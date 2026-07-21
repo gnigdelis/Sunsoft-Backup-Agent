@@ -1,7 +1,10 @@
 from PySide6.QtWidgets import (
     QWidget,
-    QLabel,
     QVBoxLayout,
+)
+
+from ui.panels.summary_panel import (
+    SummaryPanel,
 )
 
 
@@ -14,7 +17,9 @@ class SummaryWidget(QWidget):
         layout = QVBoxLayout()
 
         layout.addWidget(
-            QLabel("SUMMARY WIDGET")
+            SummaryPanel()
         )
 
-        self.setLayout(layout)
+        self.setLayout(
+            layout
+        )

@@ -6,6 +6,12 @@ from PySide6.QtWidgets import (
 
 )
 
+from ui.styles.theme import (
+
+    APPLICATION_BACKGROUND,
+
+)
+
 from ui.widgets.sidebar_widget import (
     SidebarWidget,
 )
@@ -25,20 +31,73 @@ class MainWindow(QWidget):
 
         super().__init__()
 
+        #
+        # APPLICATION SETTINGS
+        #
+
         self.setWindowTitle(
-            "Sunsoft Golden Backup Tool"
+            "Sunsoft Backup Agent"
         )
 
-        self.resize(
+        #
+        # UI FREEZE
+        #
+        # Το παράθυρο θα παραμένει
+        # πάντα στα 1600x900.
+        #
+
+        self.setFixedSize(
+
             1600,
             900,
+
+        )
+
+        #
+        # APPLICATION STYLE
+        #
+
+        self.setStyleSheet(
+
+            f"""
+
+            QWidget {{
+
+                background-color: {APPLICATION_BACKGROUND};
+
+            }}
+
+            """
+
         )
 
         self.setup_ui()
 
     def setup_ui(self):
 
+        #
+        # MAIN LAYOUT
+        #
+
         main_layout = QHBoxLayout()
+
+        #
+        # Δεν θέλουμε κενά μεταξύ
+        # Sidebar και Dashboard.
+        #
+
+        main_layout.setContentsMargins(
+
+            0,
+            0,
+            0,
+            0,
+
+        )
+
+        main_layout.setSpacing(
+            0
+        )
 
         #
         # SIDEBAR
@@ -51,6 +110,25 @@ class MainWindow(QWidget):
         #
 
         self.stacked_widget = QStackedWidget()
+
+        #
+        # DASHBOARD STYLE
+        #
+
+        self.stacked_widget.setStyleSheet(
+
+            f"""
+
+            QStackedWidget {{
+
+                background-color: {APPLICATION_BACKGROUND};
+                border: none;
+
+            }}
+
+            """
+
+        )
 
         #
         # PAGES
@@ -89,14 +167,22 @@ class MainWindow(QWidget):
         #
 
         main_layout.addWidget(
+
             self.sidebar,
             1,
+
         )
 
         main_layout.addWidget(
+
             self.stacked_widget,
             5,
+
         )
+
+        #
+        # SET LAYOUT
+        #
 
         self.setLayout(
             main_layout
