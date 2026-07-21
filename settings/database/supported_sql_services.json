@@ -1,0 +1,11 @@
+{
+    "services": [
+
+        "MSSQLSERVER",
+        "MSSQL$SQLEXPRESS",
+        "SQLSERVERAGENT",
+        "SQLBrowser",
+        "SQLWriter"
+
+    ]
+}
