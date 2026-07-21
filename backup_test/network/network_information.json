@@ -1,0 +1,56 @@
+{
+    "success": true,
+    "status": "SUCCESS",
+    "warnings": [],
+    "errors": [],
+    "data": {
+        "hostname": "FNBAT-NB-0049",
+        "network_adapters": [
+            {
+                "adapter": "Ethernet 4",
+                "ip_address": "169.254.195.2",
+                "subnet_mask": "255.255.0.0"
+            },
+            {
+                "adapter": "Ethernet 5",
+                "ip_address": "169.254.212.101",
+                "subnet_mask": "255.255.0.0"
+            },
+            {
+                "adapter": "Ethernet",
+                "ip_address": "10.10.241.55",
+                "subnet_mask": "255.255.255.0"
+            },
+            {
+                "adapter": "Wi-Fi",
+                "ip_address": "169.254.83.27",
+                "subnet_mask": "255.255.0.0"
+            },
+            {
+                "adapter": "Local Area Connection* 1",
+                "ip_address": "169.254.39.188",
+                "subnet_mask": "255.255.0.0"
+            },
+            {
+                "adapter": "Local Area Connection* 10",
+                "ip_address": "169.254.76.38",
+                "subnet_mask": "255.255.0.0"
+            },
+            {
+                "adapter": "Ethernet 2",
+                "ip_address": "169.254.249.33",
+                "subnet_mask": "255.255.0.0"
+            },
+            {
+                "adapter": "Bluetooth Network Connection",
+                "ip_address": "169.254.255.216",
+                "subnet_mask": "255.255.0.0"
+            },
+            {
+                "adapter": "Loopback Pseudo-Interface 1",
+                "ip_address": "127.0.0.1",
+                "subnet_mask": "255.0.0.0"
+            }
+        ]
+    }
+}

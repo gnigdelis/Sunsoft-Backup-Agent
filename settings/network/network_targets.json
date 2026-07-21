@@ -1,0 +1,8 @@
+{
+    "internet_connectivity": true,
+    "network_adapters": true,
+    "mapped_drives": true,
+    "shared_folders": true,
+    "dns_servers": true,
+    "gateway": true
+}
