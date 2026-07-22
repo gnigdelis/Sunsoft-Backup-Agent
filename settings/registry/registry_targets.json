@@ -1,0 +1,9 @@
+{
+    "registry_keys": [
+
+        "HKEY_CURRENT_USER\\Software\\VB and VBA Program Settings",
+
+        "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Sunsoft\\System\\Printers"
+
+    ]
+}
