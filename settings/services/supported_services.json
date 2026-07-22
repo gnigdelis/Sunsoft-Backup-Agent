@@ -1,0 +1,29 @@
+{
+    "services": [
+
+        {
+            "name": "SnService",
+            "display_name": "Sunsoft Service",
+            "required": true
+        },
+
+        {
+            "name": "ExternalTaxProvider",
+            "display_name": "External Tax Provider",
+            "required": true
+        },
+
+        {
+            "name": "WebPosReportClientApi",
+            "display_name": "Web POS Report Client API",
+            "required": false
+        },
+
+        {
+            "name": "AmvrosiaWebService",
+            "display_name": "Amvrosia Web Service",
+            "required": false
+        }
+
+    ]
+}
