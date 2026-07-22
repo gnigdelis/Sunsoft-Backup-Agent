@@ -1,0 +1,992 @@
+{
+    "success": true,
+    "status": "SUCCESS",
+    "warnings": [],
+    "errors": [],
+    "data": [
+        {
+            "name": "Windows Driver Package - Motorola Solutions (cdcacmmoto) Ports  (09/17/2012 1.96.0.0)",
+            "version": "09/17/2012 1.96.0.0",
+            "publisher": "Motorola Solutions",
+            "install_date": ""
+        },
+        {
+            "name": "Git",
+            "version": "2.55.0.2",
+            "publisher": "The Git Development Community",
+            "install_date": "20260709"
+        },
+        {
+            "name": "Intel(R) Graphics Software & Drivers",
+            "version": "1.0.1168.1",
+            "publisher": "Intel(R) Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "GDR 1115 for SQL Server 2025 (KB5091223) (64-bit)",
+            "version": "17.0.1115.1",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260611"
+        },
+        {
+            "name": "GDR 1125 for SQL Server 2025 (KB5102333) (64-bit)",
+            "version": "17.0.1125.2",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft SQL Server 2025 (64-bit)",
+            "version": "",
+            "publisher": "",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft SQL Server 2025 (64-bit)",
+            "version": "",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Notepad++ (64-bit x64)",
+            "version": "8.9.6.4",
+            "publisher": "Notepad++ Team",
+            "install_date": ""
+        },
+        {
+            "name": "Εφαρμογές Microsoft 365 για μεγάλες επιχειρήσεις - el-gr",
+            "version": "16.0.20131.20154",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft 365 Apps for enterprise - en-us",
+            "version": "16.0.20131.20154",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft OneDrive",
+            "version": "26.119.0622.0003",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft .NET Runtime - 8.0.29 (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "SQL Server 2025 Common Files",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Core 1.1.9 - Host FX Resolver (x64)",
+            "version": "4.18.18148",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260616"
+        },
+        {
+            "name": "Microsoft .NET Core Host - 2.0.9 (x64)",
+            "version": "16.36.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft Windows Desktop Targeting Pack - 8.0.29 (x64)",
+            "version": "64.116.55314",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Host FX Resolver - 9.0.18 (x64)",
+            "version": "72.72.55158",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "DiagnosticsHub_CollectionService",
+            "version": "18.5.37003",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft ODBC Driver 17 for SQL Server",
+            "version": "17.10.6.1",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft.NET.Sdk.Maui.Manifest-8.0.100 (x64)",
+            "version": "8.0.3",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft .NET Core 1.0.12 - Runtime (x64)",
+            "version": "1.0.12",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260616"
+        },
+        {
+            "name": "SQL Server 2025 Connection Info",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET AppHost Pack - 8.0.29 (x64_x86)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Runtime - 7.0.20 (x64)",
+            "version": "56.80.15184",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET 8.0 Templates 8.0.423 (x64)",
+            "version": "32.15.28090",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "7-Zip 26.02 (x64 edition)",
+            "version": "26.02.00.0",
+            "publisher": "Igor Pavlov",
+            "install_date": "20260628"
+        },
+        {
+            "name": "vs_minshellx64msi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft.NET.Workload.Mono.Toolchain.net6.Manifest (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 8.0.29 Shared Framework (x64)",
+            "version": "8.0.29.26325",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "SQL Server 2025 Batch Parser",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "SQL Server 2025 DMF",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "SQL Server 2025 Connection Info",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET Host - 9.0.18 (x64)",
+            "version": "72.72.55158",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "SQL Server 2025 Database Engine Services",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET Core 1.0.12 - Host FX Resolver (x64)",
+            "version": "4.1.21458",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260616"
+        },
+        {
+            "name": "Microsoft .NET Core 1.1.9 - Runtime (x64)",
+            "version": "1.1.9",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260616"
+        },
+        {
+            "name": "Microsoft.NET.Workload.Emscripten.Current.Manifest (x64)",
+            "version": "64.116.54965",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft.NET.Sdk.tvOS.Manifest-8.0.100 (x64)",
+            "version": "17.0.8478",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft .NET Core Host FX Resolver - 2.0.9 (x64)",
+            "version": "16.36.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "SQL Server 2025 Common Files",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft ODBC Driver 18 for SQL Server",
+            "version": "18.6.1.1",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "SQL Server 2025 Shared Management Objects",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET Core 1.0.12 - Host (x64)",
+            "version": "4.0.21458",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260616"
+        },
+        {
+            "name": "Microsoft.NET.Sdk.iOS.Manifest-8.0.100 (x64)",
+            "version": "17.0.8478",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft Visual Studio Installer",
+            "version": "4.8.60.55523",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft Visual C++ 2022 X64 Additional Runtime - 14.51.36247",
+            "version": "14.51.36247",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft .NET Toolset 8.0.423 (x64)",
+            "version": "32.15.60858",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "FortiClient",
+            "version": "7.4.3.1790",
+            "publisher": "Fortinet Technologies Inc",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft.NET.Workload.Emscripten.net6.Manifest (x64)",
+            "version": "64.116.54965",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Motorola CDC Driver (x64) v1.96",
+            "version": "1.96.0005",
+            "publisher": "Motorola Solutions, Inc.",
+            "install_date": "20260618"
+        },
+        {
+            "name": "vs_communityx64msi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft .NET Targeting Pack - 8.0.29 (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Dell Core Services",
+            "version": "1.14.151.0",
+            "publisher": "Dell, Inc.",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 8.0.29 Targeting Pack (x64)",
+            "version": "8.0.29.26325",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Google Chrome",
+            "version": "151.0.7922.34",
+            "publisher": "Google LLC",
+            "install_date": "20260717"
+        },
+        {
+            "name": "Microsoft.NET.Workload.Emscripten.net7.Manifest (x64)",
+            "version": "64.116.54965",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 2.0.9 Runtime Package Store (x64)",
+            "version": "2.0.13103.0",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft.NET.Sdk.MacCatalyst.Manifest-8.0.100 (x64)",
+            "version": "17.0.8478",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Office 16 Click-to-Run Extensibility Component",
+            "version": "16.0.20131.20112",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260701"
+        },
+        {
+            "name": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.51.36247",
+            "version": "14.51.36247",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "SQL Server 2025 Shared Management Objects Extensions",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft.NET.Sdk.macOS.Manifest-8.0.100 (x64)",
+            "version": "14.0.8478",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "vs_minshellinteropx64msi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "SQL Server 2025 DMF",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft OLE DB Driver for SQL Server",
+            "version": "18.7.5.0",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "SQL Server 2025 Database Engine Shared",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Standard Targeting Pack - 2.1.0 (x64)",
+            "version": "24.0.28113",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft .NET Core Runtime - 2.0.9 (x64)",
+            "version": "16.36.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft Teams Meeting Add-in for Microsoft Office",
+            "version": "1.26.16801",
+            "publisher": "Microsoft",
+            "install_date": "20260629"
+        },
+        {
+            "name": "SQL Server 2025 Shared Management Objects Extensions",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft.NET.Workload.Mono.Toolchain.Current.Manifest (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Host FX Resolver - 8.0.29 (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft SQL Server 2025 Setup (English)",
+            "version": "17.0.1125.2",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Adobe Acrobat (64-bit)",
+            "version": "26.001.21691",
+            "publisher": "Adobe",
+            "install_date": "20260628"
+        },
+        {
+            "name": "SQL Server 2025 Database Engine Shared",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft OLE DB Driver 19 for SQL Server",
+            "version": "19.4.1.0",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET Host FX Resolver - 7.0.20 (x64)",
+            "version": "56.80.15184",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft.NET.Sdk.Android.Manifest-8.0.100 (x64)",
+            "version": "34.0.43",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft Windows Desktop Runtime - 9.0.18 (x64)",
+            "version": "72.72.55185",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 7.0.20 Shared Framework (x64)",
+            "version": "7.0.20.24269",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "SQL Server 2025 XEvent",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "SQL Server 2025 XEvent",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft SQL Server 2025 RsFx Driver",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET AppHost Pack - 8.0.29 (x64_arm64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "SQL Server 2025 Shared Management Objects",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Dell SupportAssist OS Recovery Plugin for Dell Update",
+            "version": "5.5.16.2",
+            "publisher": "Dell Inc.",
+            "install_date": "20260721"
+        },
+        {
+            "name": "Microsoft .NET Host - 8.0.29 (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "SQL Server 2025 SQL Diagnostics",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET Runtime - 9.0.18 (x64)",
+            "version": "72.72.55158",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Host - 7.0.20 (x64)",
+            "version": "56.80.15184",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "SQL Server 2025 Database Engine Services",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft.NET.Sdk.Aspire.Manifest-8.0.100 (x64)",
+            "version": "64.0.5426",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft.NET.Workload.Mono.Toolchain.net7.Manifest (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft Windows Desktop Runtime - 8.0.29 (x64)",
+            "version": "64.116.55314",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Core 1.1.9 - Host (x64)",
+            "version": "4.18.18148",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260616"
+        },
+        {
+            "name": "Microsoft .NET AppHost Pack - 8.0.29 (x64)",
+            "version": "64.116.55299",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft ASP.NET Core Module",
+            "version": "2.1.1991",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft VSS Writer for SQL Server 2025",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "SQL Server Management Studio 22",
+            "version": "22.8.0",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "AnyDesk",
+            "version": "ad 9.7.4",
+            "publisher": "AnyDesk Software GmbH",
+            "install_date": ""
+        },
+        {
+            "name": "Take Control Agent",
+            "version": "7.50.30",
+            "publisher": "N-able",
+            "install_date": ""
+        },
+        {
+            "name": "Brave",
+            "version": "150.1.92.141",
+            "publisher": "Brave Software Inc",
+            "install_date": "20260720"
+        },
+        {
+            "name": "Firebird 3.0.7.33374 (Win32)",
+            "version": "3.0.7.33374",
+            "publisher": "Firebird Project",
+            "install_date": "20260701"
+        },
+        {
+            "name": "AmvrosiaFull",
+            "version": "13.29.004",
+            "publisher": "Sunsoft Ltd.",
+            "install_date": "20260721"
+        },
+        {
+            "name": "Motorola CDC Driver (x64) v1.96",
+            "version": "1.96.0005",
+            "publisher": "Motorola Solutions, Inc.",
+            "install_date": "20260618"
+        },
+        {
+            "name": "BackOfficeFull",
+            "version": "13.29.001",
+            "publisher": "Sunsoft Ltd.",
+            "install_date": "20260721"
+        },
+        {
+            "name": "Microsoft Edge WebView2 Runtime",
+            "version": "150.0.4078.83",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260720"
+        },
+        {
+            "name": "NinjaRMMAgent",
+            "version": "14.0.8536",
+            "publisher": "NinjaRMM LLC",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Sunsoft.ExternalConnectionWepApi.Installer",
+            "version": "3.1.0.0",
+            "publisher": "Sunsoft Ltd",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft .NET Core Host - 2.0.9 (x86)",
+            "version": "16.36.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft Visual C++ v14 Redistributable (x64) - 14.51.36247",
+            "version": "14.51.36247.0",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "vs_communitymsires",
+            "version": "18.8.11901",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft .NET SDK 8.0.423 (x64)",
+            "version": "8.4.2326.32602",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft .NET Runtime - 7.0.20 (x64)",
+            "version": "7.0.20.33717",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft .NET Core 1.0.12 - Runtime (x64)",
+            "version": "1.0.12.5074",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "vs_CoreEditorFonts",
+            "version": "17.7.40001",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft .NET Runtime - 7.0.20 (x86)",
+            "version": "7.0.20.33717",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "vs_minshellmsires",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 7.0.20 Shared Framework (x86)",
+            "version": "7.0.20.24269",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "AmvrosiaFull",
+            "version": "13.29.004",
+            "publisher": "Sunsoft Ltd.",
+            "install_date": "20260721"
+        },
+        {
+            "name": "vs_githubprotocolhandlermsi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft .NET Core 1.0.12 & 1.1.9 - Windows Server Hosting",
+            "version": "1.1.40627.174",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft .NET Core 2.0.9 - Windows Server Hosting",
+            "version": "2.0.40703.10031",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Amvrosia Web Service",
+            "version": "7.5.0.1",
+            "publisher": "Sunsoft Ltd",
+            "install_date": "20260721"
+        },
+        {
+            "name": "MSI to redistribute MS VS2010 CRT libraries",
+            "version": "10.0.30319.1",
+            "publisher": "The Firebird Project",
+            "install_date": "20260701"
+        },
+        {
+            "name": "Microsoft .NET Core Runtime - 2.0.9 (x64)",
+            "version": "2.0.9.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.51.36247",
+            "version": "14.51.36247",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 2.0.9 Runtime Package Store (x86)",
+            "version": "2.0.13103.0",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft .NET Core 1.1.9 - Runtime (x64)",
+            "version": "1.1.9.1764",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft .NET Runtime - 7.0.20 (x86)",
+            "version": "56.80.15184",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft Visual Studio Setup Configuration",
+            "version": "4.8.41.48107",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft Visual C++ 2022 X86 Additional Runtime - 14.51.36247",
+            "version": "14.51.36247",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Microsoft .NET Host - 7.0.20 (x86)",
+            "version": "56.80.15184",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 7.0.20 - Shared Framework (x64)",
+            "version": "7.0.20.24269",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Microsoft Visual Studio Setup WMI Provider",
+            "version": "4.8.41.48107",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 7.0.20 Hosting Bundle Options",
+            "version": "7.0.20.24269",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "vs_ssmsprotocolselectormsi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft .NET Core Host FX Resolver - 2.0.9 (x86)",
+            "version": "16.36.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "FnB Services",
+            "version": "1.0.0.1",
+            "publisher": "Sunsoft Ltd",
+            "install_date": "20260721"
+        },
+        {
+            "name": "vs_FileTracker_Singleton",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "External Tax Provider",
+            "version": "4.0.0.1",
+            "publisher": "Sunsoft Ltd",
+            "install_date": "20260610"
+        },
+        {
+            "name": "Dell Command | Update",
+            "version": "5.7.0",
+            "publisher": "Dell Inc.",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft Visual C++ v14 Redistributable (x86) - 14.51.36247",
+            "version": "14.51.36247.0",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "vs_communitysharedmsi",
+            "version": "18.8.11901",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft .NET Host FX Resolver - 7.0.20 (x86)",
+            "version": "56.80.15184",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260609"
+        },
+        {
+            "name": "vs_minshellsharedmsi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Adobe Refresh Manager",
+            "version": "1.8.0",
+            "publisher": "Adobe Systems Incorporated",
+            "install_date": "20260603"
+        },
+        {
+            "name": "Microsoft Windows Desktop Runtime - 9.0.18 (x64)",
+            "version": "9.0.18.36217",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Dell SupportAssist OS Recovery Plugin for Dell Update",
+            "version": "5.5.16.2",
+            "publisher": "Dell Inc.",
+            "install_date": ""
+        },
+        {
+            "name": "vs_filehandler_amd64",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "vs_minshellinteropsharedmsi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Sunsoft.WebPosReportClientApi.Installer",
+            "version": "1.1.1.2",
+            "publisher": "Sunsoft Ltd",
+            "install_date": "20260616"
+        },
+        {
+            "name": "BackOfficeFull",
+            "version": "13.29.001",
+            "publisher": "Sunsoft Ltd.",
+            "install_date": "20260721"
+        },
+        {
+            "name": "Microsoft ASP.NET Core 7.0.20 - Shared Framework (x86)",
+            "version": "7.0.20.24269",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "SnService",
+            "version": "1.1.0.0",
+            "publisher": "Sunsoft Ltd",
+            "install_date": "20260721"
+        },
+        {
+            "name": "vs_filehandler_x86",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft .NET 7.0.20 - Windows Server Hosting",
+            "version": "7.0.20.24269",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "Browser for SQL Server 2025",
+            "version": "17.0.1000.7",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260716"
+        },
+        {
+            "name": "Microsoft .NET Core Runtime - 2.0.9 (x86)",
+            "version": "2.0.9.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": ""
+        },
+        {
+            "name": "SnService",
+            "version": "1.1.0.0",
+            "publisher": "Sunsoft Ltd",
+            "install_date": ""
+        },
+        {
+            "name": "vs_vswebprotocolselectormsi",
+            "version": "18.8.11829",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260715"
+        },
+        {
+            "name": "Microsoft .NET Core Runtime - 2.0.9 (x86)",
+            "version": "16.36.26615",
+            "publisher": "Microsoft Corporation",
+            "install_date": "20260617"
+        },
+        {
+            "name": "Realtek Audio Driver",
+            "version": "6.0.9954.2",
+            "publisher": "Realtek Semiconductor Corp.",
+            "install_date": "20260612"
+        },
+        {
+            "name": "NinjaRMMAgent",
+            "version": "14.0.8536",
+            "publisher": "NinjaRMM LLC",
+            "install_date": "20260603"
+        }
+    ]
+}
