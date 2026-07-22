@@ -1,0 +1,6 @@
+{
+    "include_disabled_tasks": true,
+    "include_windows_tasks": true,
+    "include_third_party_tasks": true,
+    "include_custom_tasks": true
+}

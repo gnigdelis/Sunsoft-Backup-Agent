@@ -1,0 +1,2836 @@
+{
+    "success": true,
+    "status": "SUCCESS",
+    "warnings": [],
+    "errors": [],
+    "data": [
+        {
+            "task_name": "\\Adobe Acrobat Update Task",
+            "status": "Ready",
+            "author": "Adobe Systems Incorporated",
+            "next_run_time": "22/7/2026 12:00:00",
+            "last_run_time": "22/7/2026 08:54:57"
+        },
+        {
+            "task_name": "\\Adobe Acrobat Update Task",
+            "status": "Ready",
+            "author": "Adobe Systems Incorporated",
+            "next_run_time": "22/7/2026 12:00:00",
+            "last_run_time": "22/7/2026 08:54:57"
+        },
+        {
+            "task_name": "\\OneDrive Per-Machine Standalone Update Task",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "23/7/2026 10:46:55",
+            "last_run_time": "21/7/2026 09:06:22"
+        },
+        {
+            "task_name": "\\OneDrive Reporting Task-S-1-5-21-3815797211-4033122004-3449430782-1146",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 10:53:55",
+            "last_run_time": "21/7/2026 10:53:56"
+        },
+        {
+            "task_name": "\\OneDrive Startup Task-S-1-5-21-3815797211-4033122004-3449430782-1146",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:52:57"
+        },
+        {
+            "task_name": "\\Take Control Agent  Helper",
+            "status": "Ready",
+            "author": "Take Control Agent",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Take Control Agent  Helper",
+            "status": "Ready",
+            "author": "Take Control Agent",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Actions Server",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "22/7/2026 10:00:00",
+            "last_run_time": "22/7/2026 08:52:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Actions Server",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "22/7/2026 10:00:00",
+            "last_run_time": "22/7/2026 08:52:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Automatic Updates 2.0",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "23/7/2026 06:12:05",
+            "last_run_time": "22/7/2026 08:47:58"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Automatic Updates 2.0",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "23/7/2026 03:36:18",
+            "last_run_time": "22/7/2026 08:47:58"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Automatic Updates 2.0",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "23/7/2026 10:23:45",
+            "last_run_time": "22/7/2026 08:47:58"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Background Push Maintenance",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 13:47:26",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Background Push Maintenance",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 13:47:26",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office ClickToRun Service Monitor",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "23/7/2026 07:07:50",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 12:45:14",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 10:58:33",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 12:00:38",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 12:51:18",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 13:59:37",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 13:53:04",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates Logon",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:57:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Feature Updates Logon",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:57:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Performance Monitor",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Serviceability Manager",
+            "status": "Ready",
+            "author": "Microsoft Office",
+            "next_run_time": "22/7/2026 17:23:42",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Startup Maintenance",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 08:17:11",
+            "last_run_time": "22/7/2026 08:57:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Office\\Office Startup Maintenance",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 08:46:56",
+            "last_run_time": "22/7/2026 08:57:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\VisualStudio\\Updates\\BackgroundDownload",
+            "status": "Ready",
+            "author": "Microsoft Visual Studio",
+            "next_run_time": "22/7/2026 11:41:08",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 09:24:18"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319 64",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 08:51:26"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319 64 Critical",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 10:46:30"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319 Critical",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 10:46:30"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\AccountHealth\\RecoverabilityToastTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:47"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Active Directory Rights Management Services Client\\AD RMS Rights Policy Template Management (Automated)",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Active Directory Rights Management Services Client\\AD RMS Rights Policy Template Management (Automated)",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Active Directory Rights Management Services Client\\AD RMS Rights Policy Template Management (Manual)",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\AppID\\PolicyConverter",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "5/6/2026 01:28:26"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\AppID\\VerifiedPublisherCertStoreCheck",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:35"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Application Experience\\MareBackup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser Exp",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Application Experience\\PcaPatchDbTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 15:21:13",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Application Experience\\SdbinstMergeDbTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Application Experience\\SdbinstMergeDbTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Application Experience\\StartupAppTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 10:18:29"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ApplicationData\\appuriverifierdaily",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ApplicationData\\appuriverifierinstall",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "20/7/2026 12:10:15"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ApplicationData\\CleanupTemporaryState",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "13/7/2026 11:33:29"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ApplicationData\\DsSvcCleanup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:58"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\AppListBackup\\Backup",
+            "status": "Ready",
+            "author": "$(@%SystemRoot%\\system32\\AppListBackupLauncher.dll,-600)",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\AppListBackup\\BackupNonMaintenance",
+            "status": "Ready",
+            "author": "$(@%SystemRoot%\\system32\\AppListBackupLauncher.dll,-600)",
+            "next_run_time": "25/7/2026 01:55:26",
+            "last_run_time": "13/7/2026 08:55:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\AppxDeploymentClient\\Pre-staged app cleanup",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:28:35"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Autochk\\Proxy",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:35"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\BitLocker\\BitLocker Encrypt All Drives",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\BitLocker\\BitLocker MDM policy Refresh",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Bluetooth\\UninstallDeviceTask",
+            "status": "Ready",
+            "author": "Microsoft",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\BrokerInfrastructure\\BgTaskRegistrationMaintenanceTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "13/7/2026 11:33:58"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\capabilityaccessmanager\\maintenancetasks",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask-Roam",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:16"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask-Roam",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:16"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Chkdsk\\ProactiveScan",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Chkdsk\\SyspartRepair",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CloudExperienceHost\\CreateObjectTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:17:36"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CloudRestore\\Backup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "25/7/2026 16:49:18",
+            "last_run_time": "17/7/2026 15:06:31"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CloudRestore\\Backup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "26/7/2026 07:32:44",
+            "last_run_time": "17/7/2026 15:06:31"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\CloudRestore\\Restore",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ConsentUX\\UnifiedConsent\\UnifiedConsentSyncTask",
+            "status": "Ready",
+            "author": "$(@%systemRoot%\\system32\\unifiedconsent.dll,-102)",
+            "next_run_time": "22/7/2026 12:54:23",
+            "last_run_time": "21/7/2026 13:06:55"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ConsentUX\\UnifiedConsent\\UnifiedConsentSyncTask",
+            "status": "Ready",
+            "author": "$(@%systemRoot%\\system32\\unifiedconsent.dll,-102)",
+            "next_run_time": "22/7/2026 13:22:15",
+            "last_run_time": "21/7/2026 13:06:55"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Containers\\CmCleanup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:28:35"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 12:00:00",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "14/7/2026 15:34:55"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Check And Scan",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 23:19:22",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Check And Scan",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 23:49:04",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Scan",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Scan for Crash Recovery",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Defrag\\ScheduledDefrag",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "9/7/2026 23:02:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Device Information\\Device",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 03:44:42",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Device Information\\Device",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 04:34:57",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Device Information\\Device User",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:55"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Device Setup\\Driver Recovery on Reboot",
+            "status": "Disabled",
+            "author": "$(@%SystemRoot%\\system32\\DeviceSetupManagerAPI.dll,-600)",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Diagnosis\\RecommendedTroubleshootingScanner",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:42:39"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Diagnosis\\RecommendedTroubleshootingScanner",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:42:39"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Diagnosis\\RecommendedTroubleshootingScanner",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:42:39"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Diagnosis\\RecommendedTroubleshootingScanner",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:42:39"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Diagnosis\\Scheduled",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "9/7/2026 23:02:48"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Diagnosis\\UnexpectedCodepath",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:49:38"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DirectX\\DirectXDatabaseUpdater",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "14/7/2026 08:57:56"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DirectX\\DirectXDatabaseUpdater",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "14/7/2026 08:57:56"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DirectX\\DXGIAdapterCache",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:09:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DirectX\\DXGIAdapterCache",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:09:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DirectX\\DXGIAdapterCache",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:09:52"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DiskCleanup\\SilentCleanup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticDataCollector",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "8/7/2026 14:57:14"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticResolver",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DiskFootprint\\Diagnostics",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:58"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DiskFootprint\\StorageSense",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 08:51:26"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\DUSM\\dusmtask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EDP\\EDP App Launch Task",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EDP\\EDP Auth Task",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EDP\\EDP Inaccessible Credentials Task",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EDP\\StorageCardEncryption Task",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\39A587A0-5BAF-4094-9835-CFFEC15A34C8\\Login Schedule created by enrollment client",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\39A587A0-5BAF-4094-9835-CFFEC15A34C8\\PushLaunch",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "2/7/2026 13:55:56"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\39A587A0-5BAF-4094-9835-CFFEC15A34C8\\PushRenewal",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "31/7/2026 10:43:41",
+            "last_run_time": "21/7/2026 11:08:53"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\39A587A0-5BAF-4094-9835-CFFEC15A34C8\\PushRenewal",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "31/7/2026 10:43:41",
+            "last_run_time": "21/7/2026 11:08:53"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\BF5420B5-D203-4A61-B650-E283DAED5D9F\\Login Schedule created by enrollment client",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\BF5420B5-D203-4A61-B650-E283DAED5D9F\\PushLaunch",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "2/7/2026 13:55:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\BF5420B5-D203-4A61-B650-E283DAED5D9F\\PushRenewal",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "31/7/2026 10:43:41",
+            "last_run_time": "21/7/2026 11:08:53"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\BF5420B5-D203-4A61-B650-E283DAED5D9F\\PushRenewal",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "31/7/2026 10:43:41",
+            "last_run_time": "21/7/2026 11:08:53"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\EnterpriseMgmt\\SessionRetry\\39A587A0-5BAF-4094-9835-CFFEC15A34C8\\Retry Schedule created for incomplete session {5C1007DD-B360-4163-84FD-446AA3D7286F}",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 10:37:38",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ExploitGuard\\ExploitGuard MDM policy Refresh",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:49:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ExploitGuard\\ExploitGuard MDM policy Refresh",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:49:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ExploitGuard\\ExploitGuard MDM policy Refresh",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:49:01"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClient",
+            "status": "Ready",
+            "author": "Microsoft Windows Feedback",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload",
+            "status": "Ready",
+            "author": "Microsoft Windows Feedback",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 10:41:25"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\File Classification Infrastructure\\Property Definition Sync",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\FileHistory\\File History (maintenance mode)",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 10:18:29"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\BootstrapUsageDataReporting",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "11/6/2026 14:22:08"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\GovernedFeatureUsageProcessing",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\GovernedFeatureUsageProcessing",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileConfigs",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:58:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:58:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:58:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:58:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:58:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\SafeguardsReconciliation",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "20/7/2026 10:46:10"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataFlushing",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:47:34"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataFlushing",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:47:34"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataFlushing",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:47:34"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataReceiver",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:54:20"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataReporting",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "20/7/2026 10:46:10"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\OneSettings\\RefreshCache",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 12:30:35",
+            "last_run_time": "22/7/2026 08:58:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\OneSettings\\RefreshCache",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 12:31:46",
+            "last_run_time": "22/7/2026 08:58:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\OneSettings\\RefreshCache",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 13:05:31",
+            "last_run_time": "22/7/2026 08:58:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Flighting\\OneSettings\\RefreshCache",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 12:26:36",
+            "last_run_time": "22/7/2026 08:58:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Hotpatch\\Monitoring",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 03:08:58",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Hotpatch\\Monitoring",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 03:20:42",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Hotpatch\\Monitoring",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 03:29:57",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\InputSettingsRestoreDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\LocalUserSyncDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 17:30:41"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\MouseSyncDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\PenSyncDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 15:41:41"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\RemoteMouseSyncDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\RemotePenSyncDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\RemoteTouchpadSyncDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\syncpensettings",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\input\\TouchpadSyncDataAvailable",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\InstallService\\RestoreDevice",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 12:08:53"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\InstallService\\ScanForUpdates",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 11:24:35",
+            "last_run_time": "21/7/2026 13:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\InstallService\\ScanForUpdates",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "24/7/2026 01:30:29",
+            "last_run_time": "21/7/2026 13:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\InstallService\\ScanForUpdates",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "23/7/2026 10:36:24",
+            "last_run_time": "21/7/2026 13:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\InstallService\\ScanForUpdatesAsUser",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\InstallService\\WakeUpAndContinueUpdates",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\InstallService\\WakeUpAndScanForUpdates",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\International\\Synchronize Language Settings",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:43:27"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\International\\Synchronize Language Settings",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:43:27"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Kernel\\La57Cleanup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "13/7/2026 11:32:28"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\LanguageComponentsInstaller\\Installation",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:57:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\LanguageComponentsInstaller\\ReconcileLanguageResources",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 13:11:18"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Location\\WindowsActionDialog",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Maintenance\\WinSAT",
+            "status": "Ready",
+            "author": "Microsoft",
+            "next_run_time": "N/A",
+            "last_run_time": "13/7/2026 11:32:48"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Autopilot\\DetectHardwareChange",
+            "status": "Disabled",
+            "author": "$(@%SystemRoot%\\system32\\Autopilot.dll,-600)",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Autopilot\\DetectHardwareChange",
+            "status": "Disabled",
+            "author": "$(@%SystemRoot%\\system32\\Autopilot.dll,-600)",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Autopilot\\RemediateHardwareChange",
+            "status": "Disabled",
+            "author": "$(@%SystemRoot%\\system32\\Autopilot.dll,-600)",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Provisioning\\Cellular",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Provisioning\\Logon",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 17:30:49"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Provisioning\\MdmDiagnosticsCleanup",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Provisioning\\Retry",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Management\\Provisioning\\RunOnReboot",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Maps\\MapsToastTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Maps\\MapsUpdateTask",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\MemoryDiagnostic\\AutomaticOfflineMemoryDiagnostic",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:02:04"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\MemoryDiagnostic\\RunFullMemoryDiagnostic",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\MUI\\LPRemove",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 10:18:29"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Multimedia\\SystemSoundsService",
+            "status": "Running",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Network Connectivity Status Indicator\\NcsiIdentifyUserProxies",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Network Connectivity Status Indicator\\NcsiIdentifyUserProxies",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Network Connectivity Status Indicator\\NcsiIdentifyUserProxies",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\NlaSvc\\WiFiTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Offline Files\\Background Synchronization",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Offline Files\\Logon Synchronization",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\PCRPF\\PCR Prediction Framework Firmware Update Task",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\PerformanceTrace\\ShowFeedbackToast",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\PerformanceTrace\\WhesvcToast",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Plug and Play\\Device Install Group Policy",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:49:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Plug and Play\\Device Install Reboot Required",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Plug and Play\\Device Install Reboot Required",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Plug and Play\\Sysprep Generalize Drivers",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Power Efficiency Diagnostics\\AnalyzeSystem",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 08:51:26"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Printing\\EduPrintProv",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Printing\\PrinterCleanupTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "28/7/2026 12:00:00",
+            "last_run_time": "28/6/2026 12:00:01"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Printing\\PrintJobCleanupTask",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "17/7/2026 12:00:01"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\RecoveryEnvironment\\VerifyWinRE",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "18/6/2026 14:45:54"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\ReFsDedupSvc\\Initialization",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Registry\\RegIdleBackup",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "8/7/2026 14:57:14"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Servicing\\OOBEFodSetup",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:38:33"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Servicing\\StartComponentCleanup",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:58"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Setup\\PITRTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Setup\\SetupRecoveryDataTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "22/7/2026 21:24:53",
+            "last_run_time": "9/7/2026 09:36:24"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\SharedPC\\Account Cleanup",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Shell\\CreateObjectTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:43:28"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Shell\\FamilySafetyMonitor",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Shell\\FamilySafetyRefreshTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Shell\\IndexerAutomaticMaintenance",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Shell\\ThemesSyncedImageDownload",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Shell\\UpdateUserPictureTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Shell\\UpdateUserPictureTaskContained",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "12/6/2026 17:07:37"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\SoftwareProtectionPlatform\\SvcRestartTaskLogon",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 21:38:04"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\SpacePort\\SpaceAgentTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\SpacePort\\SpaceAgentTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\SpacePort\\SpaceManagerTask",
+            "status": "Ready",
+            "author": "$(@%SystemRoot%\\system32\\spaceman.exe,-2)",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\SpacePort\\SpaceManagerTask",
+            "status": "Ready",
+            "author": "$(@%SystemRoot%\\system32\\spaceman.exe,-2)",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\StateRepository\\MaintenanceTasks",
+            "status": "Ready",
+            "author": "$(@%SystemRoot%\\system32\\Windows.StateRepositoryClient.dll,-600)",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Storage Tiers Management\\Storage Tiers Management Initialization",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Storage Tiers Management\\Storage Tiers Optimization",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Subscription\\EnableLicenseAcquisition",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Subscription\\EnableLicenseAcquisition",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Subscription\\EnableLicenseAcquisition",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Subscription\\LicenseAcquisition",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "23/7/2026 06:37:47",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Subscription\\LicenseAcquisition",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "23/7/2026 10:58:42",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Subscription\\LicenseAcquisition",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "23/7/2026 10:06:11",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Sustainability\\PowerGridForecastTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 12:32:43",
+            "last_run_time": "21/7/2026 12:19:28"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Sustainability\\PowerGridForecastTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 12:09:45",
+            "last_run_time": "21/7/2026 12:19:28"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Sustainability\\SustainabilityTelemetry",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "13/7/2026 11:33:29"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Sysmain\\HybridDriveCachePrepopulate",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Sysmain\\HybridDriveCacheRebalance",
+            "status": "Disabled",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Sysmain\\ResPriStaticDbSync",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "13/7/2026 11:33:28"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Sysmain\\WsSwapAssessmentTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "6/7/2026 10:46:59"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\SystemRestore\\SR",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 08:51:26"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Task Manager\\Interactive",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\TextServicesFramework\\MsCtfMonitor",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Time Synchronization\\ForceSynchronizeTime",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Time Synchronization\\ForceSynchronizeTime",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Time Synchronization\\SynchronizeTime",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:59"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Time Zone\\SynchronizeTimeZone",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "16/7/2026 08:51:26"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\UPnP\\UPnPHostConfig",
+            "status": "Ready",
+            "author": "Microsoft",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 08:55:24"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 08:55:24"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 08:55:24"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 08:55:24"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WCM\\WiFiTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "3/6/2026 12:59:38"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WDI\\ResolutionHost",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "20/7/2026 08:55:45"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Defender\\Windows Defender Cache Maintenance",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:33:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Defender\\Windows Defender Cleanup",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "20/7/2026 14:46:36"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Defender\\Windows Defender Verification",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 10:41:46"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 11:36:52",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 11:34:04",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 11:08:42",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 11:31:36",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "22/7/2026 11:15:32",
+            "last_run_time": "22/7/2026 08:48:35"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Filtering Platform\\BfeOnServiceStartTypeChange",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Windows Media Sharing\\UpdateLibrary",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WindowsColorSystem\\Calibration Loader",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WindowsColorSystem\\Calibration Loader",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+            "status": "Ready",
+            "author": "Microsoft Corporation.",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+            "status": "Ready",
+            "author": "Microsoft Corporation.",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+            "status": "Ready",
+            "author": "Microsoft Corporation.",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+            "status": "Ready",
+            "author": "Microsoft Corporation.",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Wininet\\CacheTask",
+            "status": "Running",
+            "author": "Microsoft",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:42:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WlanSvc\\CDSSync",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:43:59"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WlanSvc\\MoProfileManagement",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WlanSvc\\MoProfileManagement",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Work Folders\\Work Folders Logon Synchronization",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:47:58"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Work Folders\\Work Folders Maintenance Work",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "15/7/2026 21:32:57"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Workplace Join\\Automatic-Device-Join",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:43:58"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Workplace Join\\Automatic-Device-Join",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "22/7/2026 08:43:58"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Workplace Join\\Device-Sync",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 16:09:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Workplace Join\\Recovery-Check",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\Workplace Join\\Recovery-Check",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WwanSvc\\NotificationTask",
+            "status": "Ready",
+            "author": "Microsoft Corporation",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WwanSvc\\OobeDiscovery",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WwanSvc\\OobeDiscovery",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "\\Microsoft\\Windows\\WwanSvc\\OobeDiscovery",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 11:08:52"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\Microsoft\\XblGameSave\\XblGameSaveTask",
+            "status": "Ready",
+            "author": "Microsoft",
+            "next_run_time": "N/A",
+            "last_run_time": "30/11/1999 00:00:00"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "TaskName",
+            "status": "Status",
+            "author": "Author",
+            "next_run_time": "Next Run Time",
+            "last_run_time": "Last Run Time"
+        },
+        {
+            "task_name": "\\SoftLanding\\S-1-5-21-3815797211-4033122004-3449430782-1146\\SoftLandingCreativeManagementTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "22/7/2026 16:05:53",
+            "last_run_time": "21/7/2026 16:05:54"
+        },
+        {
+            "task_name": "\\SoftLanding\\S-1-5-21-3815797211-4033122004-3449430782-1146\\SoftLandingCreativeManagementTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "22/7/2026 16:05:53",
+            "last_run_time": "21/7/2026 16:05:54"
+        },
+        {
+            "task_name": "\\SoftLanding\\S-1-5-21-3815797211-4033122004-3449430782-1146\\SoftLandingCreativeManagementTask",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "22/7/2026 16:05:53",
+            "last_run_time": "21/7/2026 16:05:54"
+        },
+        {
+            "task_name": "\\SoftLanding\\S-1-5-21-3815797211-4033122004-3449430782-1146\\SoftLandingDeferralTask-{be76d8ef-d141-45d8-8790-152c1d261bc6}",
+            "status": "Ready",
+            "author": "N/A",
+            "next_run_time": "22/7/2026 09:35:00",
+            "last_run_time": "22/7/2026 09:20:01"
+        },
+        {
+            "task_name": "\\SoftLanding\\S-1-5-21-3815797211-4033122004-3449430782-1146\\SoftLandingTriggerTask-128000000001615609-render-{4c9fe6e9-0c63-49cd-9e5b-e6c3846b5228}",
+            "status": "Disabled",
+            "author": "N/A",
+            "next_run_time": "N/A",
+            "last_run_time": "21/7/2026 16:05:54"
+        }
+    ]
+}
