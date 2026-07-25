@@ -19,7 +19,7 @@ from ui.styles.theme import (
     BUTTON_BORDER_RADIUS,
     BUTTON_HEIGHT,
     TEXT_FONT_SIZE,
-    GOLD_COLOR,
+    PRIMARY_COLOR,
     WHITE_COLOR,
     SECONDARY_TEXT_COLOR,
     SUCCESS_COLOR,
@@ -52,15 +52,15 @@ class SidebarWidget(QWidget):
         )
 
         #
-        # APPLICATION TITLE
+        # TITLE
         #
 
         self.title_label = QLabel(
-            "SUNSOFT"
+            "Sunsoft"
         )
 
         self.subtitle_label = QLabel(
-            "Backup Agent"
+            "Support Agent"
         )
 
         self.title_label.setAlignment(
@@ -80,26 +80,18 @@ class SidebarWidget(QWidget):
         )
 
         layout.addSpacing(
-            10
+            20
         )
 
         #
-        # SIDEBAR BUTTONS
+        # BUTTONS
         #
 
         self.dashboard_button = QPushButton(
             "Αρχική Σελίδα"
         )
 
-        self.backup_button = QPushButton(
-            "Backup"
-        )
-
-        self.restore_button = QPushButton(
-            "Επαναφορά"
-        )
-
-        self.backups_button = QPushButton(
+        self.history_button = QPushButton(
             "Ιστορικό Backup"
         )
 
@@ -107,23 +99,11 @@ class SidebarWidget(QWidget):
             "Ρυθμίσεις"
         )
 
-        self.logs_button = QPushButton(
-            "Καταγραφές"
-        )
-
-        self.about_button = QPushButton(
-            "Πληροφορίες"
-        )
-
         buttons = [
 
             self.dashboard_button,
-            self.backup_button,
-            self.restore_button,
-            self.backups_button,
+            self.history_button,
             self.settings_button,
-            self.logs_button,
-            self.about_button,
 
         ]
 
@@ -140,11 +120,11 @@ class SidebarWidget(QWidget):
         layout.addStretch()
 
         #
-        # APPLICATION STATUS
+        # STATUS
         #
 
         self.status_title = QLabel(
-            "Κατάσταση Agent"
+            "ΚΑΤΑΣΤΑΣΗ"
         )
 
         self.status_label = QLabel(
@@ -224,9 +204,9 @@ class SidebarWidget(QWidget):
 
             f"""
 
-            color: {GOLD_COLOR};
+            color: {PRIMARY_COLOR};
 
-            font-size: 18pt;
+            font-size: 20pt;
             font-weight: bold;
 
             """
@@ -239,7 +219,8 @@ class SidebarWidget(QWidget):
 
             color: {WHITE_COLOR};
 
-            font-size: 11pt;
+            font-size: 12pt;
+            font-weight: bold;
 
             """
 
@@ -252,6 +233,7 @@ class SidebarWidget(QWidget):
             color: {SECONDARY_TEXT_COLOR};
 
             font-size: 10pt;
+            font-weight: bold;
 
             """
 

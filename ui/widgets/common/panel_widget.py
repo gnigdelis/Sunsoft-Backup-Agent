@@ -7,6 +7,14 @@ from PySide6.QtWidgets import (
 
 from PySide6.QtCore import Qt
 
+from ui.styles.theme import (
+    PANEL_BACKGROUND,
+    PANEL_BORDER_COLOR,
+    PANEL_BORDER_RADIUS,
+    PRIMARY_COLOR,
+    WHITE_COLOR,
+)
+
 
 class PanelWidget(QFrame):
 
@@ -29,7 +37,7 @@ class PanelWidget(QFrame):
         #
 
         self.setObjectName(
-            "GuardianPanel"
+            "PanelWidget"
         )
 
         #
@@ -38,15 +46,15 @@ class PanelWidget(QFrame):
 
         self.main_layout = QVBoxLayout()
 
-        self.main_layout.setSpacing(
-            15
-        )
-
         self.main_layout.setContentsMargins(
             20,
             20,
             20,
             20,
+        )
+
+        self.main_layout.setSpacing(
+            15
         )
 
         #
@@ -57,12 +65,12 @@ class PanelWidget(QFrame):
             self.title
         )
 
-        self.title_label.setObjectName(
-            "GuardianPanelTitle"
-        )
-
         self.title_label.setAlignment(
             Qt.AlignmentFlag.AlignLeft
+        )
+
+        self.title_label.setObjectName(
+            "PanelTitle"
         )
 
         self.main_layout.addWidget(
@@ -80,31 +88,40 @@ class PanelWidget(QFrame):
     def setup_styles(self):
 
         self.setStyleSheet(
-            """
-            QFrame#GuardianPanel {
 
-                background-color: #1B1B1B;
-                border: 2px solid #D4AF37;
-                border-radius: 12px;
+            f"""
 
-            }
+            QFrame#PanelWidget {{
 
-            QLabel#GuardianPanelTitle {
+                background-color: {PANEL_BACKGROUND};
 
-                color: #D4AF37;
-                font-size: 16px;
+                border: 1px solid {PANEL_BORDER_COLOR};
+
+                border-radius: {PANEL_BORDER_RADIUS}px;
+
+            }}
+
+            QLabel#PanelTitle {{
+
+                color: {PRIMARY_COLOR};
+
+                font-size: 12pt;
                 font-weight: bold;
-                padding-bottom: 5px;
 
-            }
+                border: none;
 
-            QLabel {
+            }}
 
-                color: white;
-                font-size: 11pt;
+            QLabel {{
 
-            }
+                color: {WHITE_COLOR};
+
+                border: none;
+
+            }}
+
             """
+
         )
 
     def add_widget(

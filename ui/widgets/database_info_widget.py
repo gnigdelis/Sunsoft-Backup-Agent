@@ -22,70 +22,42 @@ class DatabaseInfoWidget(QWidget):
 
     def setup_ui(self):
 
-        #
-        # MAIN LAYOUT
-        #
-
         main_layout = QVBoxLayout()
-
-        #
-        # PANEL
-        #
 
         panel = PanelWidget(
             "Στοιχεία Βάσης Δεδομένων"
         )
 
-        #
-        # DATABASE INFORMATION
-        #
+        rows = [
 
-        database_information = [
+            ("Τύπος Βάσης", "SQL Server"),
 
-            ("Τύπος Βάσης", "N/A"),
+            ("Όνομα Βάσης", "--"),
 
-            ("Όνομα Server", "N/A"),
+            ("Κατάσταση Σύνδεσης", "--"),
 
-            ("Όνομα Βάσης", "N/A"),
+            ("Τελευταίος Έλεγχος", "--"),
 
-            ("Κατάσταση Σύνδεσης", "N/A"),
+            ("Μέγεθος Βάσης", "--"),
 
-            ("Τελευταίος Έλεγχος", "N/A"),
-
-            ("Έκδοση SQL Server", "N/A"),
-
-            ("Μέγεθος Βάσης", "N/A"),
-
-            ("Κατάσταση Backup", "N/A"),
+            ("Κατάσταση Backup", "--"),
 
         ]
 
-        #
-        # CREATE INFO ROWS
-        #
-
-        for title, value in database_information:
-
-            row = InfoRowWidget(
-                title=title,
-                value=value,
-            )
+        for title, value in rows:
 
             panel.add_widget(
-                row
-            )
 
-        #
-        # ADD PANEL
-        #
+                InfoRowWidget(
+                    title,
+                    value,
+                )
+
+            )
 
         main_layout.addWidget(
             panel
         )
-
-        #
-        # SET LAYOUT
-        #
 
         self.setLayout(
             main_layout

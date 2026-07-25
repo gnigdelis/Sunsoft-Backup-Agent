@@ -1,4 +1,4 @@
-APPLICATION_NAME = "Sunsoft Backup Agent"
+APPLICATION_NAME = "Sunsoft Support Agent"
 
 APPLICATION_VERSION = "1.0.0"
 

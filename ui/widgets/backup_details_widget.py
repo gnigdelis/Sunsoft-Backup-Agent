@@ -1,15 +1,15 @@
 from PySide6.QtWidgets import (
     QWidget,
-    QVBoxLayout,
     QLabel,
+    QVBoxLayout,
 )
 
 from ui.widgets.common.panel_widget import (
     PanelWidget,
 )
 
-from ui.widgets.common.status_row_widget import (
-    StatusRowWidget,
+from ui.widgets.common.info_row_widget import (
+    InfoRowWidget,
 )
 
 
@@ -34,65 +34,60 @@ class BackupDetailsWidget(QWidget):
         #
 
         panel = PanelWidget(
-            "Λεπτομέρειες Backup"
+            "Στοιχεία Backup"
         )
 
         #
-        # BACKUP PIPELINE
+        # INFORMATION ROWS
         #
 
-        backup_operations = [
-
-            ("Έλεγχος Αρχείων", "ΣΕ ΑΝΑΜΟΝΗ", "--:--:--"),
-
-            ("Αντιγραφή Αρχείων", "ΣΕ ΑΝΑΜΟΝΗ", "--:--:--"),
-
-            ("Εξαγωγή Registry", "ΣΕ ΑΝΑΜΟΝΗ", "--:--:--"),
-
-            ("Backup Βάσης Δεδομένων", "ΣΕ ΑΝΑΜΟΝΗ", "--:--:--"),
-
-            ("Δημιουργία Manifest", "ΣΕ ΑΝΑΜΟΝΗ", "--:--:--"),
-
-            ("Συμπίεση (7z)", "ΣΕ ΑΝΑΜΟΝΗ", "--:--:--"),
-
-            ("Μεταφόρτωση", "ΣΕ ΑΝΑΜΟΝΗ", "--:--:--"),
-
-        ]
-
-        #
-        # CREATE STATUS ROWS
-        #
-
-        for title, status, duration in backup_operations:
-
-            row = StatusRowWidget(
-                title=title,
-                status=status,
-                duration=duration,
-            )
-
-            panel.add_widget(
-                row
-            )
-
-        #
-        # TOTAL BACKUP TIME
-        #
-
-        self.total_time_title = QLabel(
-            "Συνολικός Χρόνος Backup"
+        self.cloud_backup = InfoRowWidget(
+            "Cloud Backup",
+            "Απενεργοποιημένο",
         )
 
-        self.total_time_value = QLabel(
-            "--:--:--"
+        self.scheduler = InfoRowWidget(
+            "Scheduler",
+            "Απενεργοποιημένος",
+        )
+
+        self.notifications = InfoRowWidget(
+            "Notifications",
+            "Απενεργοποιημένες",
+        )
+
+        self.destination = InfoRowWidget(
+            "Προορισμός",
+            "Δεν έχει οριστεί",
+        )
+
+        self.compression = InfoRowWidget(
+            "Συμπίεση",
+            "ZIP",
+        )
+
+        #
+        # ADD WIDGETS
+        #
+
+        panel.add_widget(
+            self.cloud_backup
         )
 
         panel.add_widget(
-            self.total_time_title
+            self.scheduler
         )
 
         panel.add_widget(
-            self.total_time_value
+            self.notifications
+        )
+
+        panel.add_widget(
+            self.destination
+        )
+
+        panel.add_widget(
+            self.compression
         )
 
         #
@@ -102,10 +97,6 @@ class BackupDetailsWidget(QWidget):
         main_layout.addWidget(
             panel
         )
-
-        #
-        # SET LAYOUT
-        #
 
         self.setLayout(
             main_layout

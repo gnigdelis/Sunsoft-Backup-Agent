@@ -5,6 +5,18 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
 )
 
+from PySide6.QtCore import Qt
+
+from ui.styles.config import (
+    APPLICATION_VERSION,
+)
+
+from ui.styles.theme import (
+    PRIMARY_COLOR,
+    WHITE_COLOR,
+    SECONDARY_TEXT_COLOR,
+)
+
 
 class HeaderWidget(QWidget):
 
@@ -13,6 +25,7 @@ class HeaderWidget(QWidget):
         super().__init__()
 
         self.setup_ui()
+        self.setup_styles()
 
     def setup_ui(self):
 
@@ -25,11 +38,11 @@ class HeaderWidget(QWidget):
         left_layout = QVBoxLayout()
 
         self.title_label = QLabel(
-            "Golden Backup"
+            "Sunsoft Support Agent"
         )
 
         self.subtitle_label = QLabel(
-            "Πλήρες backup αρχείων, Registry και βάσης δεδομένων"
+            "Professional Technical Support Utility\nfor Sunsoft Systems"
         )
 
         left_layout.addWidget(
@@ -46,17 +59,15 @@ class HeaderWidget(QWidget):
 
         right_layout = QVBoxLayout()
 
-        self.datetime_label = QLabel(
-            "20/07/2026 16:45"
-        )
-
         self.version_label = QLabel(
-            "Version 1.0.0.0"
+            f"Version {APPLICATION_VERSION}"
         )
 
-        right_layout.addWidget(
-            self.datetime_label
+        self.version_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight
         )
+
+        right_layout.addStretch()
 
         right_layout.addWidget(
             self.version_label
@@ -68,14 +79,44 @@ class HeaderWidget(QWidget):
 
         main_layout.addLayout(
             left_layout,
-            4
+            4,
         )
 
         main_layout.addLayout(
             right_layout,
-            1
+            1,
         )
 
         self.setLayout(
             main_layout
+        )
+
+    def setup_styles(self):
+
+        self.title_label.setStyleSheet(
+
+            f"""
+            color: {PRIMARY_COLOR};
+            font-size: 24pt;
+            font-weight: bold;
+            """
+
+        )
+
+        self.subtitle_label.setStyleSheet(
+
+            f"""
+            color: {WHITE_COLOR};
+            font-size: 11pt;
+            """
+
+        )
+
+        self.version_label.setStyleSheet(
+
+            f"""
+            color: {SECONDARY_TEXT_COLOR};
+            font-size: 10pt;
+            """
+
         )

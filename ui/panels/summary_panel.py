@@ -34,7 +34,10 @@ class SummaryPanel(QWidget):
 
         panel_layout = QHBoxLayout()
 
-        panel_layout.setSpacing(20)
+        panel_layout.setSpacing(
+            20
+        )
+
         panel_layout.setContentsMargins(
             15,
             15,
@@ -47,33 +50,33 @@ class SummaryPanel(QWidget):
         #
 
         self.last_backup_card = SummaryCardWidget(
-            title="Last Backup",
-            value="Never",
-            status="PENDING",
+            title="Τελευταίο Backup",
+            value="ΠΟΤΕ",
+            status="ΑΝΑΜΟΝΗ",
         )
 
         self.files_card = SummaryCardWidget(
-            title="Files",
+            title="Αρχεία Backup",
             value="0",
-            status="PENDING",
-        )
-
-        self.registry_card = SummaryCardWidget(
-            title="Registry Keys",
-            value="0",
-            status="PENDING",
+            status="ΑΝΑΜΟΝΗ",
         )
 
         self.database_card = SummaryCardWidget(
-            title="Database",
+            title="Βάση Δεδομένων",
             value="0",
-            status="PENDING",
+            status="ΑΝΑΜΟΝΗ",
         )
 
         self.backup_size_card = SummaryCardWidget(
-            title="Backup Size",
+            title="Μέγεθος Backup",
             value="0 MB",
-            status="PENDING",
+            status="ΑΝΑΜΟΝΗ",
+        )
+
+        self.status_card = SummaryCardWidget(
+            title="Κατάσταση Backup",
+            value="ΕΤΟΙΜΟ",
+            status="ΑΝΑΜΟΝΗ",
         )
 
         #
@@ -89,15 +92,15 @@ class SummaryPanel(QWidget):
         )
 
         panel_layout.addWidget(
-            self.registry_card
-        )
-
-        panel_layout.addWidget(
             self.database_card
         )
 
         panel_layout.addWidget(
             self.backup_size_card
+        )
+
+        panel_layout.addWidget(
+            self.status_card
         )
 
         #
@@ -109,7 +112,7 @@ class SummaryPanel(QWidget):
         )
 
         #
-        # ADD PANEL TO MAIN LAYOUT
+        # ADD PANEL
         #
 
         main_layout.addWidget(

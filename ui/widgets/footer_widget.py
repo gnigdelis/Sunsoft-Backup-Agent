@@ -12,9 +12,9 @@ from ui.styles.config import (
 )
 
 from ui.styles.theme import (
-    SECONDARY_TEXT_COLOR,
-    GOLD_COLOR,
+    PRIMARY_COLOR,
     WHITE_COLOR,
+    SECONDARY_TEXT_COLOR,
 )
 
 
@@ -29,16 +29,11 @@ class FooterWidget(QWidget):
 
     def setup_ui(self):
 
-        #
-        # MAIN LAYOUT
-        #
-
         layout = QVBoxLayout()
-        layout.setSpacing(5)
 
-        #
-        # APPLICATION NAME
-        #
+        layout.setSpacing(
+            5
+        )
 
         self.application_label = QLabel(
             f"{APPLICATION_NAME} v{APPLICATION_VERSION}"
@@ -48,33 +43,21 @@ class FooterWidget(QWidget):
             Qt.AlignmentFlag.AlignCenter
         )
 
-        #
-        # DESCRIPTION
-        #
-
         self.description_label = QLabel(
-            "Internal Technical Support Utility"
+            "Professional Technical Support Utility"
         )
 
         self.description_label.setAlignment(
             Qt.AlignmentFlag.AlignCenter
         )
 
-        #
-        # COPYRIGHT
-        #
-
         self.copyright_label = QLabel(
-            "© 2026 Sunsoft Ltd."
+            "© 2026 Sunsoft"
         )
 
         self.copyright_label.setAlignment(
             Qt.AlignmentFlag.AlignCenter
         )
-
-        #
-        # ADD LABELS
-        #
 
         layout.addWidget(
             self.application_label
@@ -88,31 +71,21 @@ class FooterWidget(QWidget):
             self.copyright_label
         )
 
-        #
-        # SET LAYOUT
-        #
-
-        self.setLayout(layout)
+        self.setLayout(
+            layout
+        )
 
     def setup_styles(self):
-
-        #
-        # APPLICATION NAME STYLE
-        #
 
         self.application_label.setStyleSheet(
 
             f"""
-            color: {GOLD_COLOR};
+            color: {PRIMARY_COLOR};
             font-size: 11pt;
             font-weight: bold;
             """
 
         )
-
-        #
-        # DESCRIPTION STYLE
-        #
 
         self.description_label.setStyleSheet(
 
@@ -122,10 +95,6 @@ class FooterWidget(QWidget):
             """
 
         )
-
-        #
-        # COPYRIGHT STYLE
-        #
 
         self.copyright_label.setStyleSheet(
 

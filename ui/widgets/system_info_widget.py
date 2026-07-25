@@ -22,70 +22,44 @@ class SystemInfoWidget(QWidget):
 
     def setup_ui(self):
 
-        #
-        # MAIN LAYOUT
-        #
-
         main_layout = QVBoxLayout()
-
-        #
-        # PANEL
-        #
 
         panel = PanelWidget(
             "Στοιχεία Συστήματος"
         )
 
-        #
-        # SYSTEM INFORMATION
-        #
+        rows = [
 
-        system_information = [
+            ("Όνομα Υπολογιστή", "--"),
 
-            ("Όνομα Υπολογιστή", "N/A"),
+            ("Λειτουργικό Σύστημα", "--"),
 
-            ("Τρέχων Χρήστης", "N/A"),
+            ("Επεξεργαστής", "--"),
 
-            ("Έκδοση Windows", "N/A"),
+            ("Μνήμη RAM", "--"),
 
-            ("Επεξεργαστής", "N/A"),
+            ("Συνολικός Χώρος Δίσκου", "--"),
 
-            ("Μνήμη RAM", "N/A"),
+            ("Διαθέσιμος Χώρος Δίσκου", "--"),
 
-            ("Συνολικός Χώρος Δίσκου", "N/A"),
-
-            ("Ελεύθερος Χώρος Δίσκου", "N/A"),
-
-            ("Έκδοση Agent", "1.0.0"),
+            ("Έκδοση Sunsoft Backup", "1.0.0"),
 
         ]
 
-        #
-        # CREATE INFO ROWS
-        #
-
-        for title, value in system_information:
-
-            row = InfoRowWidget(
-                title=title,
-                value=value,
-            )
+        for title, value in rows:
 
             panel.add_widget(
-                row
-            )
 
-        #
-        # ADD PANEL
-        #
+                InfoRowWidget(
+                    title,
+                    value,
+                )
+
+            )
 
         main_layout.addWidget(
             panel
         )
-
-        #
-        # SET LAYOUT
-        #
 
         self.setLayout(
             main_layout

@@ -1,20 +1,100 @@
-from pathlib import Path
+import os
+import tempfile
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+class Paths:
 
-BACKUP_FOLDER = PROJECT_ROOT / "backup"
+    @staticmethod
+    def get_temp_folder():
 
-TEMP_FOLDER = PROJECT_ROOT / "temp"
+        temp_folder = os.path.join(
 
-LOGS_FOLDER = PROJECT_ROOT / "logs"
+            tempfile.gettempdir(),
+            "SunsoftSupportAgent",
 
-CONFIG_FOLDER = PROJECT_ROOT / "config"
+        )
 
-REGISTRY_FOLDER = PROJECT_ROOT / "registry"
+        os.makedirs(
 
-SQL_FOLDER = PROJECT_ROOT / "sql"
+            temp_folder,
+            exist_ok=True,
 
-UPLOAD_FOLDER = PROJECT_ROOT / "upload"
+        )
 
-RESTORE_FOLDER = PROJECT_ROOT / "restore"
+        return temp_folder
+
+    @staticmethod
+    def get_files_folder():
+
+        folder = os.path.join(
+
+            Paths.get_temp_folder(),
+            "Files",
+
+        )
+
+        os.makedirs(
+
+            folder,
+            exist_ok=True,
+
+        )
+
+        return folder
+
+    @staticmethod
+    def get_sql_folder():
+
+        folder = os.path.join(
+
+            Paths.get_temp_folder(),
+            "SQL",
+
+        )
+
+        os.makedirs(
+
+            folder,
+            exist_ok=True,
+
+        )
+
+        return folder
+
+    @staticmethod
+    def get_registry_folder():
+
+        folder = os.path.join(
+
+            Paths.get_temp_folder(),
+            "Registry",
+
+        )
+
+        os.makedirs(
+
+            folder,
+            exist_ok=True,
+
+        )
+
+        return folder
+
+    @staticmethod
+    def get_programdata_folder():
+
+        folder = os.path.join(
+
+            Paths.get_temp_folder(),
+            "ProgramData",
+
+        )
+
+        os.makedirs(
+
+            folder,
+            exist_ok=True,
+
+        )
+
+        return folder

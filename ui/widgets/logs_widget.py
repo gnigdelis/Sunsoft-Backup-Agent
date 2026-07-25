@@ -44,6 +44,13 @@ class LogsWidget(QWidget):
         #
 
         self.logs_textbox = QTextEdit()
+        self.logs_textbox.setMinimumHeight(
+           250
+        )
+
+        self.logs_textbox.setMaximumHeight(
+         250
+        )
 
         self.logs_textbox.setReadOnly(
             True
@@ -84,7 +91,7 @@ class LogsWidget(QWidget):
         #
 
         self.logs_textbox.append(
-            "INFO | Ο Sunsoft Backup Agent είναι έτοιμος."
+            "INFO | Το Sunsoft Backup είναι έτοιμο."
         )
 
         #
@@ -111,24 +118,82 @@ class LogsWidget(QWidget):
             main_layout
         )
 
+    #
+    # GENERIC LOG
+    #
+
     def add_log(
         self,
-        message: str,
+        message,
     ):
 
         self.logs_textbox.append(
             message
         )
 
-        #
-        # AUTO SCROLL
-        #
-
-        scrollbar = self.logs_textbox.verticalScrollBar()
+        scrollbar = (
+            self.logs_textbox.verticalScrollBar()
+        )
 
         scrollbar.setValue(
             scrollbar.maximum()
         )
+
+    #
+    # INFO LOG
+    #
+
+    def add_info_log(
+        self,
+        message,
+    ):
+
+        self.add_log(
+            f"INFO | {message}"
+        )
+
+    #
+    # SUCCESS LOG
+    #
+
+    def add_success_log(
+        self,
+        message,
+    ):
+
+        self.add_log(
+            f"SUCCESS | {message}"
+        )
+
+    #
+    # WARNING LOG
+    #
+
+    def add_warning_log(
+        self,
+        message,
+    ):
+
+        self.add_log(
+            f"WARNING | {message}"
+        )
+
+    #
+    # ERROR LOG
+    #
+
+    def add_error_log(
+        self,
+        message,
+    ):
+
+        self.add_log(
+            f"ERROR | {message}"
+        )
+
+    #
+    # CLEAR LOGS
+    #
 
     def clear_logs(self):
 

@@ -12,9 +12,11 @@ from ui.styles.theme import (
     PANEL_BORDER_COLOR,
     CARD_BORDER_SIZE,
     CARD_BORDER_RADIUS,
-    GOLD_COLOR,
+    PRIMARY_COLOR,
     WHITE_COLOR,
     SUCCESS_COLOR,
+    WARNING_COLOR,
+    SECONDARY_TEXT_COLOR,
     SUBTITLE_FONT_SIZE,
     SMALL_FONT_SIZE,
 )
@@ -57,6 +59,10 @@ class SummaryCardWidget(QFrame):
             8
         )
 
+        #
+        # TITLE
+        #
+
         self.title_label = QLabel(
             self.title
         )
@@ -64,6 +70,10 @@ class SummaryCardWidget(QFrame):
         self.title_label.setAlignment(
             Qt.AlignmentFlag.AlignCenter
         )
+
+        #
+        # VALUE
+        #
 
         self.value_label = QLabel(
             self.value
@@ -73,6 +83,10 @@ class SummaryCardWidget(QFrame):
             Qt.AlignmentFlag.AlignCenter
         )
 
+        #
+        # STATUS
+        #
+
         self.status_label = QLabel(
             self.status
         )
@@ -80,6 +94,10 @@ class SummaryCardWidget(QFrame):
         self.status_label.setAlignment(
             Qt.AlignmentFlag.AlignCenter
         )
+
+        #
+        # LAYOUT
+        #
 
         layout.addWidget(
             self.title_label
@@ -121,11 +139,15 @@ class SummaryCardWidget(QFrame):
 
         )
 
+        #
+        # TITLE STYLE
+        #
+
         self.title_label.setStyleSheet(
 
             f"""
 
-            color: {GOLD_COLOR};
+            color: {PRIMARY_COLOR};
 
             font-size: {SUBTITLE_FONT_SIZE}pt;
             font-weight: bold;
@@ -134,24 +156,44 @@ class SummaryCardWidget(QFrame):
 
         )
 
+        #
+        # VALUE STYLE
+        #
+
         self.value_label.setStyleSheet(
 
             f"""
 
             color: {WHITE_COLOR};
 
-            font-size: 24pt;
+            font-size: 18pt;
             font-weight: bold;
 
             """
 
         )
 
+        #
+        # STATUS STYLE
+        #
+
+        if self.status == "ΟΛΟΚΛΗΡΩΘΗΚΕ":
+
+            background_color = SUCCESS_COLOR
+
+        elif self.status == "ΑΝΑΜΟΝΗ":
+
+            background_color = WARNING_COLOR
+
+        else:
+
+            background_color = SECONDARY_TEXT_COLOR
+
         self.status_label.setStyleSheet(
 
             f"""
 
-            background-color: {SUCCESS_COLOR};
+            background-color: {background_color};
 
             color: {WHITE_COLOR};
 

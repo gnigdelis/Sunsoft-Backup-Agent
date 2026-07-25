@@ -4,6 +4,11 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
 )
 
+from ui.styles.theme import (
+    WHITE_COLOR,
+    SECONDARY_TEXT_COLOR,
+)
+
 
 class InfoRowWidget(QWidget):
 
@@ -19,6 +24,7 @@ class InfoRowWidget(QWidget):
         self.value = value
 
         self.setup_ui()
+        self.setup_styles()
 
     def setup_ui(self):
 
@@ -29,14 +35,14 @@ class InfoRowWidget(QWidget):
         layout = QHBoxLayout()
 
         layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            5,
+            5,
         )
 
         layout.setSpacing(
-            10
+            15
         )
 
         #
@@ -66,7 +72,7 @@ class InfoRowWidget(QWidget):
 
         layout.addWidget(
             self.value_label,
-            3,
+            1,
         )
 
         #
@@ -77,10 +83,39 @@ class InfoRowWidget(QWidget):
             layout
         )
 
+    def setup_styles(self):
+
+        self.title_label.setStyleSheet(
+
+            f"""
+
+            color: {WHITE_COLOR};
+
+            font-size: 10pt;
+            font-weight: bold;
+
+            """
+
+        )
+
+        self.value_label.setStyleSheet(
+
+            f"""
+
+            color: {SECONDARY_TEXT_COLOR};
+
+            font-size: 10pt;
+
+            """
+
+        )
+
     def set_value(
         self,
         value: str,
     ):
+
+        self.value = value
 
         self.value_label.setText(
             value

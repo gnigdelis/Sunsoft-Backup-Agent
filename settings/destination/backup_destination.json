@@ -1,0 +1,7 @@
+{
+    "provider": "LOCAL",
+    "destination_path": "C:\\ProgramData\\Sunsoft Guardian\\Backups",
+    "keep_last_backups": 30,
+    "automatic_cleanup": true,
+    "backup_file_extension": ".zip"
+}

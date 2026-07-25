@@ -1,0 +1,20 @@
+{
+    "critical_targets": [
+
+        "sql",
+        "programdata"
+
+    ],
+
+    "optional_targets": [
+
+        "system",
+        "printers",
+        "network",
+        "registry",
+        "services",
+        "installed_applications",
+        "task_scheduler"
+
+    ]
+}

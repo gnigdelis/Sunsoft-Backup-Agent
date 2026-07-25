@@ -1,0 +1,8 @@
+{
+    "last_successful_backup": null,
+    "last_failed_backup": null,
+    "last_backup_status": null,
+    "last_backup_duration_seconds": null,
+    "total_successful_backups": 0,
+    "total_failed_backups": 0
+}

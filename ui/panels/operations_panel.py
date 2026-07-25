@@ -19,7 +19,13 @@ class OperationsPanel(QWidget):
 
         super().__init__()
 
+        self.setup_ui()
+
+    def setup_ui(self):
+
         main_layout = QHBoxLayout()
+
+        main_layout.setSpacing(15)
 
         #
         # LEFT COLUMN
@@ -27,8 +33,12 @@ class OperationsPanel(QWidget):
 
         left_layout = QVBoxLayout()
 
-        left_layout.addWidget(
+        self.logs_widget = (
             LogsWidget()
+        )
+
+        left_layout.addWidget(
+            self.logs_widget
         )
 
         #
@@ -37,20 +47,28 @@ class OperationsPanel(QWidget):
 
         right_layout = QVBoxLayout()
 
-        right_layout.addWidget(
+        self.action_buttons_widget = (
             ActionButtonsWidget()
         )
+
+        right_layout.addWidget(
+            self.action_buttons_widget
+        )
+
+        right_layout.addStretch()
 
         #
         # ADD COLUMNS
         #
 
         main_layout.addLayout(
-            left_layout
+            left_layout,
+            5,
         )
 
         main_layout.addLayout(
-            right_layout
+            right_layout,
+            2,
         )
 
         self.setLayout(

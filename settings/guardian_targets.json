@@ -1,0 +1,15 @@
+{
+    "targets": [
+
+        "system",
+        "sql",
+        "programdata",
+        "printers",
+        "network",
+        "installed_applications",
+        "registry",
+        "task_scheduler",
+        "sunsoft_services"
+
+    ]
+}
