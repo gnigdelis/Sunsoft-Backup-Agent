@@ -1,0 +1,20 @@
+backup_finished called
+{'data': {'session_name': 'FNBAT-NB-0049_26072026_175718', 'session_path': 'temp\\FNBAT-NB-0049_26072026_175718', 'status': 'SUCCESS', 'zip_file': 'temp\\FNBAT-NB-0049_26072026_175718.zip'}, 'errors': [], 'generated_at': '2026-07-26 18:01:09', 'status': 'SUCCESS', 'success': True, 'warnings': []}
+backup_finished completed
+cleanup_thread called
+backup_finished called
+{'data': {'session_name': 'FNBAT-NB-0049_26072026_180817', 'session_path': 'temp\\FNBAT-NB-0049_26072026_180817', 'status': 'SUCCESS', 'zip_file': 'temp\\FNBAT-NB-0049_26072026_180817.zip'}, 'errors': [], 'generated_at': '2026-07-26 18:10:38', 'status': 'SUCCESS', 'success': True, 'warnings': []}
+backup_finished completed
+cleanup_thread called
+backup_finished called
+{'data': {'session_name': 'FNBAT-NB-0049_26072026_191326', 'session_path': 'temp\\FNBAT-NB-0049_26072026_191326', 'status': 'SUCCESS', 'zip_file': 'temp\\FNBAT-NB-0049_26072026_191326.zip'}, 'errors': [], 'generated_at': '2026-07-26 19:15:32', 'status': 'SUCCESS', 'success': True, 'warnings': []}
+backup_finished completed
+cleanup_thread called
+backup_finished called
+{'data': {'session_name': 'FNBAT-NB-0049_26072026_191929', 'session_path': 'temp\\FNBAT-NB-0049_26072026_191929', 'status': 'SUCCESS', 'zip_file': 'temp\\FNBAT-NB-0049_26072026_191929.zip'}, 'errors': [], 'generated_at': '2026-07-26 19:21:30', 'status': 'SUCCESS', 'success': True, 'warnings': []}
+backup_finished completed
+cleanup_thread called
+backup_finished called
+{'data': {'session_name': 'FNBAT-NB-0049_27072026_201536', 'session_path': 'temp\\FNBAT-NB-0049_27072026_201536', 'status': 'SUCCESS', 'zip_file': 'temp\\FNBAT-NB-0049_27072026_201536.zip'}, 'errors': [], 'generated_at': '2026-07-27 20:17:43', 'status': 'SUCCESS', 'success': True, 'warnings': []}
+backup_finished completed
+cleanup_thread called
