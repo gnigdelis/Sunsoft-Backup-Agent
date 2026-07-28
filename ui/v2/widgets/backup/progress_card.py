@@ -22,7 +22,7 @@ class ProgressCard(QWidget):
         layout.setSpacing(10)
 
         self.title = QLabel("Backup Progress")
-        self.title.setFont(Theme.Typography.subtitle())
+        self.title.setFont(Theme.Typography.heading())
         self.title.setStyleSheet(
             f"color:{Theme.Colors.TEXT};"
         )
@@ -44,17 +44,16 @@ class ProgressCard(QWidget):
         self.progress.setStyleSheet(f"""
             QProgressBar {{
 
-                border:none;
-                border-radius:9px;
-
-                background:{Theme.Colors.SURFACE_LIGHT};
+                border: none;
+                border-radius: 9px;
+                background: {Theme.Colors.SURFACE_LIGHT};
 
             }}
 
             QProgressBar::chunk {{
 
-                border-radius:9px;
-                background:#E53935;
+                border-radius: 9px;
+                background: #E53935;
 
             }}
         """)
@@ -66,11 +65,9 @@ class ProgressCard(QWidget):
         self.setStyleSheet(f"""
             ProgressCard {{
 
-                background:{Theme.Colors.SURFACE};
-
-                border:1px solid {Theme.Colors.BORDER};
-
-                border-radius:12px;
+                background: {Theme.Colors.SURFACE};
+                border: 1px solid {Theme.Colors.BORDER};
+                border-radius: 12px;
 
             }}
         """)

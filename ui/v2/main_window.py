@@ -22,6 +22,7 @@ from ui.v2.pages.history_page import HistoryPage
 class MainWindow(QWidget):
 
     def __init__(self):
+
         super().__init__()
 
         self.setup_ui()
@@ -48,25 +49,19 @@ class MainWindow(QWidget):
 
         layout = QHBoxLayout(self)
 
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
+        layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
 
-        #
-        # Sidebar
-        #
+        layout.setSpacing(0)
 
         self.sidebar = Sidebar()
         self.sidebar.setFixedWidth(300)
 
-        #
-        # Stack
-        #
-
         self.stack = QStackedWidget()
-
-        #
-        # Navigation
-        #
 
         self.navigation = NavigationManager(
             self.stack
@@ -77,10 +72,15 @@ class MainWindow(QWidget):
         #
 
         self.dashboard_page = DashboardPage()
+
         self.backup_page = BackupPage()
+
         self.logs_page = LogsPage()
+
         self.settings_page = SettingsPage()
+
         self.restore_page = RestorePage()
+
         self.history_page = HistoryPage()
 
         self.navigation.register(
@@ -124,15 +124,7 @@ class MainWindow(QWidget):
 
     def setup_navigation(self):
 
-        #
-        # Default page
-        #
-
         self.navigation.show("dashboard")
-
-        #
-        # Sidebar navigation
-        #
 
         self.sidebar.menu.dashboard.clicked.connect(
             lambda: self.navigation.show("dashboard")

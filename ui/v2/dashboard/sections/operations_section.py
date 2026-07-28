@@ -3,7 +3,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
 )
 
-from core.backup_runner import BackupRunner
+from core.services.backup_service import backup_service
 
 from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
 from ui.v2.widgets.actions.quick_actions_card import QuickActionsCard
@@ -15,7 +15,11 @@ class OperationsSection(QWidget):
 
         super().__init__()
 
-        self.backup_runner = BackupRunner()
+        #
+        # Shared Backup Runner
+        #
+
+        self.backup_runner = backup_service.runner
 
         self.setup_ui()
 
@@ -96,7 +100,7 @@ class OperationsSection(QWidget):
             "▶ Έναρξη Backup..."
         )
 
-        self.backup_runner.start()
+        backup_service.start_backup()
 
     def on_info(self, text):
 

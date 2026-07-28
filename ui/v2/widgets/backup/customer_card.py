@@ -27,7 +27,7 @@ class CustomerCard(QWidget):
         title = QLabel("Customer Information")
 
         title.setFont(
-            Theme.Typography.subtitle()
+            Theme.Typography.heading()
         )
 
         title.setStyleSheet(

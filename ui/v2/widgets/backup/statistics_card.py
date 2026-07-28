@@ -26,7 +26,7 @@ class StatisticsCard(QWidget):
         title = QLabel("Backup Statistics")
 
         title.setFont(
-            Theme.Typography.subtitle()
+             Theme.Typography.heading()
         )
 
         title.setStyleSheet(
