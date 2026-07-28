@@ -125,9 +125,35 @@ class MainWindow(QWidget):
     def setup_navigation(self):
 
         #
-        # προσωρινά
+        # Default page
         #
 
-        self.navigation.show(
-            "dashboard"
+        self.navigation.show("dashboard")
+
+        #
+        # Sidebar navigation
+        #
+
+        self.sidebar.menu.dashboard.clicked.connect(
+            lambda: self.navigation.show("dashboard")
+        )
+
+        self.sidebar.menu.backup.clicked.connect(
+            lambda: self.navigation.show("backup")
+        )
+
+        self.sidebar.menu.restore.clicked.connect(
+            lambda: self.navigation.show("restore")
+        )
+
+        self.sidebar.menu.history.clicked.connect(
+            lambda: self.navigation.show("history")
+        )
+
+        self.sidebar.menu.logs.clicked.connect(
+            lambda: self.navigation.show("logs")
+        )
+
+        self.sidebar.menu.settings.clicked.connect(
+            lambda: self.navigation.show("settings")
         )

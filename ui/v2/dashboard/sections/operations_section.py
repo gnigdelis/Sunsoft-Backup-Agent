@@ -3,6 +3,8 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
 )
 
+from core.backup_runner import BackupRunner
+
 from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
 from ui.v2.widgets.actions.quick_actions_card import QuickActionsCard
 
@@ -13,7 +15,11 @@ class OperationsSection(QWidget):
 
         super().__init__()
 
+        self.backup_runner = BackupRunner()
+
         self.setup_ui()
+
+        self.connect_signals()
 
     def setup_ui(self):
 
@@ -40,10 +46,6 @@ class OperationsSection(QWidget):
 
         self.quick_actions = QuickActionsCard()
 
-        #
-        # Stretch
-        #
-
         layout.addWidget(
             self.live_activity,
             3,
@@ -55,3 +57,75 @@ class OperationsSection(QWidget):
         )
 
         self.setLayout(layout)
+
+    def connect_signals(self):
+
+        #
+        # Backup Button
+        #
+
+        self.quick_actions.backup_clicked.connect(
+            self.start_backup
+        )
+
+        #
+        # Logs
+        #
+
+        self.backup_runner.log_info.connect(
+            self.on_info
+        )
+
+        self.backup_runner.log_success.connect(
+            self.on_success
+        )
+
+        self.backup_runner.log_error.connect(
+            self.on_error
+        )
+
+        self.backup_runner.finished.connect(
+            self.on_finished
+        )
+
+    def start_backup(self):
+
+        self.live_activity.clear_logs()
+
+        self.live_activity.add_log(
+            "▶ Έναρξη Backup..."
+        )
+
+        self.backup_runner.start()
+
+    def on_info(self, text):
+
+        self.live_activity.add_log(
+            f"ℹ {text}"
+        )
+
+    def on_success(self, text):
+
+        self.live_activity.add_log(
+            f"✔ {text}"
+        )
+
+    def on_error(self, text):
+
+        self.live_activity.add_log(
+            f"✖ {text}"
+        )
+
+    def on_finished(self, result):
+
+        if result.get("success", False):
+
+            self.live_activity.add_log(
+                "✔ Το Backup ολοκληρώθηκε."
+            )
+
+        else:
+
+            self.live_activity.add_log(
+                "✖ Το Backup απέτυχε."
+            )

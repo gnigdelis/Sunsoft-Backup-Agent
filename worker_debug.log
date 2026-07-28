@@ -46,3 +46,11 @@ Pipeline Finished
 Emitting finished
 Finished emitted
 WORKER END
+WORKER START
+Creating Pipeline
+Executing Pipeline
+Pipeline Finished
+{'success': True, 'status': 'SUCCESS', 'generated_at': '2026-07-28 18:37:20', 'warnings': [], 'errors': [], 'data': {'status': 'SUCCESS', 'session_name': 'FNBAT-NB-0049_28072026_183451', 'session_path': 'temp\\FNBAT-NB-0049_28072026_183451', 'zip_file': 'temp\\FNBAT-NB-0049_28072026_183451.zip'}}
+Emitting finished
+Finished emitted
+WORKER END

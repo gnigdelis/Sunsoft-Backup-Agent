@@ -75,7 +75,7 @@ class NavigationMenu(QWidget):
 
         for item in self.items:
             item.clicked.connect(
-                lambda _, current=item: self.set_active(current)
+                lambda current=item: self.set_active(current)
             )
 
     def set_active(self, current):
