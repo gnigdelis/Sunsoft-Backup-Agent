@@ -2,9 +2,18 @@ from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QLabel,
+    QHBoxLayout,
 )
 
 from ui.v2.styles.theme import Theme
+
+from ui.v2.backup.widgets.backup_toolbar import BackupToolbar
+from ui.v2.widgets.backup.progress_card import ProgressCard
+from ui.v2.widgets.backup.customer_card import CustomerCard
+from ui.v2.widgets.backup.statistics_card import StatisticsCard
+
+# Χρησιμοποίησε το υπάρχον LiveActivityCard του project
+from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
 
 
 class BackupLayout(QWidget):
@@ -17,27 +26,77 @@ class BackupLayout(QWidget):
 
     def setup_ui(self):
 
-        layout = QVBoxLayout(self)
+        root = QVBoxLayout(self)
 
-        layout.setContentsMargins(
-            20,
-            20,
-            20,
-            20,
-        )
+        root.setContentsMargins(20, 20, 20, 20)
+        root.setSpacing(20)
 
-        layout.setSpacing(15)
+        #
+        # Header
+        #
+
+        header = QHBoxLayout()
 
         title = QLabel("Backup Manager")
-
         title.setFont(
             Theme.Typography.title()
         )
-
         title.setStyleSheet(
             f"color:{Theme.Colors.TEXT};"
         )
 
-        layout.addWidget(title)
+        self.status = QLabel("🟢 Ready")
+        self.status.setStyleSheet(
+            f"color:{Theme.Colors.SUCCESS}; font-size:11pt;"
+        )
 
-        layout.addStretch()
+        header.addWidget(title)
+        header.addStretch()
+        header.addWidget(self.status)
+
+        #
+        # Widgets
+        #
+
+        self.toolbar = BackupToolbar()
+
+        self.progress_card = ProgressCard()
+
+        self.customer_card = CustomerCard()
+
+        self.activity_card = LiveActivityCard()
+
+        self.statistics_card = StatisticsCard()
+
+        #
+        # Middle Area
+        #
+
+        middle = QHBoxLayout()
+        middle.setSpacing(20)
+
+        middle.addWidget(
+            self.customer_card,
+            1,
+        )
+
+        middle.addWidget(
+            self.activity_card,
+            2,
+        )
+
+        #
+        # Build Layout
+        #
+
+        root.addLayout(header)
+
+        root.addWidget(self.toolbar)
+
+        root.addWidget(self.progress_card)
+
+        root.addLayout(middle)
+
+        root.addWidget(self.statistics_card)
+
+        root.addStretch()
