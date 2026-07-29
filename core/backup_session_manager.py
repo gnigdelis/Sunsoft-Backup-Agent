@@ -1,5 +1,4 @@
 from pathlib import Path
-from datetime import datetime
 import platform
 
 from core.common.result import Result
@@ -11,25 +10,9 @@ class BackupSessionManager:
 
         return platform.node()
 
-    def _get_timestamp(self):
-
-        return datetime.now().strftime(
-            "%d%m%Y_%H%M%S"
-        )
-
     def _get_session_name(self):
 
-        computer_name = (
-            self._get_computer_name()
-        )
-
-        timestamp = (
-            self._get_timestamp()
-        )
-
-        return (
-            f"{computer_name}_{timestamp}"
-        )
+        return self._get_computer_name()
 
     def create_session(
         self,
