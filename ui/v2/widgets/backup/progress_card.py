@@ -22,7 +22,9 @@ class ProgressCard(QWidget):
         layout.setSpacing(10)
 
         self.title = QLabel("Backup Progress")
-        self.title.setFont(Theme.Typography.heading())
+        self.title.setFont(
+            Theme.Typography.heading()
+        )
         self.title.setStyleSheet(
             f"color:{Theme.Colors.TEXT};"
         )
@@ -35,13 +37,31 @@ class ProgressCard(QWidget):
             """
         )
 
+        self.task = QLabel("Waiting...")
+        self.task.setStyleSheet(
+            f"""
+            color:{Theme.Colors.TEXT};
+            font-size:10pt;
+            """
+        )
+
+        self.step = QLabel("Step 0 / 0")
+        self.step.setStyleSheet(
+            f"""
+            color:{Theme.Colors.TEXT_SECONDARY};
+            font-size:9pt;
+            """
+        )
+
         self.progress = QProgressBar()
+
         self.progress.setRange(0, 100)
         self.progress.setValue(0)
         self.progress.setTextVisible(False)
         self.progress.setFixedHeight(18)
 
-        self.progress.setStyleSheet(f"""
+        self.progress.setStyleSheet(
+            f"""
             QProgressBar {{
 
                 border: none;
@@ -56,13 +76,17 @@ class ProgressCard(QWidget):
                 background: #E53935;
 
             }}
-        """)
+            """
+        )
 
         layout.addWidget(self.title)
         layout.addWidget(self.percent)
         layout.addWidget(self.progress)
+        layout.addWidget(self.task)
+        layout.addWidget(self.step)
 
-        self.setStyleSheet(f"""
+        self.setStyleSheet(
+            f"""
             ProgressCard {{
 
                 background: {Theme.Colors.SURFACE};
@@ -70,11 +94,43 @@ class ProgressCard(QWidget):
                 border-radius: 12px;
 
             }}
-        """)
+            """
+        )
 
-    def set_progress(self, value: int):
+    def update_progress(
+        self,
+        percentage,
+        current_step,
+        total_steps,
+        current_task,
+    ):
 
-        value = max(0, min(100, value))
+        percentage = max(
+            0,
+            min(100, percentage),
+        )
 
-        self.progress.setValue(value)
-        self.percent.setText(f"{value}%")
+        self.progress.setValue(
+            percentage
+        )
+
+        self.percent.setText(
+            f"{percentage}%"
+        )
+
+        self.task.setText(
+            current_task
+        )
+
+        self.step.setText(
+            f"Step {current_step} / {total_steps}"
+        )
+
+    def reset(self):
+
+        self.update_progress(
+            0,
+            0,
+            0,
+            "Waiting...",
+        )

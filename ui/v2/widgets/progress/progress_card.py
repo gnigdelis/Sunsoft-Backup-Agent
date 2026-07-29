@@ -1,7 +1,11 @@
 from PySide6.QtCore import Qt
+
 from PySide6.QtWidgets import (
     QLabel,
-    QGridLayout,
+    QHBoxLayout,
+    QVBoxLayout,
+    QWidget,
+    QFrame,
 )
 
 from ui.v2.styles.theme import Theme
@@ -20,89 +24,170 @@ class ProgressCard(BaseCard):
 
         self.build()
 
+    def create_title(self, text):
+
+        label = QLabel(text)
+
+        label.setStyleSheet(
+            f"""
+            color:{Theme.Colors.TEXT_SECONDARY};
+            font-size:10pt;
+            """
+        )
+
+        return label
+
+    def create_value(self, text, color=None):
+
+        label = QLabel(text)
+
+        label.setStyleSheet(
+            f"""
+            color:{color or Theme.Colors.TEXT};
+            font-size:12pt;
+            font-weight:600;
+            """
+        )
+
+        return label
+
     def build(self):
+
+        self.content_layout.setAlignment(
+            Qt.AlignmentFlag.AlignTop
+        )
+
+        #
+        # Main Horizontal Layout
+        #
+
+        row = QHBoxLayout()
+
+        row.setSpacing(25)
+
+        #
+        # Circular Progress
+        #
 
         progress = CircularProgress(68)
 
-        self.content_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-
-        self.content_layout.addWidget(
+        row.addWidget(
             progress,
             alignment=Qt.AlignmentFlag.AlignCenter,
         )
 
-        self.content_layout.addSpacing(10)
+        #
+        # Right Panel
+        #
 
-        grid = QGridLayout()
+        info = QVBoxLayout()
 
-        grid.setHorizontalSpacing(25)
-        grid.setVerticalSpacing(6)
+        info.setSpacing(8)
 
         #
         # Files
         #
 
-        files_title = QLabel("Files")
-        files_title.setStyleSheet(
-            f"color:{Theme.Colors.TEXT_SECONDARY};"
+        info.addWidget(
+            self.create_title("Files")
         )
 
-        files_value = QLabel("184,392 / 265,100")
-        files_value.setStyleSheet(
-            f"""
-            color:{Theme.Colors.TEXT};
-            font-size:11pt;
-            font-weight:600;
-            """
+        info.addWidget(
+            self.create_value("184,392 / 265,100")
         )
 
         #
         # Speed
         #
 
-        speed_title = QLabel("Speed")
-        speed_title.setStyleSheet(
-            f"color:{Theme.Colors.TEXT_SECONDARY};"
+        info.addSpacing(6)
+
+        info.addWidget(
+            self.create_title("Speed")
         )
 
-        speed_value = QLabel("126 MB/s")
-        speed_value.setStyleSheet(
-            f"""
-            color:{Theme.Colors.TEXT};
-            font-size:11pt;
-            font-weight:600;
-            """
+        info.addWidget(
+            self.create_value("126 MB/s")
         )
 
         #
         # Remaining
         #
 
-        remain_title = QLabel("Remaining")
-        remain_title.setStyleSheet(
-            f"color:{Theme.Colors.TEXT_SECONDARY};"
+        info.addSpacing(6)
+
+        info.addWidget(
+            self.create_title("Remaining")
         )
 
-        remain_value = QLabel("02:14")
-        remain_value.setStyleSheet(
-            f"""
-            color:{Theme.Colors.TEXT};
-            font-size:11pt;
-            font-weight:600;
-            """
+        info.addWidget(
+            self.create_value("02:14")
         )
 
         #
         # Copied
         #
 
-        copied_title = QLabel("Copied")
-        copied_title.setStyleSheet(
-            f"color:{Theme.Colors.TEXT_SECONDARY};"
+        info.addSpacing(6)
+
+        info.addWidget(
+            self.create_title("Copied")
         )
 
-        copied_value = QLabel("412 GB")
-        copied_value.setStyleSheet(
+        info.addWidget(
+            self.create_value(
+                "412 GB",
+                Theme.Colors.PRIMARY,
+            )
+        )
+
+        info.addStretch()
+
+        row.addLayout(info)
+
+        self.content_layout.addLayout(row)
+
+        #
+        # Divider
+        #
+
+        line = QFrame()
+
+        line.setFrameShape(
+            QFrame.Shape.HLine
+        )
+
+        line.setStyleSheet(
+            """
+            color:#353535;
+            background:#353535;
+            """
+        )
+
+        self.content_layout.addSpacing(10)
+        self.content_layout.addWidget(line)
+        self.content_layout.addSpacing(8)
+
+        #
+        # Current Task
+        #
+
+        task_title = QLabel("Current Task")
+
+        task_title.setStyleSheet(
+            f"""
+            color:{Theme.Colors.TEXT_SECONDARY};
+            font-size:10pt;
+            """
+        )
+
+        task_value = QLabel(
+            "Compressing database backup..."
+        )
+
+        task_value.setWordWrap(True)
+
+        task_value.setStyleSheet(
             f"""
             color:{Theme.Colors.TEXT};
             font-size:11pt;
@@ -110,17 +195,7 @@ class ProgressCard(BaseCard):
             """
         )
 
-        grid.addWidget(files_title, 0, 0)
-        grid.addWidget(files_value, 1, 0)
+        self.content_layout.addWidget(task_title)
+        self.content_layout.addWidget(task_value)
 
-        grid.addWidget(speed_title, 0, 1)
-        grid.addWidget(speed_value, 1, 1)
-
-        grid.addWidget(remain_title, 2, 0)
-        grid.addWidget(remain_value, 3, 0)
-
-        grid.addWidget(copied_title, 2, 1)
-        grid.addWidget(copied_value, 3, 1)
-
-        self.content_layout.addLayout(grid)
         self.content_layout.addStretch()

@@ -3,7 +3,9 @@ from PySide6.QtWidgets import (
     QGridLayout,
 )
 
-from ui.v2.widgets.cards.metric_card import MetricCard
+from core.discovery.system_discovery import SystemDiscovery
+
+from ui.v2.widgets.cards.info_card import InfoCard
 from ui.v2.widgets.cards.last_backup_card import LastBackupCard
 from ui.v2.widgets.progress.progress_card import ProgressCard
 
@@ -13,6 +15,10 @@ class SummarySection(QWidget):
     def __init__(self):
 
         super().__init__()
+
+        self.system = SystemDiscovery()
+
+        self.system_info = self.system.discover()["data"]
 
         self.setup_ui()
 
@@ -24,18 +30,40 @@ class SummarySection(QWidget):
         layout.setVerticalSpacing(15)
 
         #
+        # Storage
+        #
+
+        total = float(
+            self.system_info["total_disk"].replace(" GB", "")
+        )
+
+        free = float(
+            self.system_info["free_disk"].replace(" GB", "")
+        )
+
+        used = round(total - free, 2)
+
+        percent = round((used / total) * 100)
+
+        #
         # First Row
         #
 
         layout.addWidget(
 
-            MetricCard(
+            InfoCard(
 
-                title="Customers",
+                title="Computer",
 
-                value="248",
+                lines=[
 
-                subtitle="Active installations",
+                    self.system_info["computer_name"],
+
+                    self.system_info["windows_version"],
+
+                    "Domain: (Coming Soon)",
+
+                ],
 
                 status="success",
 
@@ -49,13 +77,17 @@ class SummarySection(QWidget):
 
         layout.addWidget(
 
-            MetricCard(
+            InfoCard(
 
-                title="Today's Backups",
+                title="Database",
 
-                value="31",
+                lines=[
 
-                subtitle="Completed successfully",
+                    "SQL Server",
+
+                    "Connected",
+
+                ],
 
                 status="info",
 
@@ -69,13 +101,19 @@ class SummarySection(QWidget):
 
         layout.addWidget(
 
-            MetricCard(
+            InfoCard(
 
                 title="Storage",
 
-                value="1.82 TB",
+                lines=[
 
-                subtitle="Used",
+                    f"{used:.2f} GB Used",
+
+                    f"{total:.2f} GB Total",
+
+                    f"{percent}% Used",
+
+                ],
 
                 status="warning",
 

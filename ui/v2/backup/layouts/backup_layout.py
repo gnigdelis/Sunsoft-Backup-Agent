@@ -5,14 +5,14 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
 )
 
+from core.controllers.backup_controller import BackupController
+
 from ui.v2.styles.theme import Theme
 
 from ui.v2.backup.widgets.backup_toolbar import BackupToolbar
 from ui.v2.widgets.backup.progress_card import ProgressCard
 from ui.v2.widgets.backup.customer_card import CustomerCard
 from ui.v2.widgets.backup.statistics_card import StatisticsCard
-
-# Χρησιμοποίησε το υπάρχον LiveActivityCard του project
 from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
 
 
@@ -21,6 +21,8 @@ class BackupLayout(QWidget):
     def __init__(self):
 
         super().__init__()
+
+        self.backup_controller = BackupController()
 
         self.setup_ui()
 
@@ -41,11 +43,13 @@ class BackupLayout(QWidget):
         title.setFont(
             Theme.Typography.title()
         )
+
         title.setStyleSheet(
             f"color:{Theme.Colors.TEXT};"
         )
 
         self.status = QLabel("🟢 Ready")
+
         self.status.setStyleSheet(
             f"color:{Theme.Colors.SUCCESS}; font-size:11pt;"
         )
@@ -73,6 +77,7 @@ class BackupLayout(QWidget):
         #
 
         middle = QHBoxLayout()
+
         middle.setSpacing(20)
 
         middle.addWidget(
@@ -100,3 +105,15 @@ class BackupLayout(QWidget):
         root.addWidget(self.statistics_card)
 
         root.addStretch()
+
+        #
+        # Backup Events
+        #
+
+        self.backup_controller.progress_changed.connect(
+            self.progress_card.update_progress
+        )
+
+        self.backup_controller.finished.connect(
+            self.progress_card.reset
+        )
