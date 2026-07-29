@@ -10,11 +10,20 @@ class BackupService:
     """
 
     def __init__(self):
+
         self.runner = BackupRunner()
 
+    @property
+    def is_running(self):
+
+        return self.runner.thread is not None
+
     def start_backup(self):
-        if not self.runner.isRunning():
-            self.runner.start()
+
+        if self.is_running:
+            return
+
+        self.runner.start()
 
 
 backup_service = BackupService()

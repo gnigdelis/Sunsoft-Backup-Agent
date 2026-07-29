@@ -3,7 +3,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
 )
 
-from core.services.backup_service import backup_service
+from core.controllers.backup_controller import BackupController
 
 from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
 from ui.v2.widgets.actions.quick_actions_card import QuickActionsCard
@@ -16,10 +16,10 @@ class OperationsSection(QWidget):
         super().__init__()
 
         #
-        # Shared Backup Runner
+        # Controller
         #
 
-        self.backup_runner = backup_service.runner
+        self.controller = BackupController()
 
         self.setup_ui()
 
@@ -65,7 +65,7 @@ class OperationsSection(QWidget):
     def connect_signals(self):
 
         #
-        # Backup Button
+        # Buttons
         #
 
         self.quick_actions.backup_clicked.connect(
@@ -76,19 +76,19 @@ class OperationsSection(QWidget):
         # Logs
         #
 
-        self.backup_runner.log_info.connect(
+        self.controller.log_info.connect(
             self.on_info
         )
 
-        self.backup_runner.log_success.connect(
+        self.controller.log_success.connect(
             self.on_success
         )
 
-        self.backup_runner.log_error.connect(
+        self.controller.log_error.connect(
             self.on_error
         )
 
-        self.backup_runner.finished.connect(
+        self.controller.finished.connect(
             self.on_finished
         )
 
@@ -100,7 +100,7 @@ class OperationsSection(QWidget):
             "▶ Έναρξη Backup..."
         )
 
-        backup_service.start_backup()
+        self.controller.start_backup()
 
     def on_info(self, text):
 

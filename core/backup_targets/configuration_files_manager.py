@@ -7,15 +7,11 @@ from core.common.result import Result
 class ConfigurationFilesManager:
 
     CONFIGURATION_FILES = [
-
-        r"C:\Program Files (x86)\Sunsoft Ltd\ExternalConnectionWebApi\External.Connection.Web.Api\appsettings.production.json",
-
+        r"C:\Program Files (x86)\Sunsoft Ltd\ExternalConnectionWebApi\External.Connection.Web.Api\appsettings.json",
+        r"C:\Program Files (x86)\Sunsoft Ltd\ExternalTaxProvider\External.Tax.Provider\appsettings.production.json",
         r"C:\Program Files (x86)\Sunsoft Ltd\AmvrosiaWebService\Amvrosia.Web.Service\web.config",
-
         r"C:\Program Files (x86)\Sunsoft Ltd\WebPosReportClientApi\Web.Pos.Report.Client.Api\appsettings.json",
-
         r"C:\Program Files (x86)\Sunsoft Ltd\SnService\SnService.exe.config",
-
     ]
 
     def backup(self, destination_path):
@@ -41,7 +37,6 @@ class ConfigurationFilesManager:
                 source = Path(file_path)
 
                 if not source.exists():
-
                     not_found_files.append(file_path)
                     continue
 
@@ -67,9 +62,7 @@ class ConfigurationFilesManager:
                         destination,
                     )
 
-                    backed_up_files.append(
-                        file_path
-                    )
+                    backed_up_files.append(file_path)
 
                 except Exception as error:
 
@@ -88,6 +81,4 @@ class ConfigurationFilesManager:
 
         except Exception as error:
 
-            return Result.error(
-                str(error)
-            )
+            return Result.error(str(error))
