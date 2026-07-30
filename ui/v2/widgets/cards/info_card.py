@@ -1,8 +1,9 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QLabel, QFrame
+from PySide6.QtWidgets import QLabel, QFrame, QWidget, QHBoxLayout
 
 from ui.v2.styles.theme import Theme
 from ui.v2.widgets.cards.base_card import BaseCard
+from ui.v2.widgets.common.svg_icon import SvgIcon
 
 
 class InfoCard(BaseCard):
@@ -12,11 +13,12 @@ class InfoCard(BaseCard):
         title: str,
         lines: list[str],
         status: str = "info",
+        icon: str | None = None,
         minimum_height: int = 160,
     ):
 
         super().__init__(
-            title=title,
+            title="",
             minimum_height=minimum_height,
         )
 
@@ -44,6 +46,43 @@ class InfoCard(BaseCard):
         )
 
         self.content_layout.addWidget(bar)
+        self.content_layout.addSpacing(12)
+
+        #
+        # Header
+        #
+
+        header = QWidget()
+
+        header_layout = QHBoxLayout(header)
+        header_layout.setContentsMargins(0, 0, 0, 0)
+        header_layout.setSpacing(8)
+
+        if icon:
+
+            header_layout.addWidget(
+                SvgIcon(
+                    icon,
+                    size=22,
+                )
+            )
+
+        title_label = QLabel(title)
+        title_label.setFont(
+            Theme.Typography.heading()
+        )
+
+        title_label.setStyleSheet(
+            f"""
+            color:{Theme.Colors.TEXT};
+            font-weight:700;
+            """
+        )
+
+        header_layout.addWidget(title_label)
+        header_layout.addStretch()
+
+        self.content_layout.addWidget(header)
         self.content_layout.addSpacing(12)
 
         #
