@@ -19,10 +19,10 @@ class CircularProgress(QWidget):
         self.value = value
 
         #
-        # Νέο μέγεθος
+        # Smaller widget
         #
 
-        self.setFixedSize(130, 130)
+        self.setFixedSize(110, 110)
 
     def setValue(self, value):
 
@@ -33,21 +33,22 @@ class CircularProgress(QWidget):
     def paintEvent(self, event):
 
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        margin = 10
-        size = min(self.width(), self.height()) - margin * 2
+        margin = 8
+
+        size = min(self.width(), self.height()) - (margin * 2)
 
         rect_x = (self.width() - size) / 2
         rect_y = (self.height() - size) / 2
 
         #
-        # Background
+        # Background Ring
         #
 
         background_pen = QPen(
             QColor("#36393F"),
-            8,
+            7,
         )
 
         painter.setPen(background_pen)
@@ -62,15 +63,15 @@ class CircularProgress(QWidget):
         )
 
         #
-        # Progress
+        # Progress Ring
         #
 
         progress_pen = QPen(
             QColor(Theme.Colors.PRIMARY),
-            8,
+            7,
         )
 
-        progress_pen.setCapStyle(Qt.RoundCap)
+        progress_pen.setCapStyle(Qt.PenCapStyle.RoundCap)
 
         painter.setPen(progress_pen)
 
@@ -93,14 +94,14 @@ class CircularProgress(QWidget):
 
         font = QFont(
             "Segoe UI",
-            17,
-            QFont.Bold,
+            15,
+            QFont.Weight.Bold,
         )
 
         painter.setFont(font)
 
         painter.drawText(
             self.rect(),
-            Qt.AlignCenter,
+            Qt.AlignmentFlag.AlignCenter,
             f"{self.value}%",
         )

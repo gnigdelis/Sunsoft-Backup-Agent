@@ -26,8 +26,21 @@ class SummarySection(QWidget):
 
         layout = QGridLayout()
 
+        layout.setContentsMargins(0, 0, 0, 0)
+
         layout.setHorizontalSpacing(15)
         layout.setVerticalSpacing(15)
+
+        #
+        # Give better proportions
+        #
+
+        layout.setColumnStretch(0, 4)
+        layout.setColumnStretch(1, 4)
+        layout.setColumnStretch(2, 4)
+
+        layout.setRowStretch(0, 2)
+        layout.setRowStretch(1, 3)
 
         #
         # Storage
@@ -46,7 +59,7 @@ class SummarySection(QWidget):
         percent = round((used / total) * 100)
 
         #
-        # First Row
+        # FIRST ROW
         #
 
         layout.addWidget(
@@ -70,7 +83,6 @@ class SummarySection(QWidget):
             ),
 
             0,
-
             0,
 
         )
@@ -94,7 +106,6 @@ class SummarySection(QWidget):
             ),
 
             0,
-
             1,
 
         )
@@ -120,37 +131,36 @@ class SummarySection(QWidget):
             ),
 
             0,
-
             2,
 
         )
 
         #
-        # Second Row
+        # SECOND ROW
         #
 
+        last_backup = LastBackupCard()
+        progress = ProgressCard()
+
         layout.addWidget(
-
-            LastBackupCard(),
-
+            last_backup,
             1,
-
             0,
-
             1,
-
             2,
-
         )
 
         layout.addWidget(
-
-            ProgressCard(),
-
+            progress,
             1,
-
             2,
-
         )
+
+        #
+        # Make cards expand correctly
+        #
+
+        last_backup.setMinimumWidth(700)
+        progress.setMinimumWidth(430)
 
         self.setLayout(layout)

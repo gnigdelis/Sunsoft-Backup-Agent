@@ -1,95 +1,34 @@
-# SUNSOFT GUARDIAN ROADMAP
+# Sunsoft Backup Agent Roadmap
 
+## Phase 1 - Core Backup
+- [ ] SQL Backup
+- [ ] Registry Backup
+- [ ] ProgramData Backup
+- [ ] Configuration Files Backup
+- [ ] Printers Backup
+- [ ] Backup Manifest
 
-PHASE 1
+## Phase 2 - Restore
+- [ ] Restore Wizard
+- [ ] Selective Restore
+- [ ] Verify Before Restore
 
-TARGETS
+## Phase 3 - Cloud
+- [ ] Local Provider
+- [ ] pCloud Provider
+- [ ] Google Drive Provider
+- [ ] OneDrive Provider
 
+## Phase 4 - Enterprise
+- [ ] Scheduler
+- [ ] Incremental Backup
+- [ ] Differential Backup
+- [ ] Integrity Verification
+- [ ] Backup History
 
--------------------------------------
-
-System
-SQL
-ProgramData
-Printer
-Network
-Installed Applications
-Registry
-Task Scheduler
-Sunsoft Services
-
-
--------------------------------------
-
-PHASE 1.5
-
-STANDARDIZATION
-
-
--------------------------------------
-
-Common Modules
-Target Standardization
-
-
--------------------------------------
-
-PHASE 2
-
-CORE MODULES
-
-
--------------------------------------
-
-Health Check Manager
-Backup Planner
-Guardian Engine
-
-
--------------------------------------
-
-PHASE 3
-
-OUTPUT MODULES
-
-
--------------------------------------
-
-Compression Engine
-Manifest Manager
-Checksum Manager
-Logs Manager
-
-
--------------------------------------
-
-PHASE 4
-
-REPORTING
-
-
--------------------------------------
-
-Guardian Report
-Environment Health Score
-Backup Analysis
-
-
--------------------------------------
-
-PHASE 5
-
-UI
-
-
--------------------------------------
-
-Dashboard Integration
-Progress System
-
-
--------------------------------------
-
-PHASE 6
-
-Sunsoft Guardian v1.0
+## Phase 5 - Diagnostics
+- [ ] Environment Report
+- [ ] Installed Applications
+- [ ] Services
+- [ ] Printers
+- [ ] Network

@@ -17,7 +17,7 @@ from ui.widgets.sidebar_widget import (
     SidebarWidget,
 )
 
-from ui.pages.dashboard_page import (
+from ui.v2.pages.pages.dashboard_page import (
     DashboardPage,
 )
 

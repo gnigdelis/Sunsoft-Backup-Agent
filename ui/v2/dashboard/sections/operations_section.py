@@ -4,6 +4,8 @@ from PySide6.QtWidgets import (
 )
 
 from core.controllers.backup_controller import BackupController
+from core.services.maintenance_service import maintenance_service
+from core.database.database_context import database_context
 
 from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
 from ui.v2.widgets.actions.quick_actions_card import QuickActionsCard
@@ -14,10 +16,6 @@ class OperationsSection(QWidget):
     def __init__(self):
 
         super().__init__()
-
-        #
-        # Controller
-        #
 
         self.controller = BackupController()
 
@@ -38,15 +36,7 @@ class OperationsSection(QWidget):
 
         layout.setSpacing(15)
 
-        #
-        # Left
-        #
-
         self.live_activity = LiveActivityCard()
-
-        #
-        # Right
-        #
 
         self.quick_actions = QuickActionsCard()
 
@@ -65,7 +55,7 @@ class OperationsSection(QWidget):
     def connect_signals(self):
 
         #
-        # Buttons
+        # Backup
         #
 
         self.quick_actions.backup_clicked.connect(
@@ -73,7 +63,15 @@ class OperationsSection(QWidget):
         )
 
         #
-        # Logs
+        # Delete MyDATA Response
+        #
+
+        self.quick_actions.delete_mydata_clicked.connect(
+            self.start_database_maintenance
+        )
+
+        #
+        # Backup Logs
         #
 
         self.controller.log_info.connect(
@@ -97,10 +95,91 @@ class OperationsSection(QWidget):
         self.live_activity.clear_logs()
 
         self.live_activity.add_log(
-            "▶ Έναρξη Backup..."
+            "Backup Started..."
         )
 
         self.controller.start_backup()
+
+    def start_database_maintenance(self):
+
+        self.live_activity.clear_logs()
+
+        #
+        # DATABASE CHECK
+        #
+
+        if not database_context.is_selected():
+
+            self.live_activity.add_log(
+                "✖ No database selected."
+            )
+
+            self.live_activity.add_log(
+                "Please select a database from the Dashboard."
+            )
+
+            return
+
+        #
+        # ACTIVE DATABASE
+        #
+
+        database = database_context.active()
+
+        database_name = (
+            database.get("name")
+            if database
+            else "Unknown"
+        )
+
+        self.live_activity.add_log(
+            f"Delete MyDATA Response Started - {database_name}"
+        )
+
+        #
+        # MAINTENANCE
+        #
+
+        try:
+
+            results = maintenance_service.run()
+
+            for result in results:
+
+                if result["success"]:
+
+                    self.live_activity.add_log(
+                        f"✓ {result['step']}"
+                    )
+
+                    if result["affected_rows"]:
+
+                        self.live_activity.add_log(
+                            f"Affected Rows: "
+                            f"{result['affected_rows']}"
+                        )
+
+                else:
+
+                    self.live_activity.add_log(
+                        f"✖ {result['step']}"
+                    )
+
+                    self.live_activity.add_log(
+                        result["message"]
+                    )
+
+                    return
+
+            self.live_activity.add_log(
+                "✓ Database Maintenance Completed"
+            )
+
+        except Exception as ex:
+
+            self.live_activity.add_log(
+                f"✖ {ex}"
+            )
 
     def on_info(self, text):
 
@@ -111,7 +190,7 @@ class OperationsSection(QWidget):
     def on_success(self, text):
 
         self.live_activity.add_log(
-            f"✔ {text}"
+            f"✓ {text}"
         )
 
     def on_error(self, text):
@@ -125,11 +204,11 @@ class OperationsSection(QWidget):
         if result.get("success", False):
 
             self.live_activity.add_log(
-                "✔ Το Backup ολοκληρώθηκε."
+                "✓ Backup Completed."
             )
 
         else:
 
             self.live_activity.add_log(
-                "✖ Το Backup απέτυχε."
+                "✖ Backup Failed."
             )

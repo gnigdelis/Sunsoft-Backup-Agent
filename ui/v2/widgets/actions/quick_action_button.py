@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
 )
 
 from ui.v2.styles.theme import Theme
+from ui.v2.widgets.common.svg_icon import SvgIcon
 
 
 class QuickActionButton(QFrame):
@@ -23,46 +24,64 @@ class QuickActionButton(QFrame):
         layout.setContentsMargins(12, 8, 12, 8)
         layout.setSpacing(12)
 
-        self.icon = QLabel(icon)
-        self.icon.setAlignment(Qt.AlignCenter)
-        self.icon.setFixedSize(34, 34)
+        #
+        # Icon Container
+        #
 
-        self.icon.setStyleSheet(f"""
-            QLabel {{
-                background: {color};
-                color: white;
-                border-radius: 8px;
-                font-size: 14pt;
-                font-weight: bold;
+        self.icon_container = QFrame()
+        self.icon_container.setFixedSize(40, 40)
+
+        icon_layout = QHBoxLayout(self.icon_container)
+        icon_layout.setContentsMargins(8, 8, 8, 8)
+        icon_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.icon = SvgIcon(
+            f"actions/{icon}",
+            size=24,
+        )
+
+        icon_layout.addWidget(self.icon)
+
+        self.icon_container.setStyleSheet(f"""
+            QFrame {{
+                background:{color};
+                border-radius:8px;
             }}
         """)
+
+        #
+        # Title
+        #
 
         self.title = QLabel(text)
 
         self.title.setStyleSheet(f"""
             QLabel {{
-                color: {Theme.Colors.TEXT};
-                font-size: 11pt;
-                font-weight: 600;
-                background: transparent;
+                color:{Theme.Colors.TEXT};
+                font-size:11pt;
+                font-weight:600;
+                background:transparent;
             }}
         """)
 
-        layout.addWidget(self.icon)
+        layout.addWidget(self.icon_container)
         layout.addWidget(self.title)
         layout.addStretch()
 
         self.setStyleSheet(f"""
             QFrame#QuickActionButton {{
-                background: transparent;
-                border-radius: 12px;
+                background:transparent;
+                border-radius:12px;
             }}
 
             QFrame#QuickActionButton:hover {{
-                background: {Theme.Colors.SURFACE_LIGHT};
+                background:{Theme.Colors.SURFACE_LIGHT};
             }}
         """)
 
     def mousePressEvent(self, event):
-        self.clicked.emit()
+
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.clicked.emit()
+
         super().mousePressEvent(event)

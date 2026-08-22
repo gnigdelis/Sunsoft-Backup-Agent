@@ -1,51 +1,109 @@
-from core.cleanup_manager import (
-    CleanupManager,
-)
+from __future__ import annotations
 
-from core.paths import (
-    Paths,
-)
+from enum import Enum, auto
+from typing import Callable
+
+
+class BackupState(Enum):
+    IDLE = auto()
+    RUNNING = auto()
+    COMPLETED = auto()
+    FAILED = auto()
 
 
 class BackupEngine:
+    """
+    Main Backup Engine.
 
-    def execute(self):
+    Είναι υπεύθυνος μόνο για τον συντονισμό της διαδικασίας.
+    Δεν κάνει ο ίδιος:
+        - αντιγραφή αρχείων
+        - backup database
+        - συμπίεση
+        - upload
+
+    Αυτά θα τα αναλάβουν άλλα modules.
+    """
+
+    def __init__(self):
+
+        self.state = BackupState.IDLE
+
+        self.progress = 0
+
+        self.current_step = ""
+
+        self.on_progress: Callable[[int, str], None] | None = None
+
+    # --------------------------------------------------
+
+    def run(self):
+
+        self.state = BackupState.RUNNING
 
         try:
 
-            #
-            # CLEAN TEMP
-            #
+            self._update(5, "Preparing backup...")
 
-            CleanupManager.cleanup_temp_folder()
+            self.validate()
 
-            #
-            # CREATE TEMP FOLDERS
-            #
+            self._update(20, "Collecting files...")
 
-            Paths.get_files_folder()
-            Paths.get_sql_folder()
-            Paths.get_registry_folder()
-            Paths.get_programdata_folder()
+            self.collect_files()
 
-            return {
+            self._update(45, "Backing up database...")
 
-                "success": True,
+            self.backup_database()
 
-                "message":
+            self._update(70, "Compressing backup...")
 
-                    "Backup Engine initialized successfully.",
+            self.compress()
 
-            }
+            self._update(90, "Finalizing...")
 
-        except Exception as error:
+            self.finish()
 
-            return {
+            self.state = BackupState.COMPLETED
 
-                "success": False,
+            self._update(100, "Backup completed.")
 
-                "message":
+        except Exception:
 
-                    str(error),
+            self.state = BackupState.FAILED
 
-            }
+            raise
+
+    # --------------------------------------------------
+
+    def validate(self):
+        pass
+
+    # --------------------------------------------------
+
+    def collect_files(self):
+        pass
+
+    # --------------------------------------------------
+
+    def backup_database(self):
+        pass
+
+    # --------------------------------------------------
+
+    def compress(self):
+        pass
+
+    # --------------------------------------------------
+
+    def finish(self):
+        pass
+
+    # --------------------------------------------------
+
+    def _update(self, progress: int, message: str):
+
+        self.progress = progress
+        self.current_step = message
+
+        if self.on_progress:
+            self.on_progress(progress, message)

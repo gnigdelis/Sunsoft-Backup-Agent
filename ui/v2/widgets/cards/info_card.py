@@ -1,5 +1,11 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QLabel, QFrame, QWidget, QHBoxLayout
+from PySide6.QtWidgets import (
+    QLabel,
+    QFrame,
+    QWidget,
+    QHBoxLayout,
+    QSizePolicy,
+)
 
 from ui.v2.styles.theme import Theme
 from ui.v2.widgets.cards.base_card import BaseCard
@@ -14,12 +20,17 @@ class InfoCard(BaseCard):
         lines: list[str],
         status: str = "info",
         icon: str | None = None,
-        minimum_height: int = 160,
+        minimum_height: int = 205,
     ):
 
         super().__init__(
             title="",
             minimum_height=minimum_height,
+        )
+
+        self.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding,
         )
 
         colors = {
@@ -29,14 +40,19 @@ class InfoCard(BaseCard):
             "info": Theme.Colors.INFO,
         }
 
-        color = colors.get(status, Theme.Colors.INFO)
+        color = colors.get(
+            status,
+            Theme.Colors.INFO,
+        )
 
         #
-        # Status Bar
+        # STATUS BAR
         #
 
         bar = QFrame()
+
         bar.setFixedHeight(4)
+
         bar.setStyleSheet(
             f"""
             background:{color};
@@ -46,28 +62,38 @@ class InfoCard(BaseCard):
         )
 
         self.content_layout.addWidget(bar)
-        self.content_layout.addSpacing(12)
+        self.content_layout.addSpacing(16)
 
         #
-        # Header
+        # HEADER
         #
 
         header = QWidget()
 
         header_layout = QHBoxLayout(header)
-        header_layout.setContentsMargins(0, 0, 0, 0)
-        header_layout.setSpacing(8)
+
+        header_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        header_layout.setSpacing(10)
 
         if icon:
 
             header_layout.addWidget(
+
                 SvgIcon(
                     icon,
                     size=22,
                 )
+
             )
 
         title_label = QLabel(title)
+
         title_label.setFont(
             Theme.Typography.heading()
         )
@@ -83,15 +109,24 @@ class InfoCard(BaseCard):
         header_layout.addStretch()
 
         self.content_layout.addWidget(header)
-        self.content_layout.addSpacing(12)
+        self.content_layout.addSpacing(14)
 
         #
-        # Information
+        # INFORMATION
         #
 
         for index, text in enumerate(lines):
 
             label = QLabel(text)
+
+            label.setWordWrap(False)
+
+            label.setAlignment(
+
+                Qt.AlignmentFlag.AlignLeft
+                | Qt.AlignmentFlag.AlignVCenter
+
+            )
 
             if index == 0:
 
@@ -118,11 +153,7 @@ class InfoCard(BaseCard):
                     """
                 )
 
-            label.setAlignment(
-                Qt.AlignmentFlag.AlignLeft
-            )
-
             self.content_layout.addWidget(label)
-            self.content_layout.addSpacing(4)
+            self.content_layout.addSpacing(8)
 
         self.content_layout.addStretch()

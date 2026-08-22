@@ -1,16 +1,15 @@
 from PySide6.QtCore import Qt
-
 from PySide6.QtWidgets import (
     QLabel,
-    QHBoxLayout,
-    QVBoxLayout,
-    QWidget,
     QFrame,
+    QVBoxLayout,
+    QHBoxLayout,
+    QProgressBar,
+    QWidget,
 )
 
 from ui.v2.styles.theme import Theme
 from ui.v2.widgets.cards.base_card import BaseCard
-from ui.v2.widgets.progress.circular_progress import CircularProgress
 
 
 class ProgressCard(BaseCard):
@@ -19,153 +18,189 @@ class ProgressCard(BaseCard):
 
         super().__init__(
             title="Backup Progress",
-            minimum_height=220,
+            minimum_height=250,
         )
 
         self.build()
 
-    def create_title(self, text):
+    #
+    # Helpers
+    #
 
-        label = QLabel(text)
+    def create_caption(self, text):
 
-        label.setStyleSheet(
+        lbl = QLabel(text)
+
+        lbl.setStyleSheet(
             f"""
             color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:10pt;
+            font-size:9pt;
             """
         )
 
-        return label
+        return lbl
 
     def create_value(self, text, color=None):
 
-        label = QLabel(text)
+        lbl = QLabel(text)
 
-        label.setStyleSheet(
+        lbl.setAlignment(
+            Qt.AlignmentFlag.AlignRight |
+            Qt.AlignmentFlag.AlignVCenter
+        )
+
+        lbl.setStyleSheet(
             f"""
             color:{color or Theme.Colors.TEXT};
-            font-size:12pt;
+            font-size:11pt;
             font-weight:600;
             """
         )
 
-        return label
+        return lbl
 
-    def build(self):
-
-        self.content_layout.setAlignment(
-            Qt.AlignmentFlag.AlignTop
-        )
-
-        #
-        # Main Horizontal Layout
-        #
+    def stat_row(self, title, value, color=None):
 
         row = QHBoxLayout()
 
-        row.setSpacing(25)
-
-        #
-        # Circular Progress
-        #
-
-        progress = CircularProgress(68)
+        row.setContentsMargins(0, 0, 0, 0)
 
         row.addWidget(
-            progress,
-            alignment=Qt.AlignmentFlag.AlignCenter,
+            self.create_caption(title)
         )
 
-        #
-        # Right Panel
-        #
+        row.addStretch()
 
-        info = QVBoxLayout()
-
-        info.setSpacing(8)
-
-        #
-        # Files
-        #
-
-        info.addWidget(
-            self.create_title("Files")
-        )
-
-        info.addWidget(
-            self.create_value("184,392 / 265,100")
-        )
-
-        #
-        # Speed
-        #
-
-        info.addSpacing(6)
-
-        info.addWidget(
-            self.create_title("Speed")
-        )
-
-        info.addWidget(
-            self.create_value("126 MB/s")
-        )
-
-        #
-        # Remaining
-        #
-
-        info.addSpacing(6)
-
-        info.addWidget(
-            self.create_title("Remaining")
-        )
-
-        info.addWidget(
-            self.create_value("02:14")
-        )
-
-        #
-        # Copied
-        #
-
-        info.addSpacing(6)
-
-        info.addWidget(
-            self.create_title("Copied")
-        )
-
-        info.addWidget(
+        row.addWidget(
             self.create_value(
-                "412 GB",
-                Theme.Colors.PRIMARY,
+                value,
+                color,
             )
         )
 
-        info.addStretch()
+        return row
 
-        row.addLayout(info)
+    #
+    # UI
+    #
 
-        self.content_layout.addLayout(row)
+    def build(self):
+
+        self.content_layout.setSpacing(10)
+
+        #
+        # Percentage
+        #
+
+        percent = QLabel("68%")
+
+        percent.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        percent.setStyleSheet(
+            f"""
+            color:{Theme.Colors.TEXT};
+            font-size:28pt;
+            font-weight:700;
+            """
+        )
+
+        self.content_layout.addWidget(percent)
+
+        #
+        # Progress Bar
+        #
+
+        progress = QProgressBar()
+
+        progress.setRange(0, 100)
+        progress.setValue(68)
+        progress.setTextVisible(False)
+        progress.setFixedHeight(10)
+
+        progress.setStyleSheet(
+            f"""
+            QProgressBar
+            {{
+                background:{Theme.Colors.BORDER};
+                border:none;
+                border-radius:5px;
+            }}
+
+            QProgressBar::chunk
+            {{
+                background:{Theme.Colors.PRIMARY};
+                border-radius:5px;
+            }}
+            """
+        )
+
+        self.content_layout.addWidget(progress)
+
+        self.content_layout.addSpacing(8)
+
+        #
+        # Statistics
+        #
+
+        stats = QWidget()
+
+        stats_layout = QVBoxLayout(stats)
+
+        stats_layout.setContentsMargins(0, 0, 0, 0)
+        stats_layout.setSpacing(8)
+
+        stats_layout.addLayout(
+            self.stat_row(
+                "Files",
+                "184,392 / 265,100",
+            )
+        )
+
+        stats_layout.addLayout(
+            self.stat_row(
+                "Speed",
+                "126 MB/s",
+            )
+        )
+
+        stats_layout.addLayout(
+            self.stat_row(
+                "Remaining",
+                "02:14",
+            )
+        )
+
+        stats_layout.addLayout(
+            self.stat_row(
+                "Copied",
+                "412 GB",
+                Theme.Colors.SUCCESS,
+            )
+        )
+
+        self.content_layout.addWidget(stats)
 
         #
         # Divider
         #
 
-        line = QFrame()
+        divider = QFrame()
 
-        line.setFrameShape(
+        divider.setFrameShape(
             QFrame.Shape.HLine
         )
 
-        line.setStyleSheet(
-            """
-            color:#353535;
-            background:#353535;
+        divider.setStyleSheet(
+            f"""
+            color:{Theme.Colors.BORDER};
+            background:{Theme.Colors.BORDER};
             """
         )
 
-        self.content_layout.addSpacing(10)
-        self.content_layout.addWidget(line)
+        self.content_layout.addSpacing(8)
+        self.content_layout.addWidget(divider)
         self.content_layout.addSpacing(8)
 
         #
@@ -177,7 +212,7 @@ class ProgressCard(BaseCard):
         task_title.setStyleSheet(
             f"""
             color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:10pt;
+            font-size:9pt;
             """
         )
 

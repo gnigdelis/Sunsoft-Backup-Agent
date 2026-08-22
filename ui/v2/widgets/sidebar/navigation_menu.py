@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
-from ui.v2.styles.theme import Theme
 from ui.v2.widgets.sidebar.navigation_item import NavigationItem
 
 
@@ -8,6 +7,8 @@ class NavigationMenu(QWidget):
 
     def __init__(self):
         super().__init__()
+
+        self.items = []
 
         self.setup_ui()
 
@@ -18,67 +19,65 @@ class NavigationMenu(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(10)
 
-        self.dashboard = NavigationItem(
-            "Dashboard",
-            "🏠",
-            "#e53935",
-            True,
-        )
-
-        self.backup = NavigationItem(
-            "Backup",
-            "💾",
-            "#8e24aa",
-        )
-
-        self.restore = NavigationItem(
-            "Restore",
-            "♻",
-            "#43a047",
-        )
-
-        self.history = NavigationItem(
-            "History",
-            "🕒",
-            "#1e88e5",
-        )
-
-        self.logs = NavigationItem(
-            "Logs",
-            "📄",
-            "#757575",
-        )
-
-        self.settings = NavigationItem(
-            "Settings",
-            "⚙",
-            "#fb8c00",
-        )
-
-        layout.addWidget(self.dashboard)
-        layout.addWidget(self.backup)
-        layout.addWidget(self.restore)
-        layout.addWidget(self.history)
-        layout.addWidget(self.logs)
-        layout.addWidget(self.settings)
-
-        layout.addStretch()
-
-        self.items = [
-            self.dashboard,
-            self.backup,
-            self.restore,
-            self.history,
-            self.logs,
-            self.settings,
+        menu_items = [
+            ("Dashboard", "dashboard.svg", "#e53935", True),
+            ("Backup", "backup.svg", "#8e24aa", False),
+            ("Restore", "restore.svg", "#43a047", False),
+            ("History", "history.svg", "#1e88e5", False),
+            ("Support", "support.svg", "#00acc1", False),
+            ("Logs", "logs.svg", "#757575", False),
+            ("Settings", "settings.svg", "#fb8c00", False),
+            (
+                "Delete - Rebuild - Shrink",
+                "settings.svg",
+                "#8e24aa",
+                False,
+            ),
         ]
 
-        for item in self.items:
+        for text, icon, color, active in menu_items:
+
+            item = NavigationItem(
+                text=text,
+                icon=icon,
+                color=color,
+                active=active,
+            )
+
             item.clicked.connect(
                 lambda current=item: self.set_active(current)
             )
 
+            layout.addWidget(item)
+
+            self.items.append(item)
+
+            #
+            # Create clean attribute names.
+            #
+
+            if text == "Delete - Rebuild - Shrink":
+
+                setattr(
+                    self,
+                    "database_maintenance",
+                    item,
+                )
+
+            else:
+
+                setattr(
+                    self,
+                    text.lower().replace(" ", "_"),
+                    item,
+                )
+
+        layout.addStretch()
+
     def set_active(self, current):
 
         for item in self.items:
-            item.setActive(item == current)
+
+            item.setActive(
+                item is current
+            )

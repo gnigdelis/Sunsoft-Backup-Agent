@@ -1,7 +1,9 @@
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget,
     QLabel,
     QHBoxLayout,
+    QSizePolicy,
 )
 
 from ui.styles.theme import (
@@ -11,6 +13,8 @@ from ui.styles.theme import (
 
 
 class InfoRowWidget(QWidget):
+
+    ROW_HEIGHT = 32
 
     def __init__(
         self,
@@ -28,86 +32,85 @@ class InfoRowWidget(QWidget):
 
     def setup_ui(self):
 
-        #
-        # MAIN LAYOUT
-        #
+        self.setMinimumHeight(self.ROW_HEIGHT)
+        self.setMaximumHeight(self.ROW_HEIGHT)
 
-        layout = QHBoxLayout()
+        layout = QHBoxLayout(self)
 
         layout.setContentsMargins(
-            5,
-            5,
-            5,
-            5,
+            0,
+            2,
+            0,
+            2,
         )
 
-        layout.setSpacing(
-            15
-        )
+        layout.setSpacing(12)
 
         #
         # TITLE
         #
 
-        self.title_label = QLabel(
-            self.title
+        self.title_label = QLabel(self.title)
+
+        self.title_label.setMinimumWidth(150)
+        self.title_label.setAlignment(
+            Qt.AlignmentFlag.AlignLeft |
+            Qt.AlignmentFlag.AlignVCenter
+        )
+
+        self.title_label.setSizePolicy(
+            QSizePolicy.Policy.Fixed,
+            QSizePolicy.Policy.Preferred
         )
 
         #
         # VALUE
         #
 
-        self.value_label = QLabel(
-            self.value
+        self.value_label = QLabel(self.value)
+
+        self.value_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight |
+            Qt.AlignmentFlag.AlignVCenter
         )
 
-        #
-        # ADD LABELS
-        #
-
-        layout.addWidget(
-            self.title_label,
-            2,
+        self.value_label.setTextInteractionFlags(
+            Qt.TextInteractionFlag.TextSelectableByMouse
         )
 
-        layout.addWidget(
-            self.value_label,
-            1,
+        self.value_label.setWordWrap(False)
+
+        self.value_label.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Preferred
         )
 
+        self.value_label.setToolTip(self.value)
+
         #
-        # SET LAYOUT
+        # ADD
         #
 
-        self.setLayout(
-            layout
-        )
+        layout.addWidget(self.title_label)
+        layout.addWidget(self.value_label)
 
     def setup_styles(self):
 
         self.title_label.setStyleSheet(
 
             f"""
-
             color: {WHITE_COLOR};
-
             font-size: 10pt;
-            font-weight: bold;
-
+            font-weight: 600;
             """
-
         )
 
         self.value_label.setStyleSheet(
 
             f"""
-
             color: {SECONDARY_TEXT_COLOR};
-
             font-size: 10pt;
-
             """
-
         )
 
     def set_value(
@@ -117,6 +120,5 @@ class InfoRowWidget(QWidget):
 
         self.value = value
 
-        self.value_label.setText(
-            value
-        )
+        self.value_label.setText(value)
+        self.value_label.setToolTip(value)

@@ -1,4 +1,5 @@
 from PySide6.QtGui import QIcon
+
 from PySide6.QtWidgets import (
     QWidget,
     QHBoxLayout,
@@ -13,10 +14,16 @@ from ui.v2.widgets.sidebar.sidebar import Sidebar
 
 from ui.v2.pages.dashboard_page import DashboardPage
 from ui.v2.pages.backup_page import BackupPage
-from ui.v2.pages.logs_page import LogsPage
-from ui.v2.pages.settings_page import SettingsPage
 from ui.v2.pages.restore_page import RestorePage
 from ui.v2.pages.history_page import HistoryPage
+from ui.v2.pages.logs_page import LogsPage
+from ui.v2.pages.support_page import SupportPage
+
+from ui.v2.pages.database_maintenance_page import (
+    DatabaseMaintenancePage,
+)
+
+from ui.v2.pages.settings_page import SettingsPage
 
 
 class MainWindow(QWidget):
@@ -26,28 +33,46 @@ class MainWindow(QWidget):
         super().__init__()
 
         self.setup_ui()
+
         self.setup_navigation()
 
     def setup_ui(self):
 
-        self.setWindowTitle("Sunsoft Support Agent v2.0")
+        self.setWindowTitle(
+            "Sunsoft Support Agent v2.0"
+        )
 
         try:
+
             self.setWindowIcon(
                 QIcon("assets/icons/app.ico")
             )
+
         except Exception:
+
             pass
 
-        self.resize(1700, 980)
-        self.setMinimumSize(1450, 900)
+        self.resize(
+            1700,
+            980,
+        )
 
-        self.setObjectName("MainWindow")
+        self.setMinimumSize(
+            1450,
+            900,
+        )
+
+        self.setObjectName(
+            "MainWindow"
+        )
+
         self.setStyleSheet(
             Theme.stylesheet()
         )
 
-        layout = QHBoxLayout(self)
+        layout = QHBoxLayout(
+            self
+        )
 
         layout.setContentsMargins(
             0,
@@ -56,10 +81,23 @@ class MainWindow(QWidget):
             0,
         )
 
-        layout.setSpacing(0)
+        layout.setSpacing(
+            0
+        )
+
+        #
+        # Sidebar
+        #
 
         self.sidebar = Sidebar()
-        self.sidebar.setFixedWidth(300)
+
+        self.sidebar.setFixedWidth(
+            300
+        )
+
+        #
+        # Page stack
+        #
 
         self.stack = QStackedWidget()
 
@@ -71,47 +109,85 @@ class MainWindow(QWidget):
         # Pages
         #
 
-        self.dashboard_page = DashboardPage()
+        self.dashboard_page = (
+            DashboardPage()
+        )
 
-        self.backup_page = BackupPage()
+        self.backup_page = (
+            BackupPage()
+        )
 
-        self.logs_page = LogsPage()
+        self.restore_page = (
+            RestorePage()
+        )
 
-        self.settings_page = SettingsPage()
+        self.history_page = (
+            HistoryPage()
+        )
 
-        self.restore_page = RestorePage()
+        self.logs_page = (
+            LogsPage()
+        )
 
-        self.history_page = HistoryPage()
+        self.support_page = (
+            SupportPage()
+        )
+
+        self.database_maintenance_page = (
+            DatabaseMaintenancePage()
+        )
+
+        self.settings_page = (
+            SettingsPage()
+        )
+
+        #
+        # Register pages
+        #
 
         self.navigation.register(
             "dashboard",
-            self.dashboard_page
+            self.dashboard_page,
         )
 
         self.navigation.register(
             "backup",
-            self.backup_page
-        )
-
-        self.navigation.register(
-            "logs",
-            self.logs_page
-        )
-
-        self.navigation.register(
-            "settings",
-            self.settings_page
+            self.backup_page,
         )
 
         self.navigation.register(
             "restore",
-            self.restore_page
+            self.restore_page,
         )
 
         self.navigation.register(
             "history",
-            self.history_page
+            self.history_page,
         )
+
+        self.navigation.register(
+            "logs",
+            self.logs_page,
+        )
+
+        self.navigation.register(
+            "support",
+            self.support_page,
+        )
+
+        self.navigation.register(
+            "database_maintenance",
+            self.database_maintenance_page,
+        )
+
+        self.navigation.register(
+            "settings",
+            self.settings_page,
+        )
+
+        #
+        # Main layout
+        #
 
         layout.addWidget(
             self.sidebar
@@ -124,28 +200,90 @@ class MainWindow(QWidget):
 
     def setup_navigation(self):
 
-        self.navigation.show("dashboard")
+        #
+        # Default page
+        #
+
+        self.navigation.show(
+            "dashboard"
+        )
+
+        #
+        # Dashboard
+        #
 
         self.sidebar.menu.dashboard.clicked.connect(
-            lambda: self.navigation.show("dashboard")
+            lambda: self.navigation.show(
+                "dashboard"
+            )
         )
+
+        #
+        # Backup
+        #
 
         self.sidebar.menu.backup.clicked.connect(
-            lambda: self.navigation.show("backup")
+            lambda: self.navigation.show(
+                "backup"
+            )
         )
+
+        #
+        # Restore
+        #
 
         self.sidebar.menu.restore.clicked.connect(
-            lambda: self.navigation.show("restore")
+            lambda: self.navigation.show(
+                "restore"
+            )
         )
+
+        #
+        # History
+        #
 
         self.sidebar.menu.history.clicked.connect(
-            lambda: self.navigation.show("history")
+            lambda: self.navigation.show(
+                "history"
+            )
         )
+
+        #
+        # Support
+        #
+
+        self.sidebar.menu.support.clicked.connect(
+            lambda: self.navigation.show(
+                "support"
+            )
+        )
+
+        #
+        # Logs
+        #
 
         self.sidebar.menu.logs.clicked.connect(
-            lambda: self.navigation.show("logs")
+            lambda: self.navigation.show(
+                "logs"
+            )
         )
 
+        #
+        # Delete / Rebuild / Shrink
+        #
+
+        self.sidebar.menu.database_maintenance.clicked.connect(
+            lambda: self.navigation.show(
+                "database_maintenance"
+            )
+        )
+
+        #
+        # Settings
+        #
+
         self.sidebar.menu.settings.clicked.connect(
-            lambda: self.navigation.show("settings")
+            lambda: self.navigation.show(
+                "settings"
+            )
         )
