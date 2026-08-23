@@ -16,7 +16,7 @@ from ui.v2.pages.dashboard_page import DashboardPage
 from ui.v2.pages.backup_page import BackupPage
 from ui.v2.pages.restore_page import RestorePage
 from ui.v2.pages.history_page import HistoryPage
-from ui.v2.pages.logs_page import LogsPage
+from ui.v2.pages.mydata.mydata_sent_page import MyDataSentPage
 from ui.v2.pages.support_page import SupportPage
 
 from ui.v2.pages.database_maintenance_page import (
@@ -125,8 +125,8 @@ class MainWindow(QWidget):
             HistoryPage()
         )
 
-        self.logs_page = (
-            LogsPage()
+        self.mydata_sent_page = (
+            MyDataSentPage()
         )
 
         self.support_page = (
@@ -166,8 +166,8 @@ class MainWindow(QWidget):
         )
 
         self.navigation.register(
-            "logs",
-            self.logs_page,
+            "mydata_sent",
+            self.mydata_sent_page,
         )
 
         self.navigation.register(
@@ -249,22 +249,22 @@ class MainWindow(QWidget):
         )
 
         #
+        # MyData Sent
+        #
+
+        self.sidebar.menu.mydata_sent.clicked.connect(
+            lambda: self.navigation.show(
+                "mydata_sent"
+            )
+        )
+
+        #
         # Support
         #
 
         self.sidebar.menu.support.clicked.connect(
             lambda: self.navigation.show(
                 "support"
-            )
-        )
-
-        #
-        # Logs
-        #
-
-        self.sidebar.menu.logs.clicked.connect(
-            lambda: self.navigation.show(
-                "logs"
             )
         )
 

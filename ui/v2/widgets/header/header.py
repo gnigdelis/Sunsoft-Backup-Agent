@@ -40,7 +40,7 @@ class Header(QWidget):
             0,
             0,
             0,
-            0
+            0,
         )
 
         layout.setSpacing(
@@ -129,7 +129,7 @@ class Header(QWidget):
         #
 
         settings = QPushButton(
-            "β™"
+            "⚙"
         )
 
         settings.setCursor(
@@ -148,7 +148,7 @@ class Header(QWidget):
                 color:white;
                 border:none;
                 border-radius:10px;
-                font-size:13pt;
+                font-size:16pt;
                 font-weight:bold;
             }}
 

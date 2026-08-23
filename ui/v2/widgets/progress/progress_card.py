@@ -23,26 +23,37 @@ class ProgressCard(BaseCard):
 
         self.build()
 
-    #
-    # Helpers
-    #
+    # =====================================================
+    # HELPERS
+    # =====================================================
 
-    def create_caption(self, text):
+    def create_caption(
+        self,
+        text,
+    ):
 
-        lbl = QLabel(text)
+        lbl = QLabel(
+            text
+        )
 
         lbl.setStyleSheet(
             f"""
             color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:9pt;
+            font-size:10pt;
             """
         )
 
         return lbl
 
-    def create_value(self, text, color=None):
+    def create_value(
+        self,
+        text,
+        color=None,
+    ):
 
-        lbl = QLabel(text)
+        lbl = QLabel(
+            text
+        )
 
         lbl.setAlignment(
             Qt.AlignmentFlag.AlignRight |
@@ -52,53 +63,75 @@ class ProgressCard(BaseCard):
         lbl.setStyleSheet(
             f"""
             color:{color or Theme.Colors.TEXT};
-            font-size:11pt;
+            font-size:10pt;
             font-weight:600;
             """
         )
 
         return lbl
 
-    def stat_row(self, title, value, color=None):
+    def stat_row(
+        self,
+        title,
+        value,
+        color=None,
+    ):
 
         row = QHBoxLayout()
 
-        row.setContentsMargins(0, 0, 0, 0)
+        row.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        row.setSpacing(
+            10
+        )
 
         row.addWidget(
-            self.create_caption(title)
+            self.create_caption(
+                title
+            )
         )
 
         row.addStretch()
 
-        row.addWidget(
-            self.create_value(
-                value,
-                color,
-            )
+        value_label = self.create_value(
+            value,
+            color,
         )
 
-        return row
+        row.addWidget(
+            value_label
+        )
 
-    #
+        return row, value_label
+
+    # =====================================================
     # UI
-    #
+    # =====================================================
 
     def build(self):
 
-        self.content_layout.setSpacing(10)
+        self.content_layout.setSpacing(
+            8
+        )
 
         #
         # Percentage
         #
 
-        percent = QLabel("68%")
+        self.percent = QLabel(
+            "0%"
+        )
 
-        percent.setAlignment(
+        self.percent.setAlignment(
             Qt.AlignmentFlag.AlignCenter
         )
 
-        percent.setStyleSheet(
+        self.percent.setStyleSheet(
             f"""
             color:{Theme.Colors.TEXT};
             font-size:28pt;
@@ -106,20 +139,34 @@ class ProgressCard(BaseCard):
             """
         )
 
-        self.content_layout.addWidget(percent)
+        self.content_layout.addWidget(
+            self.percent
+        )
 
         #
         # Progress Bar
         #
 
-        progress = QProgressBar()
+        self.progress = QProgressBar()
 
-        progress.setRange(0, 100)
-        progress.setValue(68)
-        progress.setTextVisible(False)
-        progress.setFixedHeight(10)
+        self.progress.setRange(
+            0,
+            100,
+        )
 
-        progress.setStyleSheet(
+        self.progress.setValue(
+            0
+        )
+
+        self.progress.setTextVisible(
+            False
+        )
+
+        self.progress.setFixedHeight(
+            10
+        )
+
+        self.progress.setStyleSheet(
             f"""
             QProgressBar
             {{
@@ -136,9 +183,9 @@ class ProgressCard(BaseCard):
             """
         )
 
-        self.content_layout.addWidget(progress)
-
-        self.content_layout.addSpacing(8)
+        self.content_layout.addWidget(
+            self.progress
+        )
 
         #
         # Statistics
@@ -146,41 +193,69 @@ class ProgressCard(BaseCard):
 
         stats = QWidget()
 
-        stats_layout = QVBoxLayout(stats)
+        stats_layout = QVBoxLayout(
+            stats
+        )
 
-        stats_layout.setContentsMargins(0, 0, 0, 0)
-        stats_layout.setSpacing(8)
+        stats_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
 
-        stats_layout.addLayout(
+        stats_layout.setSpacing(
+            5
+        )
+
+        self.files_row, self.files_value = (
             self.stat_row(
                 "Files",
-                "184,392 / 265,100",
+                "0 / 0",
             )
         )
 
-        stats_layout.addLayout(
+        self.speed_row, self.speed_value = (
             self.stat_row(
                 "Speed",
-                "126 MB/s",
+                "0 MB/s",
             )
         )
 
-        stats_layout.addLayout(
+        self.remaining_row, self.remaining_value = (
             self.stat_row(
                 "Remaining",
-                "02:14",
+                "--:--",
             )
         )
 
-        stats_layout.addLayout(
+        self.copied_row, self.copied_value = (
             self.stat_row(
                 "Copied",
-                "412 GB",
+                "0 MB",
                 Theme.Colors.SUCCESS,
             )
         )
 
-        self.content_layout.addWidget(stats)
+        stats_layout.addLayout(
+            self.files_row
+        )
+
+        stats_layout.addLayout(
+            self.speed_row
+        )
+
+        stats_layout.addLayout(
+            self.remaining_row
+        )
+
+        stats_layout.addLayout(
+            self.copied_row
+        )
+
+        self.content_layout.addWidget(
+            stats
+        )
 
         #
         # Divider
@@ -199,30 +274,34 @@ class ProgressCard(BaseCard):
             """
         )
 
-        self.content_layout.addSpacing(8)
-        self.content_layout.addWidget(divider)
-        self.content_layout.addSpacing(8)
+        self.content_layout.addWidget(
+            divider
+        )
 
         #
         # Current Task
         #
 
-        task_title = QLabel("Current Task")
+        self.task_title = QLabel(
+            "Current Task"
+        )
 
-        task_title.setStyleSheet(
+        self.task_title.setStyleSheet(
             f"""
             color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:9pt;
+            font-size:10pt;
             """
         )
 
-        task_value = QLabel(
-            "Compressing database backup..."
+        self.task_value = QLabel(
+            "Waiting..."
         )
 
-        task_value.setWordWrap(True)
+        self.task_value.setWordWrap(
+            True
+        )
 
-        task_value.setStyleSheet(
+        self.task_value.setStyleSheet(
             f"""
             color:{Theme.Colors.TEXT};
             font-size:11pt;
@@ -230,7 +309,103 @@ class ProgressCard(BaseCard):
             """
         )
 
-        self.content_layout.addWidget(task_title)
-        self.content_layout.addWidget(task_value)
+        self.content_layout.addWidget(
+            self.task_title
+        )
+
+        self.content_layout.addWidget(
+            self.task_value
+        )
 
         self.content_layout.addStretch()
+
+    # =====================================================
+    # LIVE PROGRESS
+    # =====================================================
+
+    def update_progress(
+        self,
+        percentage,
+        current_step,
+        total_steps,
+        task,
+    ):
+
+        self.percent.setText(
+            f"{percentage}%"
+        )
+
+        self.progress.setValue(
+            percentage
+        )
+
+        self.files_value.setText(
+            f"Step {current_step} / {total_steps}"
+        )
+
+        self.task_value.setText(
+            task
+        )
+
+    # =====================================================
+    # RESET
+    # =====================================================
+
+    def reset(self):
+
+        self.percent.setText(
+            "0%"
+        )
+
+        self.progress.setValue(
+            0
+        )
+
+        self.files_value.setText(
+            "0 / 0"
+        )
+
+        self.speed_value.setText(
+            "0 MB/s"
+        )
+
+        self.remaining_value.setText(
+            "--:--"
+        )
+
+        self.copied_value.setText(
+            "0 MB"
+        )
+
+        self.task_value.setText(
+            "Waiting..."
+        )
+
+    # =====================================================
+    # FINISH
+    # =====================================================
+
+    def finish(
+        self,
+        success=True,
+    ):
+
+        if success:
+
+            self.percent.setText(
+                "100%"
+            )
+
+            self.progress.setValue(
+                100
+            )
+
+            self.task_value.setText(
+                "Backup Completed."
+            )
+
+        else:
+
+            self.task_value.setText(
+                "Backup Failed."
+            )

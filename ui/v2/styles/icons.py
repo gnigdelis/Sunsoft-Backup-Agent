@@ -1,4 +1,4 @@
-icons.py"""
+﻿"""
 Centralized SVG icon definitions.
 
 Never hardcode icon paths in the UI.

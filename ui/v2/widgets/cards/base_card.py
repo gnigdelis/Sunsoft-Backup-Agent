@@ -17,6 +17,7 @@ class BaseCard(QFrame):
         minimum_height: int = 180,
         icon: str = "",
     ):
+
         super().__init__()
 
         self.title = title
@@ -46,50 +47,101 @@ class BaseCard(QFrame):
         )
 
         self.main_layout = QVBoxLayout(self)
+
         self.main_layout.setContentsMargins(
             Theme.Spacing.MD,
             Theme.Spacing.MD,
             Theme.Spacing.MD,
             Theme.Spacing.MD,
         )
-        self.main_layout.setSpacing(Theme.Spacing.SM)
+
+        self.main_layout.setSpacing(
+            Theme.Spacing.SM
+        )
 
         #
-        # Header
+        # HEADER
         #
 
         header = QHBoxLayout()
 
         if self.icon:
-            self.icon_label = QLabel(self.icon)
-            self.icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.icon_label.setFixedSize(40, 40)
-            header.addWidget(self.icon_label)
-            header.addSpacing(Theme.Spacing.SM)
 
-        self.title_label = QLabel(self.title)
-        self.title_label.setFont(Theme.Typography.heading())
-        self.title_label.setStyleSheet(
-            f"color: {Theme.Colors.TEXT};"
+            self.icon_label = QLabel(
+                self.icon
+            )
+
+            self.icon_label.setAlignment(
+                Qt.AlignmentFlag.AlignCenter
+            )
+
+            self.icon_label.setFixedSize(
+                40,
+                40,
+            )
+
+            header.addWidget(
+                self.icon_label
+            )
+
+            header.addSpacing(
+                Theme.Spacing.SM
+            )
+
+        self.title_label = QLabel(
+            self.title
         )
 
-        header.addWidget(self.title_label)
+        self.title_label.setFont(
+            Theme.Typography.heading()
+        )
+
+        self.title_label.setStyleSheet(
+            f"""
+            color: {Theme.Colors.TEXT};
+            """
+        )
+
+        header.addWidget(
+            self.title_label
+        )
+
         header.addStretch()
 
-        self.main_layout.addLayout(header)
+        self.main_layout.addLayout(
+            header
+        )
 
         #
-        # Content
+        # CONTENT
         #
 
         self.content_layout = QVBoxLayout()
-        self.content_layout.setSpacing(Theme.Spacing.SM)
 
-        self.main_layout.addLayout(self.content_layout)
+        self.content_layout.setSpacing(
+            Theme.Spacing.SM
+        )
+
+        self.main_layout.addLayout(
+            self.content_layout
+        )
+
         self.main_layout.addStretch()
 
-    def add_widget(self, widget):
-        self.content_layout.addWidget(widget)
+    def add_widget(
+        self,
+        widget,
+    ):
 
-    def add_layout(self, layout):
-        self.content_layout.addLayout(layout)
+        self.content_layout.addWidget(
+            widget
+        )
+
+    def add_layout(
+        self,
+        layout,
+    ):
+
+        self.content_layout.addLayout(
+            layout
+        )

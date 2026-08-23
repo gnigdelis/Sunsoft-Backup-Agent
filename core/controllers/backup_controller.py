@@ -1,6 +1,10 @@
+﻿from pathlib import Path
+
 from PySide6.QtCore import QObject
 
 from core.services.backup_service import backup_service
+from core.database.database_context import database_context
+from core.common.result import Result
 
 
 class BackupController(QObject):
@@ -23,7 +27,46 @@ class BackupController(QObject):
 
     def start_backup(self):
 
+        # -------------------------------------------------
+        # Database Selection Validation
+        # -------------------------------------------------
+
+        if not database_context.is_selected():
+
+            return Result.error(
+                "No database selected. "
+                "Please select a database before starting the backup."
+            )
+
+        udl_path = (
+            database_context.active_udl()
+        )
+
+        if not udl_path:
+
+            return Result.error(
+                "No database selected. "
+                "Please select a database before starting the backup."
+            )
+
+        if not Path(udl_path).exists():
+
+            return Result.error(
+                "The selected UDL file is no longer available.\n"
+                f"UDL: {udl_path}"
+            )
+
+        # -------------------------------------------------
+        # Start Backup
+        # -------------------------------------------------
+
         backup_service.start_backup()
+
+        return Result.success(
+            data={
+                "udl_path": udl_path,
+            }
+        )
 
     # -------------------------------------------------
     # Status

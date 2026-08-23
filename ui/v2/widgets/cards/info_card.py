@@ -51,7 +51,9 @@ class InfoCard(BaseCard):
 
         bar = QFrame()
 
-        bar.setFixedHeight(4)
+        bar.setFixedHeight(
+            4
+        )
 
         bar.setStyleSheet(
             f"""
@@ -61,8 +63,13 @@ class InfoCard(BaseCard):
             """
         )
 
-        self.content_layout.addWidget(bar)
-        self.content_layout.addSpacing(16)
+        self.content_layout.addWidget(
+            bar
+        )
+
+        self.content_layout.addSpacing(
+            16
+        )
 
         #
         # HEADER
@@ -70,7 +77,9 @@ class InfoCard(BaseCard):
 
         header = QWidget()
 
-        header_layout = QHBoxLayout(header)
+        header_layout = QHBoxLayout(
+            header
+        )
 
         header_layout.setContentsMargins(
             0,
@@ -79,20 +88,22 @@ class InfoCard(BaseCard):
             0,
         )
 
-        header_layout.setSpacing(10)
+        header_layout.setSpacing(
+            10
+        )
 
         if icon:
 
             header_layout.addWidget(
-
                 SvgIcon(
                     icon,
                     size=22,
                 )
-
             )
 
-        title_label = QLabel(title)
+        title_label = QLabel(
+            title
+        )
 
         title_label.setFont(
             Theme.Typography.heading()
@@ -105,11 +116,19 @@ class InfoCard(BaseCard):
             """
         )
 
-        header_layout.addWidget(title_label)
+        header_layout.addWidget(
+            title_label
+        )
+
         header_layout.addStretch()
 
-        self.content_layout.addWidget(header)
-        self.content_layout.addSpacing(14)
+        self.content_layout.addWidget(
+            header
+        )
+
+        self.content_layout.addSpacing(
+            14
+        )
 
         #
         # INFORMATION
@@ -117,15 +136,17 @@ class InfoCard(BaseCard):
 
         for index, text in enumerate(lines):
 
-            label = QLabel(text)
+            label = QLabel(
+                text
+            )
 
-            label.setWordWrap(False)
+            label.setWordWrap(
+                False
+            )
 
             label.setAlignment(
-
                 Qt.AlignmentFlag.AlignLeft
                 | Qt.AlignmentFlag.AlignVCenter
-
             )
 
             if index == 0:
@@ -153,7 +174,12 @@ class InfoCard(BaseCard):
                     """
                 )
 
-            self.content_layout.addWidget(label)
-            self.content_layout.addSpacing(8)
+            self.content_layout.addWidget(
+                label
+            )
+
+            self.content_layout.addSpacing(
+                8
+            )
 
         self.content_layout.addStretch()

@@ -4,6 +4,7 @@ from PySide6.QtWidgets import (
 )
 
 from core.discovery.system_discovery import SystemDiscovery
+from core.controllers.backup_controller import BackupController
 
 from ui.v2.widgets.cards.info_card import InfoCard
 from ui.v2.widgets.cards.last_backup_card import LastBackupCard
@@ -20,19 +21,44 @@ class SummarySection(QWidget):
 
         self.system_info = self.system.discover()["data"]
 
+        # -------------------------------------------------
+        # Shared Backup Controller
+        # -------------------------------------------------
+
+        self.controller = BackupController()
+
+        # -------------------------------------------------
+        # UI
+        # -------------------------------------------------
+
         self.setup_ui()
+
+        # -------------------------------------------------
+        # Signals
+        # -------------------------------------------------
+
+        self.connect_signals()
+
+    # =====================================================
+    # UI
+    # =====================================================
 
     def setup_ui(self):
 
         layout = QGridLayout()
 
-        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
 
         layout.setHorizontalSpacing(15)
         layout.setVerticalSpacing(15)
 
         #
-        # Give better proportions
+        # Proportions
         #
 
         layout.setColumnStretch(0, 4)
@@ -47,16 +73,27 @@ class SummarySection(QWidget):
         #
 
         total = float(
-            self.system_info["total_disk"].replace(" GB", "")
+            self.system_info["total_disk"].replace(
+                " GB",
+                "",
+            )
         )
 
         free = float(
-            self.system_info["free_disk"].replace(" GB", "")
+            self.system_info["free_disk"].replace(
+                " GB",
+                "",
+            )
         )
 
-        used = round(total - free, 2)
+        used = round(
+            total - free,
+            2,
+        )
 
-        percent = round((used / total) * 100)
+        percent = round(
+            (used / total) * 100
+        )
 
         #
         # FIRST ROW
@@ -70,9 +107,13 @@ class SummarySection(QWidget):
 
                 lines=[
 
-                    self.system_info["computer_name"],
+                    self.system_info[
+                        "computer_name"
+                    ],
 
-                    self.system_info["windows_version"],
+                    self.system_info[
+                        "windows_version"
+                    ],
 
                     "Domain: (Coming Soon)",
 
@@ -139,28 +180,118 @@ class SummarySection(QWidget):
         # SECOND ROW
         #
 
-        last_backup = LastBackupCard()
-        progress = ProgressCard()
+        self.last_backup = LastBackupCard()
+
+        self.progress = ProgressCard()
 
         layout.addWidget(
-            last_backup,
+
+            self.last_backup,
+
             1,
             0,
             1,
             2,
+
         )
 
         layout.addWidget(
-            progress,
+
+            self.progress,
+
             1,
             2,
+
         )
 
         #
-        # Make cards expand correctly
+        # Minimum sizes
         #
 
-        last_backup.setMinimumWidth(700)
-        progress.setMinimumWidth(430)
+        self.last_backup.setMinimumWidth(
+            700
+        )
 
-        self.setLayout(layout)
+        self.progress.setMinimumWidth(
+            430
+        )
+
+        self.setLayout(
+            layout
+        )
+
+    # =====================================================
+    # SIGNALS
+    # =====================================================
+
+    def connect_signals(self):
+
+        #
+        # Backup Progress
+        #
+
+        self.controller.progress_changed.connect(
+            self.on_progress_changed
+        )
+
+        #
+        # Backup Finished
+        #
+
+        self.controller.finished.connect(
+            self.on_backup_finished
+        )
+
+    # =====================================================
+    # BACKUP EVENTS
+    # =====================================================
+
+    def on_progress_changed(
+        self,
+        percentage,
+        current_step,
+        total_steps,
+        task,
+    ):
+
+        self.progress.update_progress(
+
+            percentage,
+
+            current_step,
+
+            total_steps,
+
+            task,
+
+        )
+
+    def on_backup_finished(
+        self,
+        result,
+    ):
+
+        success = result.get(
+            "success",
+            False,
+        )
+
+        self.progress.finish(
+            success
+        )
+
+        if success:
+
+            self.last_backup.update_backup()
+
+        else:
+
+            self.last_backup.set_failed()
+
+    # =====================================================
+    # RESET
+    # =====================================================
+
+    def reset_progress(self):
+
+        self.progress.reset()

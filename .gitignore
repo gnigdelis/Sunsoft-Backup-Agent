@@ -1,4 +1,4 @@
-# Python
+﻿# Python
 __pycache__/
 *.pyc
 
@@ -11,14 +11,32 @@ venv/
 
 # Logs
 logs/
+*.log
 
 # Temporary Files
 temp/
+*.tmp
 
 # Backup Files
 *.bak
 *.7z
 *.zip
+
+# Build Output
+build/
+dist/
+
+# PyInstaller
+*.spec
+
+# Development / Debug Files
+*_current.txt
+*_search.txt
+*_ready.py
+*_final.py
+project_files.txt
+tics.py
+update_statistics.py
 
 # Windows
 Thumbs.db

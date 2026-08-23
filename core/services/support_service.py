@@ -1,4 +1,4 @@
-from core.configuration.udl_locator import UDLLocator
+from core.database.database_context import database_context
 from core.database.database_connection import DatabaseConnection
 
 from core.support.sales_search import SalesSearch
@@ -9,15 +9,25 @@ class SupportService:
 
     def __init__(self):
 
-        udl_path = UDLLocator.find()
-
-        self.database = DatabaseConnection(
-            udl_path
-        )
+        self.database = None
 
         self.search_service = SalesSearch()
 
         self.reset_service = SalesStatusReset()
+
+    def _get_database(self):
+
+        udl_path = database_context.active_udl()
+
+        if not udl_path:
+
+            raise RuntimeError(
+                "No database selected."
+            )
+
+        return DatabaseConnection(
+            udl_path
+        )
 
     def search_invoice(
         self,
@@ -25,14 +35,20 @@ class SupportService:
         invoice_date: str,
     ):
 
-        connection = self.database.connect()
+        database = self._get_database()
+
+        connection = database.connect()
 
         try:
 
             return self.search_service.execute(
+
                 connection,
+
                 invoice_number,
+
                 invoice_date,
+
             )
 
         finally:
@@ -44,13 +60,18 @@ class SupportService:
         oid: int,
     ):
 
-        connection = self.database.connect()
+        database = self._get_database()
+
+        connection = database.connect()
 
         try:
 
             return self.reset_service.by_oid(
+
                 connection,
+
                 oid,
+
             )
 
         finally:
@@ -63,19 +84,22 @@ class SupportService:
         end_oid: int,
     ):
 
-        connection = self.database.connect()
+        database = self._get_database()
+
+        connection = database.connect()
 
         try:
 
             return self.reset_service.by_range(
+
                 connection,
+
                 start_oid,
+
                 end_oid,
+
             )
 
         finally:
 
             connection.close()
-
-
-support_service = SupportService()

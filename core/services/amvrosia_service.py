@@ -1,10 +1,5 @@
-from core.configuration.udl_locator import (
-    UDLLocator,
-)
-
-from core.database.database_connection import (
-    DatabaseConnection,
-)
+from core.database.database_context import database_context
+from core.database.database_connection import DatabaseConnection
 
 from core.amvrosia.repair_order import (
     RepairOrder,
@@ -15,20 +10,32 @@ class AmvrosiaService:
 
     def __init__(self):
 
-        udl_path = UDLLocator.find()
-
-        self.database = DatabaseConnection(
-            udl_path
-        )
+        self.database = None
 
         self.repair = RepairOrder()
+
+    def _get_database(self):
+
+        udl_path = database_context.active_udl()
+
+        if not udl_path:
+
+            raise RuntimeError(
+                "No database selected."
+            )
+
+        return DatabaseConnection(
+            udl_path
+        )
 
     def search_order(
         self,
         order_number: int,
     ):
 
-        connection = self.database.connect()
+        database = self._get_database()
+
+        connection = database.connect()
 
         try:
 
@@ -46,7 +53,9 @@ class AmvrosiaService:
         order_number: int,
     ):
 
-        connection = self.database.connect()
+        database = self._get_database()
+
+        connection = database.connect()
 
         try:
 

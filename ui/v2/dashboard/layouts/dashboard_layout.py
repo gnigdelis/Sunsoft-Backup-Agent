@@ -7,7 +7,6 @@ from ui.v2.widgets.header.header import Header
 from ui.v2.widgets.footer.footer import Footer
 
 from ui.v2.dashboard.sections.summary_section import SummarySection
-from ui.v2.dashboard.sections.information_section import InformationSection
 from ui.v2.dashboard.sections.operations_section import OperationsSection
 
 
@@ -30,22 +29,34 @@ class DashboardLayout(QWidget):
             20,
         )
 
-        layout.setSpacing(15)
+        layout.setSpacing(
+            15
+        )
 
         self.header = Header()
 
         self.summary = SummarySection()
 
-        self.information = InformationSection()
-
         self.operations = OperationsSection()
 
         self.footer = Footer()
 
-        layout.addWidget(self.header)
-        layout.addWidget(self.summary)
-        layout.addWidget(self.information)
-        layout.addWidget(self.operations)
-        layout.addWidget(self.footer)
+        layout.addWidget(
+            self.header
+        )
 
-        self.setLayout(layout)
+        layout.addWidget(
+            self.summary
+        )
+
+        layout.addWidget(
+            self.operations
+        )
+
+        layout.addWidget(
+            self.footer
+        )
+
+        self.setLayout(
+            layout
+        )

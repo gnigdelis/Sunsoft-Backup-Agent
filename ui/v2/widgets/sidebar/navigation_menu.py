@@ -6,6 +6,7 @@ from ui.v2.widgets.sidebar.navigation_item import NavigationItem
 class NavigationMenu(QWidget):
 
     def __init__(self):
+
         super().__init__()
 
         self.items = []
@@ -14,19 +15,72 @@ class NavigationMenu(QWidget):
 
     def setup_ui(self):
 
-        layout = QVBoxLayout(self)
+        layout = QVBoxLayout(
+            self
+        )
 
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(10)
+        layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        layout.setSpacing(
+            10
+        )
 
         menu_items = [
-            ("Dashboard", "dashboard.svg", "#e53935", True),
-            ("Backup", "backup.svg", "#8e24aa", False),
-            ("Restore", "restore.svg", "#43a047", False),
-            ("History", "history.svg", "#1e88e5", False),
-            ("Support", "support.svg", "#00acc1", False),
-            ("Logs", "logs.svg", "#757575", False),
-            ("Settings", "settings.svg", "#fb8c00", False),
+
+            (
+                "Dashboard",
+                "dashboard.svg",
+                "#e53935",
+                True,
+            ),
+
+            (
+                "Backup",
+                "backup.svg",
+                "#8e24aa",
+                False,
+            ),
+
+            (
+                "Restore",
+                "restore.svg",
+                "#43a047",
+                False,
+            ),
+
+            (
+                "History",
+                "history.svg",
+                "#1e88e5",
+                False,
+            ),
+
+            (
+                "Support",
+                "support.svg",
+                "#00acc1",
+                False,
+            ),
+
+            (
+                "MyData Sent",
+                "mydata.svg",
+                "#757575",
+                False,
+            ),
+
+            (
+                "Settings",
+                "settings.svg",
+                "#fb8c00",
+                False,
+            ),
+
             (
                 "Delete - Rebuild - Shrink",
                 "settings.svg",
@@ -45,15 +99,20 @@ class NavigationMenu(QWidget):
             )
 
             item.clicked.connect(
-                lambda current=item: self.set_active(current)
+                lambda current=item:
+                self.set_active(current)
             )
 
-            layout.addWidget(item)
+            layout.addWidget(
+                item
+            )
 
-            self.items.append(item)
+            self.items.append(
+                item
+            )
 
             #
-            # Create clean attribute names.
+            # Clean attribute names
             #
 
             if text == "Delete - Rebuild - Shrink":
@@ -64,17 +123,31 @@ class NavigationMenu(QWidget):
                     item,
                 )
 
+            elif text == "MyData Sent":
+
+                setattr(
+                    self,
+                    "mydata_sent",
+                    item,
+                )
+
             else:
 
                 setattr(
                     self,
-                    text.lower().replace(" ", "_"),
+                    text.lower().replace(
+                        " ",
+                        "_",
+                    ),
                     item,
                 )
 
         layout.addStretch()
 
-    def set_active(self, current):
+    def set_active(
+        self,
+        current,
+    ):
 
         for item in self.items:
 
