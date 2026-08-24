@@ -37,6 +37,16 @@ class NavigationItem(QFrame):
             50
         )
 
+        self.setStyleSheet(
+            """
+            QFrame#NavigationItem {
+                background: transparent;
+                border: none;
+                border-radius: 0px;
+            }
+            """
+        )
+
         layout = QHBoxLayout(
             self
         )
@@ -61,6 +71,7 @@ class NavigationItem(QFrame):
             if "/" in icon
             else f"navigation/{icon}",
             size=22,
+            color=Theme.Colors.TEXT,
         )
 
         layout.addWidget(
@@ -73,6 +84,18 @@ class NavigationItem(QFrame):
 
         self.title = QLabel(
             text
+        )
+
+        self.title.setStyleSheet(
+            f"""
+            QLabel {{
+                background: transparent;
+                border: none;
+                color: {Theme.Colors.TEXT};
+                font-size: 10.5pt;
+                font-weight: 500;
+            }}
+            """
         )
 
         layout.addWidget(
@@ -102,51 +125,111 @@ class NavigationItem(QFrame):
 
     def refresh(self):
 
+        normal_color = (
+            Theme.Colors.TEXT
+        )
+
+        active_color = (
+            Theme.Colors.PRIMARY
+        )
+
         if self.active:
 
-            self.setStyleSheet(
+            self.title.setStyleSheet(
                 f"""
-                QFrame#NavigationItem {{
-                    background:#1B2432;
-                    border:none;
-                    border-left:3px solid
-                        {Theme.Colors.PRIMARY};
-                    border-radius:7px;
-                }}
-
                 QLabel {{
-                    background:transparent;
-                    color:{Theme.Colors.PRIMARY};
-                    font-size:10.5pt;
-                    font-weight:700;
+                    background: transparent;
+                    border: none;
+                    color: {active_color};
+                    font-size: 10.5pt;
+                    font-weight: 700;
                 }}
                 """
+            )
+
+            self.icon.setColor(
+                active_color
             )
 
         else:
 
-            self.setStyleSheet(
+            self.title.setStyleSheet(
                 f"""
-                QFrame#NavigationItem {{
-                    background:transparent;
-                    border:none;
-                    border-left:3px solid transparent;
-                    border-radius:7px;
-                }}
-
-                QFrame#NavigationItem:hover {{
-                    background:#17202D;
-                    border-left:3px solid #334155;
-                }}
-
                 QLabel {{
-                    background:transparent;
-                    color:{Theme.Colors.TEXT};
-                    font-size:10.5pt;
-                    font-weight:500;
+                    background: transparent;
+                    border: none;
+                    color: {normal_color};
+                    font-size: 10.5pt;
+                    font-weight: 500;
                 }}
                 """
             )
+
+            self.icon.setColor(
+                normal_color
+            )
+
+    # ==========================================================
+    # MOUSE ENTER
+    # ==========================================================
+
+    def enterEvent(
+        self,
+        event,
+    ):
+
+        if not self.active:
+
+            self.title.setStyleSheet(
+                f"""
+                QLabel {{
+                    background: transparent;
+                    border: none;
+                    color: {Theme.Colors.PRIMARY};
+                    font-size: 10.5pt;
+                    font-weight: 500;
+                }}
+                """
+            )
+
+            self.icon.setColor(
+                Theme.Colors.PRIMARY
+            )
+
+        super().enterEvent(
+            event
+        )
+
+    # ==========================================================
+    # MOUSE LEAVE
+    # ==========================================================
+
+    def leaveEvent(
+        self,
+        event,
+    ):
+
+        if not self.active:
+
+            self.title.setStyleSheet(
+                f"""
+                QLabel {{
+                    background: transparent;
+                    border: none;
+                    color: {Theme.Colors.TEXT};
+                    font-size: 10.5pt;
+                    font-weight: 500;
+                }}
+                """
+            )
+
+            self.icon.setColor(
+                Theme.Colors.TEXT
+            )
+
+        super().leaveEvent(
+            event
+        )
 
     # ==========================================================
     # CLICK

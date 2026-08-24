@@ -7,23 +7,54 @@ from PySide6.QtWidgets import (
 
 from ui.v2.styles.theme import Theme
 
+from core.database.database_context import (
+    database_context,
+)
+
 
 class Footer(QWidget):
 
     def __init__(self):
+
         super().__init__()
+
         self.setup_ui()
+
+        self.update_database_status(
+            database_context.active()
+        )
+
+        database_context.database_changed.connect(
+            self.update_database_status
+        )
+
+    # ==========================================================
+    # UI
+    # ==========================================================
 
     def setup_ui(self):
 
-        self.setFixedHeight(42)
+        self.setFixedHeight(
+            42
+        )
 
-        layout = QHBoxLayout(self)
+        layout = QHBoxLayout(
+            self
+        )
 
-        layout.setContentsMargins(10, 0, 10, 0)
-        layout.setSpacing(18)
+        layout.setContentsMargins(
+            10,
+            0,
+            10,
+            0,
+        )
 
-        self.setStyleSheet(f"""
+        layout.setSpacing(
+            18
+        )
+
+        self.setStyleSheet(
+            f"""
             QWidget {{
                 background:transparent;
                 border-top:1px solid {Theme.Colors.BORDER};
@@ -34,26 +65,89 @@ class Footer(QWidget):
                 color:{Theme.Colors.TEXT_SECONDARY};
                 font-size:9pt;
             }}
-        """)
+            """
+        )
 
-        app = QLabel("Sunsoft Support Agent v2.0")
+        #
+        # Engine
+        #
 
-        engine = QLabel("Engine : Ready")
+        self.engine = QLabel(
+            "Engine : Ready"
+        )
 
-        database = QLabel("Database : Connected")
+        #
+        # Database
+        #
 
-        provider = QLabel("Provider : Idle")
+        self.database = QLabel(
+            "Database : Not Connected"
+        )
 
-        version = QLabel("Build 2.0.0")
+        #
+        # Provider
+        #
 
-        layout.addWidget(app)
-        layout.addSpacing(20)
-        layout.addWidget(engine)
-        layout.addSpacing(20)
-        layout.addWidget(database)
-        layout.addSpacing(20)
-        layout.addWidget(provider)
+        self.provider = QLabel(
+            "Provider : Idle"
+        )
+
+        #
+        # Build
+        #
+
+        self.version = QLabel(
+            "Build 2.0.0"
+        )
+
+        #
+        # Layout
+        #
+
+        layout.addWidget(
+            self.engine
+        )
+
+        layout.addSpacing(
+            20
+        )
+
+        layout.addWidget(
+            self.database
+        )
+
+        layout.addSpacing(
+            20
+        )
+
+        layout.addWidget(
+            self.provider
+        )
 
         layout.addStretch()
 
-        layout.addWidget(version, alignment=Qt.AlignRight)
+        layout.addWidget(
+            self.version,
+            alignment=Qt.AlignmentFlag.AlignRight,
+        )
+
+    # ==========================================================
+    # DATABASE STATUS
+    # ==========================================================
+
+    def update_database_status(
+        self,
+        database,
+    ):
+
+        if database:
+
+            self.database.setText(
+                "Database : Connected"
+            )
+
+        else:
+
+            self.database.setText(
+                "Database : Not Connected"
+            )

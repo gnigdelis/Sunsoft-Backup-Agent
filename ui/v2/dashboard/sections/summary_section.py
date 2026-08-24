@@ -1,41 +1,59 @@
+from pathlib import Path
+import json
+import os
+from datetime import datetime
+
 from PySide6.QtWidgets import (
     QWidget,
     QHBoxLayout,
 )
 
-from core.discovery.system_discovery import SystemDiscovery
-from core.controllers.backup_controller import BackupController
-from core.dashboard_data_provider import DashboardDataProvider
-from core.destination_manager import DestinationManager
-from core.database.database_context import database_context
+from core.dashboard_data_provider import (
+    DashboardDataProvider,
+)
 
-from ui.v2.widgets.cards.info_card import InfoCard
-from ui.v2.widgets.cards.last_backup_card import LastBackupCard
-from ui.v2.widgets.progress.progress_card import ProgressCard
+from core.destination_manager import (
+    DestinationManager,
+)
+
+from core.database.database_context import (
+    database_context,
+)
+
+from ui.v2.widgets.cards.dashboard_metric_card import (
+    DashboardMetricCard,
+)
+
 from ui.v2.styles.icons import Icons
+from ui.v2.styles.theme import Theme
 
 
 class SummarySection(QWidget):
 
+    STATE_DIRECTORY = (
+        Path(
+            os.environ.get(
+                "LOCALAPPDATA",
+                Path.home(),
+            )
+        )
+        / "Sunsoft Backup Agent"
+    )
+
+    STATE_FILE = (
+        STATE_DIRECTORY
+        / "last_backup.json"
+    )
+
     def __init__(self):
 
         super().__init__()
-
-        self.system = SystemDiscovery()
-
-        self.system_info = (
-            self.system.discover()["data"]
-        )
-
-        self.controller = BackupController()
 
         self.destination_manager = (
             DestinationManager()
         )
 
         self.setup_ui()
-
-        self.connect_signals()
 
         self.refresh_summary()
 
@@ -61,75 +79,84 @@ class SummarySection(QWidget):
         )
 
         layout.setSpacing(
-            12
+            14
         )
 
         #
         # Last Backup
         #
 
-        self.last_backup = (
-            LastBackupCard()
+        self.last_backup_card = (
+            DashboardMetricCard(
+                title="Last Backup",
+                value="Never",
+                subtitle="No backup recorded",
+                icon=Icons.CLOCK,
+                right_icon=Icons.CLOCK,
+                accent="#8B3A3A",
+                minimum_height=175,
+                success=True,
+            )
         )
 
         #
         # Files
         #
 
-        self.files_card = InfoCard(
-            title="Files",
-            lines=[
-                "0",
-                "Files in backup",
-            ],
-            status="info",
-            icon=Icons.FILES,
-            minimum_height=145,
+        self.files_card = (
+            DashboardMetricCard(
+                title="Files",
+                value="0",
+                subtitle="Total files backed up",
+                icon=Icons.FILES,
+                accent=Theme.Colors.INFO,
+                minimum_height=175,
+            )
         )
 
         #
         # Database
         #
 
-        self.database_card = InfoCard(
-            title="Database",
-            lines=[
-                "Not Connected",
-                "SQL Server",
-            ],
-            status="warning",
-            icon=Icons.DATABASE,
-            minimum_height=145,
+        self.database_card = (
+            DashboardMetricCard(
+                title="Database",
+                value="Not Connected",
+                subtitle="SQL Server",
+                icon=Icons.DATABASE,
+                accent="#8E44AD",
+                minimum_height=175,
+            )
         )
 
         #
         # Backup Size
         #
 
-        self.size_card = InfoCard(
-            title="Backup Size",
-            lines=[
-                "0 MB",
-                "Current backup size",
-            ],
-            status="info",
-            icon=Icons.STORAGE,
-            minimum_height=145,
+        self.size_card = (
+            DashboardMetricCard(
+                title="Backup Size",
+                value="0 MB",
+                subtitle="Total backup size",
+                icon=Icons.STORAGE,
+                accent=Theme.Colors.WARNING,
+                minimum_height=175,
+            )
         )
 
         #
         # Location
         #
 
-        self.location_card = InfoCard(
-            title="Location",
-            lines=[
-                "Not Configured",
-                "Backup destination",
-            ],
-            status="warning",
-            icon=Icons.STORAGE,
-            minimum_height=145,
+        self.location_card = (
+            DashboardMetricCard(
+                title="Location",
+                value="Not Configured",
+                subtitle="Primary destination",
+                icon=Icons.STORAGE,
+                accent=Theme.Colors.SUCCESS,
+                minimum_height=175,
+            )
         )
 
         #
@@ -137,7 +164,7 @@ class SummarySection(QWidget):
         #
 
         layout.addWidget(
-            self.last_backup,
+            self.last_backup_card,
             1,
         )
 
@@ -165,27 +192,6 @@ class SummarySection(QWidget):
             layout
         )
 
-        #
-        # Keep existing progress card
-        # available for the backup controller.
-        #
-
-        self.progress = ProgressCard()
-
-    # ==========================================================
-    # SIGNALS
-    # ==========================================================
-
-    def connect_signals(self):
-
-        self.controller.progress_changed.connect(
-            self.on_progress_changed
-        )
-
-        self.controller.finished.connect(
-            self.on_backup_finished
-        )
-
     # ==========================================================
     # DATABASE
     # ==========================================================
@@ -203,14 +209,124 @@ class SummarySection(QWidget):
 
     def refresh_summary(self):
 
-        #
-        # Files
-        #
+        self.refresh_last_backup()
+
+        self.refresh_files()
+
+        self.refresh_database()
+
+        self.refresh_backup_size()
+
+        self.refresh_location()
+
+    # ==========================================================
+    # LAST BACKUP
+    # ==========================================================
+
+    def refresh_last_backup(self):
+
+        try:
+
+            if not self.STATE_FILE.exists():
+
+                self.last_backup_card.set_value(
+                    "Never"
+                )
+
+                self.last_backup_card.set_subtitle(
+                    "No backup recorded"
+                )
+
+                return
+
+            with open(
+                self.STATE_FILE,
+                "r",
+                encoding="utf-8",
+            ) as state_file:
+
+                data = json.load(
+                    state_file
+                )
+
+            value = data.get(
+                "last_backup"
+            )
+
+            if not value:
+
+                self.last_backup_card.set_value(
+                    "Never"
+                )
+
+                self.last_backup_card.set_subtitle(
+                    "No backup recorded"
+                )
+
+                return
+
+            backup_datetime = (
+                datetime.fromisoformat(
+                    value
+                )
+            )
+
+            now = datetime.now()
+
+            if (
+                backup_datetime.date()
+                == now.date()
+            ):
+
+                main_value = (
+                    backup_datetime.strftime(
+                        "Today %H:%M"
+                    )
+                )
+
+            else:
+
+                main_value = (
+                    backup_datetime.strftime(
+                        "%d/%m/%Y %H:%M"
+                    )
+                )
+
+            subtitle = (
+                backup_datetime.strftime(
+                    "%d/%m/%Y %H:%M:%S"
+                )
+            )
+
+            self.last_backup_card.set_value(
+                main_value
+            )
+
+            self.last_backup_card.set_subtitle(
+                subtitle
+            )
+
+        except Exception:
+
+            self.last_backup_card.set_value(
+                "Never"
+            )
+
+            self.last_backup_card.set_subtitle(
+                "No backup recorded"
+            )
+
+    # ==========================================================
+    # FILES
+    # ==========================================================
+
+    def refresh_files(self):
 
         try:
 
             files = (
-                DashboardDataProvider.get_backup_files()
+                DashboardDataProvider
+                .get_backup_files()
             )
 
         except Exception:
@@ -229,17 +345,19 @@ class SummarySection(QWidget):
 
             files = "0"
 
-        self.update_card(
-            self.files_card,
-            [
-                files,
-                "Files in backup",
-            ],
+        self.files_card.set_value(
+            files
         )
 
-        #
-        # Database
-        #
+        self.files_card.set_subtitle(
+            "Total files backed up"
+        )
+
+    # ==========================================================
+    # DATABASE
+    # ==========================================================
+
+    def refresh_database(self):
 
         database = (
             database_context.active()
@@ -247,9 +365,11 @@ class SummarySection(QWidget):
 
         if database:
 
-            database_status = "Connected"
+            self.database_card.set_value(
+                "Connected"
+            )
 
-            database_name = (
+            self.database_card.set_subtitle(
                 database.get(
                     "name",
                     "SQL Server",
@@ -257,51 +377,50 @@ class SummarySection(QWidget):
                 or "SQL Server"
             )
 
-            database_state = "success"
-
         else:
 
-            database_status = "Not Connected"
-            database_name = "SQL Server"
-            database_state = "warning"
+            self.database_card.set_value(
+                "Not Connected"
+            )
 
-        self.update_card(
-            self.database_card,
-            [
-                database_status,
-                database_name,
-            ],
-        )
+            self.database_card.set_subtitle(
+                "SQL Server"
+            )
 
-        #
-        # Backup Size
-        #
+    # ==========================================================
+    # BACKUP SIZE
+    # ==========================================================
+
+    def refresh_backup_size(self):
 
         try:
 
-            backup_size = (
-                DashboardDataProvider.get_backup_size()
+            size = (
+                DashboardDataProvider
+                .get_backup_size()
             )
 
         except Exception:
 
-            backup_size = "0 MB"
+            size = "0 MB"
 
-        if not backup_size:
+        if not size:
 
-            backup_size = "0 MB"
+            size = "0 MB"
 
-        self.update_card(
-            self.size_card,
-            [
-                str(backup_size),
-                "Current backup size",
-            ],
+        self.size_card.set_value(
+            str(size)
         )
 
-        #
-        # Location
-        #
+        self.size_card.set_subtitle(
+            "Total backup size"
+        )
+
+    # ==========================================================
+    # LOCATION
+    # ==========================================================
+
+    def refresh_location(self):
 
         try:
 
@@ -310,9 +429,11 @@ class SummarySection(QWidget):
                 .get_destination()
             )
 
-            if result.get(
-                "success",
-                False,
+            if (
+                result.get(
+                    "success",
+                    False,
+                )
             ):
 
                 location = (
@@ -331,186 +452,16 @@ class SummarySection(QWidget):
 
         if not location:
 
-            location = "Not Configured"
-
-        self.update_card(
-            self.location_card,
-            [
-                str(location),
-                "Backup destination",
-            ],
-        )
-
-    # ==========================================================
-    # CARD UPDATE
-    # ==========================================================
-
-    def update_card(
-        self,
-        card,
-        lines,
-    ):
-
-        #
-        # Recreate the InfoCard because the
-        # current InfoCard implementation does
-        # not expose a content update method.
-        #
-
-        parent = (
-            card.parentWidget()
-        )
-
-        if parent is None:
-
-            return
-
-        layout = (
-            parent.layout()
-        )
-
-        if layout is None:
-
-            return
-
-        index = (
-            layout.indexOf(card)
-        )
-
-        if index < 0:
-
-            return
-
-        if card is self.files_card:
-
-            title = "Files"
-            icon = Icons.FILES
-            status = "info"
-
-        elif card is self.database_card:
-
-            title = "Database"
-
-            icon = Icons.DATABASE
-
-            status = (
-                "success"
-                if lines[0] == "Connected"
-                else "warning"
+            self.location_card.set_value(
+                "Not Configured"
             )
-
-        elif card is self.size_card:
-
-            title = "Backup Size"
-            icon = Icons.STORAGE
-            status = "info"
 
         else:
 
-            title = "Location"
-            icon = Icons.STORAGE
-
-            status = (
-                "success"
-                if lines[0] != "Not Configured"
-                else "warning"
+            self.location_card.set_value(
+                str(location)
             )
 
-        new_card = InfoCard(
-            title=title,
-            lines=lines,
-            status=status,
-            icon=icon,
-            minimum_height=145,
+        self.location_card.set_subtitle(
+            "Primary destination"
         )
-
-        layout.insertWidget(
-            index,
-            new_card,
-            1,
-        )
-
-        card.setParent(
-            None
-        )
-
-        card.deleteLater()
-
-        if card is self.files_card:
-
-            self.files_card = (
-                new_card
-            )
-
-        elif card is self.database_card:
-
-            self.database_card = (
-                new_card
-            )
-
-        elif card is self.size_card:
-
-            self.size_card = (
-                new_card
-            )
-
-        elif card is self.location_card:
-
-            self.location_card = (
-                new_card
-            )
-
-    # ==========================================================
-    # BACKUP PROGRESS
-    # ==========================================================
-
-    def on_progress_changed(
-        self,
-        percentage,
-        current_step,
-        total_steps,
-        task,
-    ):
-
-        self.progress.update_progress(
-            percentage,
-            current_step,
-            total_steps,
-            task,
-        )
-
-    # ==========================================================
-    # BACKUP FINISHED
-    # ==========================================================
-
-    def on_backup_finished(
-        self,
-        result,
-    ):
-
-        success = result.get(
-            "success",
-            False,
-        )
-
-        self.progress.finish(
-            success
-        )
-
-        if success:
-
-            self.last_backup.update_backup()
-
-        else:
-
-            self.last_backup.set_failed()
-
-        self.refresh_summary()
-
-    # ==========================================================
-    # RESET
-    # ==========================================================
-
-    def reset_progress(self):
-
-        self.progress.reset()

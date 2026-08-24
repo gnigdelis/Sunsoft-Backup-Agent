@@ -19,6 +19,39 @@ class DashboardLayout(QWidget):
 
         super().__init__()
 
+        self.setObjectName(
+            "DashboardLayout"
+        )
+
+        self.setStyleSheet(
+            """
+            QWidget#DashboardLayout {
+                background: transparent;
+                border: none;
+            }
+
+            QLabel#DashboardTitle {
+                background: transparent;
+                border: none;
+                color: #F5F7FA;
+                font-size: 26pt;
+                font-weight: 700;
+                padding: 0;
+                margin: 0;
+            }
+
+            QLabel#DashboardSubtitle {
+                background: transparent;
+                border: none;
+                color: #98A3B3;
+                font-size: 10.5pt;
+                font-weight: 400;
+                padding: 0;
+                margin: 0;
+            }
+            """
+        )
+
         self.setup_ui()
 
     def setup_ui(self):
@@ -39,7 +72,7 @@ class DashboardLayout(QWidget):
         )
 
         #
-        # Page header
+        # PAGE HEADER
         #
 
         top_row = QHBoxLayout()
@@ -55,6 +88,10 @@ class DashboardLayout(QWidget):
             18
         )
 
+        #
+        # TITLE COLUMN
+        #
+
         title_column = QVBoxLayout()
 
         title_column.setContentsMargins(
@@ -68,6 +105,10 @@ class DashboardLayout(QWidget):
             2
         )
 
+        #
+        # Dashboard title
+        #
+
         title = QLabel(
             "Dashboard"
         )
@@ -76,16 +117,9 @@ class DashboardLayout(QWidget):
             "DashboardTitle"
         )
 
-        title.setStyleSheet(
-            """
-            QLabel#DashboardTitle {
-                font-size: 26pt;
-                font-weight: 700;
-                color: #F5F7FA;
-                background: transparent;
-            }
-            """
-        )
+        #
+        # Subtitle
+        #
 
         subtitle = QLabel(
             "Monitor your backup activity and system status"
@@ -93,16 +127,6 @@ class DashboardLayout(QWidget):
 
         subtitle.setObjectName(
             "DashboardSubtitle"
-        )
-
-        subtitle.setStyleSheet(
-            """
-            QLabel#DashboardSubtitle {
-                font-size: 10.5pt;
-                color: #98A3B3;
-                background: transparent;
-            }
-            """
         )
 
         title_column.addWidget(
@@ -118,6 +142,10 @@ class DashboardLayout(QWidget):
             1,
         )
 
+        #
+        # HEADER / UDL
+        #
+
         self.header = Header()
 
         top_row.addWidget(
@@ -131,7 +159,7 @@ class DashboardLayout(QWidget):
         )
 
         #
-        # Dashboard content
+        # DASHBOARD CONTENT
         #
 
         self.summary = SummarySection()
