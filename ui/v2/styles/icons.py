@@ -12,41 +12,43 @@ class Icons:
     # Navigation
     # ==========================
 
-    DASHBOARD = "navigation/dashboard.svg"
-    BACKUP_PAGE = "navigation/backup.svg"
-    RESTORE_PAGE = "navigation/restore.svg"
-    HISTORY = "navigation/history.svg"
-    LOGS = "navigation/logs.svg"
-    SETTINGS = "navigation/settings.svg"
+    DASHBOARD = "lucide/icons/house.svg"
+    BACKUP_PAGE = "lucide/icons/upload.svg"
+    RESTORE_PAGE = "lucide/icons/rotate-ccw.svg"
+    HISTORY = "lucide/icons/clock-3.svg"
+    SUPPORT = "lucide/icons/headset.svg"
+    MYDATA_SENT = "lucide/icons/send.svg"
+    SETTINGS = "lucide/icons/settings.svg"
+    SQL_TOOLS = "lucide/icons/database.svg"
 
     # ==========================
     # Actions
     # ==========================
 
-    BACKUP = "actions/backup.svg"
-    UPLOAD = "actions/upload.svg"
-    VERIFY = "actions/verify.svg"
-    REBUILD = "actions/rebuild.svg"
-    DELETE = "actions/delete.svg"
+    BACKUP = "lucide/icons/upload.svg"
+    UPLOAD = "lucide/icons/upload.svg"
+    VERIFY = "lucide/icons/package-check.svg"
+    REBUILD = "lucide/icons/refresh-cw.svg"
+    DELETE = "lucide/icons/trash-2.svg"
+    EXTRA_LOCK = "lucide/icons/lock-keyhole.svg"
 
     # ==========================
     # System
     # ==========================
 
-    COMPUTER = "system/computer.svg"
-    DATABASE = "system/database.svg"
-    STORAGE = "system/storage.svg"
-
-    FILES = "system/files.svg"
-    COPIED = "system/copied.svg"
-    SPEED = "system/speed.svg"
-    CLOCK = "system/clock.svg"
+    COMPUTER = "lucide/icons/monitor.svg"
+    DATABASE = "lucide/icons/database.svg"
+    STORAGE = "lucide/icons/hard-drive.svg"
+    FILES = "lucide/icons/files.svg"
+    COPIED = "lucide/icons/copy-check.svg"
+    SPEED = "lucide/icons/gauge.svg"
+    CLOCK = "lucide/icons/clock-3.svg"
 
     # ==========================
     # Status
     # ==========================
 
-    SUCCESS = "status/success.svg"
-    WARNING = "status/warning.svg"
-    ERROR = "status/error.svg"
-    INFO = "status/info.svg"
+    SUCCESS = "lucide/icons/circle-check.svg"
+    WARNING = "lucide/icons/triangle-alert.svg"
+    ERROR = "lucide/icons/circle-x.svg"
+    INFO = "lucide/icons/info.svg"

@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt, Signal
+﻿from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QFrame,
     QLabel,
@@ -33,10 +33,6 @@ class NavigationItem(QFrame):
         layout.setContentsMargins(12, 8, 12, 8)
         layout.setSpacing(12)
 
-        #
-        # Icon Container
-        #
-
         self.icon_container = QFrame()
         self.icon_container.setFixedSize(40, 40)
 
@@ -44,16 +40,18 @@ class NavigationItem(QFrame):
         icon_layout.setContentsMargins(8, 8, 8, 8)
         icon_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
+        icon_path = (
+            icon
+            if "/" in icon
+            else f"navigation/{icon}"
+        )
+
         self.icon = SvgIcon(
-            f"navigation/{icon}",
+            icon_path,
             size=24,
         )
 
         icon_layout.addWidget(self.icon)
-
-        #
-        # Title
-        #
 
         self.title = QLabel(text)
 

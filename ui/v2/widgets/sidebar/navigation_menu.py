@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QVBoxLayout, QWidget
+﻿from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from ui.v2.widgets.sidebar.navigation_item import NavigationItem
 
@@ -34,56 +34,56 @@ class NavigationMenu(QWidget):
 
             (
                 "Dashboard",
-                "dashboard.svg",
+                "lucide/icons/house.svg",
                 "#e53935",
                 True,
             ),
 
             (
                 "Backup",
-                "backup.svg",
+                "lucide/icons/upload.svg",
                 "#8e24aa",
                 False,
             ),
 
             (
                 "Restore",
-                "restore.svg",
+                "lucide/icons/rotate-ccw.svg",
                 "#43a047",
                 False,
             ),
 
             (
                 "History",
-                "history.svg",
+                "lucide/icons/clock-3.svg",
                 "#1e88e5",
                 False,
             ),
 
             (
                 "Support",
-                "support.svg",
+                "lucide/icons/headset.svg",
                 "#00acc1",
                 False,
             ),
 
             (
                 "MyData Sent",
-                "mydata.svg",
+                "lucide/icons/send.svg",
                 "#757575",
                 False,
             ),
 
             (
                 "Settings",
-                "settings.svg",
+                "lucide/icons/settings.svg",
                 "#fb8c00",
                 False,
             ),
 
             (
-                "Delete - Rebuild - Shrink",
-                "settings.svg",
+                "SQL Tools",
+                "lucide/icons/database.svg",
                 "#8e24aa",
                 False,
             ),
@@ -111,11 +111,7 @@ class NavigationMenu(QWidget):
                 item
             )
 
-            #
-            # Clean attribute names
-            #
-
-            if text == "Delete - Rebuild - Shrink":
+            if text == "SQL Tools":
 
                 setattr(
                     self,

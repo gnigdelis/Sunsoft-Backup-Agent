@@ -1,6 +1,6 @@
-from pathlib import Path
+﻿from pathlib import Path
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QByteArray
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtWidgets import QWidget, QHBoxLayout
 
@@ -9,10 +9,8 @@ class SvgIcon(QWidget):
     """
     Lightweight SVG icon widget used across the entire UI.
 
-    Usage:
-        SvgIcon("navigation/dashboard.svg")
-        SvgIcon("system/storage.svg")
-        SvgIcon("status/success.svg", size=18)
+    Lucide icons are normalized to white stroke so they remain
+    consistent inside the colored icon containers.
     """
 
     def __init__(
@@ -38,19 +36,90 @@ class SvgIcon(QWidget):
 
         self.load(filename)
 
+    def _resolve_path(self, filename: str):
+
+        candidates = [
+            Path("assets") / "icons" / filename,
+            Path(filename),
+        ]
+
+        for candidate in candidates:
+
+            if candidate.exists():
+                return candidate
+
+        return None
+
+    def _prepare_svg(self, data: bytes):
+
+        svg = data.decode(
+            "utf-8",
+            errors="ignore",
+        )
+
+        #
+        # Lucide normally uses currentColor.
+        # QSvgWidget does not inherit CSS currentColor
+        # the way a browser does, so force the stroke to white.
+        #
+
+        svg = svg.replace(
+            'stroke="currentColor"',
+            'stroke="#ffffff"',
+        )
+
+        svg = svg.replace(
+            'stroke="black"',
+            'stroke="#ffffff"',
+        )
+
+        svg = svg.replace(
+            'stroke="#000"',
+            'stroke="#ffffff"',
+        )
+
+        svg = svg.replace(
+            'stroke="#000000"',
+            'stroke="#ffffff"',
+        )
+
+        return svg.encode("utf-8")
+
     def load(self, filename: str):
 
-        path = Path("assets") / "icons" / filename
+        path = self._resolve_path(filename)
 
-        if path.exists():
-            self._icon.load(str(path))
+        if path is None:
+            return
+
+        try:
+
+            data = path.read_bytes()
+
+            prepared = self._prepare_svg(
+                data
+            )
+
+            self._icon.load(
+                QByteArray(prepared)
+            )
+
+        except Exception:
+            pass
 
     def setSize(self, size: int):
 
         self._size = size
 
-        self._icon.setFixedSize(size, size)
-        self.setFixedSize(size, size)
+        self._icon.setFixedSize(
+            size,
+            size,
+        )
+
+        self.setFixedSize(
+            size,
+            size,
+        )
 
     @property
     def size(self):

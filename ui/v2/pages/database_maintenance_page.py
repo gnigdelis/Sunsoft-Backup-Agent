@@ -1,4 +1,4 @@
-from PySide6.QtCore import QThread
+﻿from PySide6.QtCore import QThread, Qt
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
@@ -21,6 +21,13 @@ from core.database.database_context import (
     database_context,
 )
 
+from ui.v2.pages.database_maintenance.extra_lock_page import (
+    ExtraLockPage,
+)
+
+from ui.v2.styles.icons import Icons
+from ui.v2.widgets.common.svg_icon import SvgIcon
+
 
 class DatabaseMaintenancePage(QWidget):
 
@@ -29,10 +36,9 @@ class DatabaseMaintenancePage(QWidget):
         super().__init__()
 
         self.thread = None
-
         self.controller = None
-
         self.current_operation = None
+        self.extra_lock_page = None
 
         self.setup_ui()
 
@@ -61,10 +67,6 @@ class DatabaseMaintenancePage(QWidget):
             12
         )
 
-        #
-        # Main Card
-        #
-
         card = QFrame()
 
         card.setObjectName(
@@ -91,7 +93,7 @@ class DatabaseMaintenancePage(QWidget):
         #
 
         title = QLabel(
-            "Database Maintenance"
+            "SQL Tools"
         )
 
         title.setStyleSheet(
@@ -108,29 +110,7 @@ class DatabaseMaintenancePage(QWidget):
         )
 
         #
-        # Description
-        #
-
-        description = QLabel(
-            "Εκτέλεση ανεξάρτητων εργασιών "
-            "συντήρησης της βάσης δεδομένων."
-        )
-
-        description.setStyleSheet(
-            """
-            QLabel {
-                color: #bdbdbd;
-                font-size: 13px;
-            }
-            """
-        )
-
-        card_layout.addWidget(
-            description
-        )
-
-        #
-        # Buttons
+        # Action Buttons
         #
 
         buttons_layout = QHBoxLayout()
@@ -139,28 +119,36 @@ class DatabaseMaintenancePage(QWidget):
             10
         )
 
-        self.delete_button = QPushButton(
-            "1. Delete MyDATA Response"
+        self.delete_button = (
+            self.create_action_button(
+                "Delete MyDATA Response",
+                Icons.DELETE,
+                "#e53935",
+            )
         )
 
-        self.rebuild_button = QPushButton(
-            "2. Rebuild Database"
+        self.rebuild_button = (
+            self.create_action_button(
+                "Rebuild Database",
+                Icons.REBUILD,
+                "#1e88e5",
+            )
         )
 
-        self.shrink_button = QPushButton(
-            "3. Shrink Database"
+        self.shrink_button = (
+            self.create_action_button(
+                "Shrink Database",
+                Icons.DATABASE,
+                "#fb8c00",
+            )
         )
 
-        self.delete_button.setMinimumHeight(
-            42
-        )
-
-        self.rebuild_button.setMinimumHeight(
-            42
-        )
-
-        self.shrink_button.setMinimumHeight(
-            42
+        self.extra_lock_button = (
+            self.create_action_button(
+                "Extra Lock",
+                Icons.EXTRA_LOCK,
+                "#8e24aa",
+            )
         )
 
         self.delete_button.clicked.connect(
@@ -175,6 +163,10 @@ class DatabaseMaintenancePage(QWidget):
             self.shrink_database
         )
 
+        self.extra_lock_button.clicked.connect(
+            self.open_extra_lock
+        )
+
         buttons_layout.addWidget(
             self.delete_button
         )
@@ -187,19 +179,42 @@ class DatabaseMaintenancePage(QWidget):
             self.shrink_button
         )
 
+        buttons_layout.addWidget(
+            self.extra_lock_button
+        )
+
         card_layout.addLayout(
             buttons_layout
+        )
+
+        #
+        # Embedded Extra Lock
+        #
+
+        self.extra_lock_page = ExtraLockPage(
+            self
+        )
+
+        self.extra_lock_page.setMinimumHeight(
+            480
+        )
+
+        self.extra_lock_page.hide()
+
+        card_layout.addWidget(
+            self.extra_lock_page,
+            1,
         )
 
         #
         # Status
         #
 
-        status_title = QLabel(
+        self.status_title = QLabel(
             "Status"
         )
 
-        status_title.setStyleSheet(
+        self.status_title.setStyleSheet(
             """
             QLabel {
                 font-weight: bold;
@@ -208,7 +223,7 @@ class DatabaseMaintenancePage(QWidget):
         )
 
         card_layout.addWidget(
-            status_title
+            self.status_title
         )
 
         self.status = QTextEdit()
@@ -236,6 +251,142 @@ class DatabaseMaintenancePage(QWidget):
 
         main_layout.addStretch()
 
+        self.status_title.show()
+        self.status.show()
+        self.extra_lock_page.hide()
+
+    # ==========================================================
+    # SQL Tool Button
+    # ==========================================================
+
+    def create_action_button(
+        self,
+        text,
+        icon_path,
+        accent,
+    ):
+
+        button = QPushButton()
+
+        button.setObjectName(
+            "SqlToolButton"
+        )
+
+        button.setMinimumHeight(
+            48
+        )
+
+        button.setCursor(
+            Qt.PointingHandCursor
+        )
+
+        layout = QHBoxLayout(
+            button
+        )
+
+        layout.setContentsMargins(
+            10,
+            6,
+            12,
+            6,
+        )
+
+        layout.setSpacing(
+            9
+        )
+
+        icon_container = QFrame()
+
+        icon_container.setFixedSize(
+            34,
+            34,
+        )
+
+        icon_container.setStyleSheet(
+            f"""
+            QFrame {{
+                background:{accent};
+                border-radius:8px;
+            }}
+            """
+        )
+
+        icon_layout = QHBoxLayout(
+            icon_container
+        )
+
+        icon_layout.setContentsMargins(
+            5,
+            5,
+            5,
+            5,
+        )
+
+        icon_layout.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        icon = SvgIcon(
+            icon_path,
+            size=22,
+        )
+
+        icon_layout.addWidget(
+            icon
+        )
+
+        label = QLabel(
+            text
+        )
+
+        label.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                color:#ffffff;
+                font-size:10pt;
+                font-weight:600;
+            }
+            """
+        )
+
+        layout.addWidget(
+            icon_container
+        )
+
+        layout.addWidget(
+            label
+        )
+
+        layout.addStretch()
+
+        button.setStyleSheet(
+            """
+            QPushButton#SqlToolButton {
+                background:#25262a;
+                border:1px solid #3a3b40;
+                border-radius:10px;
+                text-align:left;
+            }
+
+            QPushButton#SqlToolButton:hover {
+                background:#2d2f34;
+                border:1px solid #55575e;
+            }
+
+            QPushButton#SqlToolButton:pressed {
+                background:#202125;
+            }
+
+            QPushButton#SqlToolButton:disabled {
+                background:#25262a;
+                border:1px solid #333438;
+            }
+            """
+        )
+
+        return button
+
     # ==========================================================
     # Database
     # ==========================================================
@@ -246,7 +397,6 @@ class DatabaseMaintenancePage(QWidget):
     ):
 
         if not database:
-
             return
 
         self.append_status(
@@ -261,6 +411,52 @@ class DatabaseMaintenancePage(QWidget):
         self.append_status(
             f"Server: "
             f"{database.get('server', 'Unknown')}"
+        )
+
+    # ==========================================================
+    # Extra Lock
+    # ==========================================================
+
+    def open_extra_lock(self):
+
+        if not database_context.is_selected():
+
+            self.append_status(
+                ""
+            )
+
+            self.append_status(
+                "Δεν έχει επιλεγεί βάση δεδομένων."
+            )
+
+            self.append_status(
+                "Παρακαλώ επίλεξε βάση από το Dashboard."
+            )
+
+            return
+
+        if self.extra_lock_page.isVisible():
+
+            self.extra_lock_page.hide()
+
+            self.status_title.show()
+            self.status.show()
+
+            self.extra_lock_button.setText(
+                "Extra Lock"
+            )
+
+            return
+
+        self.extra_lock_page.load_values()
+
+        self.status_title.hide()
+        self.status.hide()
+
+        self.extra_lock_page.show()
+
+        self.extra_lock_button.setText(
+            "Close Extra Lock"
         )
 
     # ==========================================================
@@ -293,6 +489,10 @@ class DatabaseMaintenancePage(QWidget):
             enabled
         )
 
+        self.extra_lock_button.setEnabled(
+            enabled
+        )
+
     def show_result(
         self,
         result,
@@ -305,18 +505,10 @@ class DatabaseMaintenancePage(QWidget):
                 f"completed successfully."
             )
 
-            affected_rows = (
-                result.get(
-                    "affected_rows",
-                    -1
-                )
+            affected_rows = result.get(
+                "affected_rows",
+                -1,
             )
-
-            #
-            # Only show affected rows when
-            # the database operation actually
-            # provides a valid row count.
-            #
 
             if affected_rows >= 0:
 
@@ -335,25 +527,20 @@ class DatabaseMaintenancePage(QWidget):
                 result["message"]
             )
 
+    # ==========================================================
+    # Operations
+    # ==========================================================
+
     def start_operation(
         self,
         operation,
         title,
     ):
 
-        #
-        # Safety check
-        #
-
         if self.thread is not None:
 
             if self.thread.isRunning():
-
                 return
-
-        #
-        # Database selection
-        #
 
         database = (
             database_context.active()
@@ -366,19 +553,14 @@ class DatabaseMaintenancePage(QWidget):
             )
 
             self.append_status(
-                "✗ No database selected."
+                "Δεν έχει επιλεγεί βάση δεδομένων."
             )
 
             self.append_status(
-                "Please select a database "
-                "from the Dashboard."
+                "Παρακαλώ επίλεξε βάση από το Dashboard."
             )
 
             return
-
-        #
-        # UI
-        #
 
         self.set_buttons_enabled(
             False
@@ -404,10 +586,6 @@ class DatabaseMaintenancePage(QWidget):
         self.append_status(
             "Running..."
         )
-
-        #
-        # Thread
-        #
 
         self.thread = QThread(
             self
@@ -456,10 +634,6 @@ class DatabaseMaintenancePage(QWidget):
         result,
     ):
 
-        #
-        # Remove "Running..."
-        #
-
         self.show_result(
             result
         )
@@ -496,9 +670,7 @@ class DatabaseMaintenancePage(QWidget):
         )
 
         self.current_operation = None
-
         self.controller = None
-
         self.thread = None
 
     # ==========================================================
