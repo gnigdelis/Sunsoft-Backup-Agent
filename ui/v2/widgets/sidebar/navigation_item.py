@@ -25,102 +25,145 @@ class NavigationItem(QFrame):
         self.active = active
         self.color = color
 
-        self.setObjectName("NavigationItem")
-        self.setCursor(Qt.PointingHandCursor)
-        self.setFixedHeight(56)
-
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(12, 8, 12, 8)
-        layout.setSpacing(12)
-
-        self.icon_container = QFrame()
-        self.icon_container.setFixedSize(40, 40)
-
-        icon_layout = QHBoxLayout(self.icon_container)
-        icon_layout.setContentsMargins(8, 8, 8, 8)
-        icon_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        icon_path = (
-            icon
-            if "/" in icon
-            else f"navigation/{icon}"
+        self.setObjectName(
+            "NavigationItem"
         )
+
+        self.setCursor(
+            Qt.PointingHandCursor
+        )
+
+        self.setFixedHeight(
+            50
+        )
+
+        layout = QHBoxLayout(
+            self
+        )
+
+        layout.setContentsMargins(
+            10,
+            5,
+            10,
+            5,
+        )
+
+        layout.setSpacing(
+            12
+        )
+
+        #
+        # Icon
+        #
 
         self.icon = SvgIcon(
-            icon_path,
-            size=24,
+            icon
+            if "/" in icon
+            else f"navigation/{icon}",
+            size=22,
         )
 
-        icon_layout.addWidget(self.icon)
+        layout.addWidget(
+            self.icon
+        )
 
-        self.title = QLabel(text)
+        #
+        # Title
+        #
 
-        layout.addWidget(self.icon_container)
-        layout.addWidget(self.title)
+        self.title = QLabel(
+            text
+        )
+
+        layout.addWidget(
+            self.title
+        )
+
         layout.addStretch()
 
         self.refresh()
 
-    def setActive(self, value: bool):
+    # ==========================================================
+    # ACTIVE
+    # ==========================================================
+
+    def setActive(
+        self,
+        value: bool,
+    ):
 
         self.active = value
+
         self.refresh()
+
+    # ==========================================================
+    # STYLE
+    # ==========================================================
 
     def refresh(self):
 
         if self.active:
 
-            self.setStyleSheet(f"""
+            self.setStyleSheet(
+                f"""
                 QFrame#NavigationItem {{
-                    background:{Theme.Colors.PRIMARY};
-                    border-radius:12px;
+                    background:#1B2432;
+                    border:none;
+                    border-left:3px solid
+                        {Theme.Colors.PRIMARY};
+                    border-radius:7px;
                 }}
 
                 QLabel {{
                     background:transparent;
-                    color:white;
-                    font-size:11pt;
+                    color:{Theme.Colors.PRIMARY};
+                    font-size:10.5pt;
                     font-weight:700;
                 }}
-            """)
-
-            self.icon_container.setStyleSheet("""
-                QFrame {
-                    background:rgba(255,255,255,0.18);
-                    border-radius:8px;
-                }
-            """)
+                """
+            )
 
         else:
 
-            self.setStyleSheet(f"""
+            self.setStyleSheet(
+                f"""
                 QFrame#NavigationItem {{
                     background:transparent;
-                    border-radius:12px;
+                    border:none;
+                    border-left:3px solid transparent;
+                    border-radius:7px;
                 }}
 
                 QFrame#NavigationItem:hover {{
-                    background:{Theme.Colors.SURFACE_LIGHT};
+                    background:#17202D;
+                    border-left:3px solid #334155;
                 }}
 
                 QLabel {{
                     background:transparent;
                     color:{Theme.Colors.TEXT};
-                    font-size:11pt;
-                    font-weight:600;
+                    font-size:10.5pt;
+                    font-weight:500;
                 }}
-            """)
+                """
+            )
 
-            self.icon_container.setStyleSheet(f"""
-                QFrame {{
-                    background:{self.color};
-                    border-radius:8px;
-                }}
-            """)
+    # ==========================================================
+    # CLICK
+    # ==========================================================
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(
+        self,
+        event,
+    ):
 
-        if event.button() == Qt.MouseButton.LeftButton:
+        if (
+            event.button()
+            == Qt.MouseButton.LeftButton
+        ):
+
             self.clicked.emit()
 
-        super().mousePressEvent(event)
+        super().mousePressEvent(
+            event
+        )

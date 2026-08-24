@@ -1,14 +1,17 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget,
-    QLabel,
     QPushButton,
     QHBoxLayout,
+    QVBoxLayout,
+    QLabel,
     QDialog,
 )
 
 from ui.v2.styles.theme import Theme
+from ui.v2.styles.icons import Icons
 from ui.v2.widgets.common.status_chip import StatusChip
+from ui.v2.widgets.common.svg_icon import SvgIcon
 from ui.v2.widgets.header.database_selector import DatabaseSelector
 
 from core.database.database_context import database_context
@@ -28,9 +31,7 @@ class Header(QWidget):
 
     def setup_ui(self):
 
-        self.setFixedHeight(
-            48
-        )
+        self.setFixedHeight(52)
 
         layout = QHBoxLayout(
             self
@@ -43,81 +44,15 @@ class Header(QWidget):
             0,
         )
 
-        layout.setSpacing(
-            15
-        )
+        layout.setSpacing(10)
 
         #
-        # LEFT
-        #
-
-        status = QLabel(
-            "Everything is running normally."
-        )
-
-        status.setStyleSheet(
-            """
-            QLabel {
-                color:#53C653;
-                font-size:11pt;
-                font-weight:600;
-                background:transparent;
-            }
-            """
-        )
-
-        #
-        # RIGHT
+        # Right side
         #
 
         right = QHBoxLayout()
 
-        right.setSpacing(
-            12
-        )
-
-        #
-        # DATABASE
-        #
-
-        self.database_button = QPushButton(
-            "Database: Not Selected"
-        )
-
-        self.database_button.setCursor(
-            Qt.PointingHandCursor
-        )
-
-        self.database_button.setFixedHeight(
-            36
-        )
-
-        self.database_button.setStyleSheet(
-            """
-            QPushButton {
-                background:#292b30;
-                color:#ffffff;
-                border:1px solid #3a3d43;
-                border-radius:9px;
-                padding:0 14px;
-                font-size:9pt;
-                font-weight:600;
-            }
-
-            QPushButton:hover {
-                background:#33363c;
-                border:1px solid #555a63;
-            }
-            """
-        )
-
-        self.database_button.clicked.connect(
-            self.open_database_selector
-        )
-
-        #
-        # CONNECTION
-        #
+        right.setSpacing(12)
 
         self.connected = StatusChip(
             "Not Connected",
@@ -125,45 +60,69 @@ class Header(QWidget):
         )
 
         #
-        # SETTINGS
+        # Settings / UDL
         #
 
-        settings = QPushButton(
-            "⚙"
-        )
+        self.settings_button = QPushButton()
 
-        settings.setCursor(
+        self.settings_button.setCursor(
             Qt.PointingHandCursor
         )
 
-        settings.setFixedSize(
+        self.settings_button.setFixedSize(
             42,
-            42
+            42,
         )
 
-        settings.setStyleSheet(
+        self.settings_button.setObjectName(
+            "HeaderSettingsButton"
+        )
+
+        settings_layout = QHBoxLayout(
+            self.settings_button
+        )
+
+        settings_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        settings_layout.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        settings_icon = SvgIcon(
+            Icons.SETTINGS,
+            size=20,
+        )
+
+        settings_layout.addWidget(
+            settings_icon
+        )
+
+        self.settings_button.setStyleSheet(
             f"""
-            QPushButton {{
-                background:{Theme.Colors.PRIMARY};
-                color:white;
-                border:none;
+            QPushButton#HeaderSettingsButton {{
+                background:#172131;
+                border:1px solid {Theme.Colors.BORDER};
                 border-radius:10px;
-                font-size:16pt;
-                font-weight:bold;
             }}
 
-            QPushButton:hover {{
-                background:#ff4b4b;
+            QPushButton#HeaderSettingsButton:hover {{
+                background:#202D3F;
+                border:1px solid {Theme.Colors.BORDER_LIGHT};
+            }}
+
+            QPushButton#HeaderSettingsButton:pressed {{
+                background:#141D2A;
             }}
             """
         )
 
-        #
-        # ADD RIGHT SIDE
-        #
-
-        right.addWidget(
-            self.database_button
+        self.settings_button.clicked.connect(
+            self.open_database_selector
         )
 
         right.addWidget(
@@ -171,15 +130,7 @@ class Header(QWidget):
         )
 
         right.addWidget(
-            settings
-        )
-
-        #
-        # MAIN LAYOUT
-        #
-
-        layout.addWidget(
-            status
+            self.settings_button
         )
 
         layout.addStretch()
@@ -214,29 +165,16 @@ class Header(QWidget):
 
     def update_database_display(
         self,
-        database
+        database,
     ):
 
         if not database:
-
-            self.database_button.setText(
-                "Database: Not Selected"
-            )
 
             self.connected.setText(
                 "Not Connected"
             )
 
             return
-
-        database_name = (
-            database.get("name")
-            or "Unknown"
-        )
-
-        self.database_button.setText(
-            f"Database: {database_name}"
-        )
 
         self.connected.setText(
             "Connected"

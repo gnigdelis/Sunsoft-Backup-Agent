@@ -1,4 +1,4 @@
-class Colors:
+﻿class Colors:
 
     # ==========================
     # Background
@@ -38,6 +38,7 @@ class Colors:
     # ==========================
 
     BORDER = "#3A3D44"
+    BORDER_LIGHT = "#4A4D55"
 
     # ==========================
     # Misc

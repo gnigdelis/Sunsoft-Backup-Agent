@@ -1,6 +1,9 @@
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
+    QHBoxLayout,
+    QLabel,
 )
 
 from ui.v2.widgets.header.header import Header
@@ -20,20 +23,116 @@ class DashboardLayout(QWidget):
 
     def setup_ui(self):
 
-        layout = QVBoxLayout()
+        layout = QVBoxLayout(
+            self
+        )
 
         layout.setContentsMargins(
-            20,
-            20,
-            20,
-            20,
+            22,
+            18,
+            22,
+            16,
         )
 
         layout.setSpacing(
-            15
+            14
+        )
+
+        #
+        # Page header
+        #
+
+        top_row = QHBoxLayout()
+
+        top_row.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        top_row.setSpacing(
+            18
+        )
+
+        title_column = QVBoxLayout()
+
+        title_column.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        title_column.setSpacing(
+            2
+        )
+
+        title = QLabel(
+            "Dashboard"
+        )
+
+        title.setObjectName(
+            "DashboardTitle"
+        )
+
+        title.setStyleSheet(
+            """
+            QLabel#DashboardTitle {
+                font-size: 26pt;
+                font-weight: 700;
+                color: #F5F7FA;
+                background: transparent;
+            }
+            """
+        )
+
+        subtitle = QLabel(
+            "Monitor your backup activity and system status"
+        )
+
+        subtitle.setObjectName(
+            "DashboardSubtitle"
+        )
+
+        subtitle.setStyleSheet(
+            """
+            QLabel#DashboardSubtitle {
+                font-size: 10.5pt;
+                color: #98A3B3;
+                background: transparent;
+            }
+            """
+        )
+
+        title_column.addWidget(
+            title
+        )
+
+        title_column.addWidget(
+            subtitle
+        )
+
+        top_row.addLayout(
+            title_column,
+            1,
         )
 
         self.header = Header()
+
+        top_row.addWidget(
+            self.header,
+            0,
+            Qt.AlignmentFlag.AlignBottom,
+        )
+
+        layout.addLayout(
+            top_row
+        )
+
+        #
+        # Dashboard content
+        #
 
         self.summary = SummarySection()
 
@@ -42,15 +141,12 @@ class DashboardLayout(QWidget):
         self.footer = Footer()
 
         layout.addWidget(
-            self.header
-        )
-
-        layout.addWidget(
             self.summary
         )
 
         layout.addWidget(
-            self.operations
+            self.operations,
+            1,
         )
 
         layout.addWidget(

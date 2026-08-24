@@ -1,14 +1,16 @@
 from PySide6.QtWidgets import (
     QWidget,
     QHBoxLayout,
+    QVBoxLayout,
 )
 
 from core.controllers.backup_controller import BackupController
-from core.services.maintenance_service import maintenance_service
-from core.database.database_context import database_context
+from core.discovery.system_discovery import SystemDiscovery
 
 from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
-from ui.v2.widgets.actions.quick_actions_card import QuickActionsCard
+from ui.v2.widgets.cards.info_card import InfoCard
+from ui.v2.widgets.progress.progress_card import ProgressCard
+from ui.v2.styles.icons import Icons
 
 
 class OperationsSection(QWidget):
@@ -19,55 +21,139 @@ class OperationsSection(QWidget):
 
         self.controller = BackupController()
 
+        self.system = SystemDiscovery()
+
+        self.system_info = (
+            self.system.discover()["data"]
+        )
+
         self.setup_ui()
 
         self.connect_signals()
 
+    # ==========================================================
+    # UI
+    # ==========================================================
+
     def setup_ui(self):
 
-        layout = QHBoxLayout()
+        main_layout = QHBoxLayout(
+            self
+        )
 
-        layout.setContentsMargins(
+        main_layout.setContentsMargins(
             0,
             0,
             0,
             0,
         )
 
-        layout.setSpacing(15)
+        main_layout.setSpacing(
+            14
+        )
 
-        self.live_activity = LiveActivityCard()
+        #
+        # LEFT SIDE
+        #
 
-        self.quick_actions = QuickActionsCard()
+        left_layout = QVBoxLayout()
 
-        layout.addWidget(
+        left_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        left_layout.setSpacing(
+            14
+        )
+
+        #
+        # Live Backup Progress
+        #
+
+        self.progress = ProgressCard()
+
+        self.progress.setMinimumHeight(
+            245
+        )
+
+        self.progress.setMaximumHeight(
+            275
+        )
+
+        left_layout.addWidget(
+            self.progress,
+            0,
+        )
+
+        #
+        # Live Logs
+        #
+
+        self.live_activity = (
+            LiveActivityCard()
+        )
+
+        left_layout.addWidget(
             self.live_activity,
-            3,
-        )
-
-        layout.addWidget(
-            self.quick_actions,
             1,
         )
 
-        self.setLayout(layout)
+        #
+        # RIGHT SIDE
+        #
+
+        self.system_card = InfoCard(
+            title="System Information",
+            lines=[
+                self.system_info.get(
+                    "computer_name",
+                    "Unknown",
+                ),
+                self.system_info.get(
+                    "windows_version",
+                    "Unknown",
+                ),
+                "Sunsoft Support Agent v2.0",
+                "Database connection available",
+            ],
+            status="info",
+            icon=Icons.COMPUTER,
+            minimum_height=530,
+        )
+
+        #
+        # MAIN LAYOUT
+        #
+
+        main_layout.addLayout(
+            left_layout,
+            3,
+        )
+
+        main_layout.addWidget(
+            self.system_card,
+            1,
+        )
+
+        self.setLayout(
+            main_layout
+        )
+
+    # ==========================================================
+    # SIGNALS
+    # ==========================================================
 
     def connect_signals(self):
 
         #
-        # Backup
+        # Backup Progress
         #
 
-        self.quick_actions.backup_clicked.connect(
-            self.start_backup
-        )
-
-        #
-        # Delete MyDATA Response
-        #
-
-        self.quick_actions.delete_mydata_clicked.connect(
-            self.start_database_maintenance
+        self.controller.progress_changed.connect(
+            self.on_progress_changed
         )
 
         #
@@ -90,125 +176,90 @@ class OperationsSection(QWidget):
             self.on_finished
         )
 
-    def start_backup(self):
+    # ==========================================================
+    # PROGRESS
+    # ==========================================================
 
-        self.live_activity.clear_logs()
+    def on_progress_changed(
+        self,
+        percentage,
+        current_step,
+        total_steps,
+        task,
+    ):
+
+        self.progress.update_progress(
+            percentage,
+            current_step,
+            total_steps,
+            task,
+        )
+
+    # ==========================================================
+    # LOGS
+    # ==========================================================
+
+    def on_info(
+        self,
+        text,
+    ):
 
         self.live_activity.add_log(
-            "Backup Started..."
+            f"INFO {text}"
         )
 
-        self.controller.start_backup()
-
-    def start_database_maintenance(self):
-
-        self.live_activity.clear_logs()
-
-        #
-        # DATABASE CHECK
-        #
-
-        if not database_context.is_selected():
-
-            self.live_activity.add_log(
-                "✖ No database selected."
-            )
-
-            self.live_activity.add_log(
-                "Please select a database from the Dashboard."
-            )
-
-            return
-
-        #
-        # ACTIVE DATABASE
-        #
-
-        database = database_context.active()
-
-        database_name = (
-            database.get("name")
-            if database
-            else "Unknown"
-        )
+    def on_success(
+        self,
+        text,
+    ):
 
         self.live_activity.add_log(
-            f"Delete MyDATA Response Started - {database_name}"
+            f"SUCCESS {text}"
         )
 
-        #
-        # MAINTENANCE
-        #
-
-        try:
-
-            results = maintenance_service.run()
-
-            for result in results:
-
-                if result["success"]:
-
-                    self.live_activity.add_log(
-                        f"✓ {result['step']}"
-                    )
-
-                    if result["affected_rows"]:
-
-                        self.live_activity.add_log(
-                            f"Affected Rows: "
-                            f"{result['affected_rows']}"
-                        )
-
-                else:
-
-                    self.live_activity.add_log(
-                        f"✖ {result['step']}"
-                    )
-
-                    self.live_activity.add_log(
-                        result["message"]
-                    )
-
-                    return
-
-            self.live_activity.add_log(
-                "✓ Database Maintenance Completed"
-            )
-
-        except Exception as ex:
-
-            self.live_activity.add_log(
-                f"✖ {ex}"
-            )
-
-    def on_info(self, text):
+    def on_error(
+        self,
+        text,
+    ):
 
         self.live_activity.add_log(
-            f"ℹ {text}"
+            f"ERROR {text}"
         )
 
-    def on_success(self, text):
+    # ==========================================================
+    # FINISHED
+    # ==========================================================
 
-        self.live_activity.add_log(
-            f"✓ {text}"
+    def on_finished(
+        self,
+        result,
+    ):
+
+        success = result.get(
+            "success",
+            False,
         )
 
-    def on_error(self, text):
-
-        self.live_activity.add_log(
-            f"✖ {text}"
+        self.progress.finish(
+            success
         )
 
-    def on_finished(self, result):
-
-        if result.get("success", False):
+        if success:
 
             self.live_activity.add_log(
-                "✓ Backup Completed."
+                "Backup Completed Successfully."
             )
 
         else:
 
             self.live_activity.add_log(
-                "✖ Backup Failed."
+                "Backup Failed."
             )
+
+    # ==========================================================
+    # RESET
+    # ==========================================================
+
+    def reset_progress(self):
+
+        self.progress.reset()

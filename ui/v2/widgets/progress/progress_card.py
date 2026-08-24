@@ -1,260 +1,363 @@
+import time
+
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QPainter, QPen, QFont
 from PySide6.QtWidgets import (
     QLabel,
     QFrame,
-    QVBoxLayout,
     QHBoxLayout,
-    QProgressBar,
+    QVBoxLayout,
     QWidget,
+    QGridLayout,
 )
 
-from ui.v2.styles.theme import Theme
 from ui.v2.widgets.cards.base_card import BaseCard
+from ui.v2.styles.theme import Theme
 
 
-class ProgressCard(BaseCard):
+class CircularProgress(QWidget):
 
-    def __init__(self):
-
-        super().__init__(
-            title="Backup Progress",
-            minimum_height=250,
-        )
-
-        self.build()
-
-    # =====================================================
-    # HELPERS
-    # =====================================================
-
-    def create_caption(
+    def __init__(
         self,
-        text,
+        parent=None,
     ):
 
-        lbl = QLabel(
-            text
+        super().__init__(parent)
+
+        self.value = 0
+
+        self.setMinimumSize(
+            150,
+            150,
         )
 
-        lbl.setStyleSheet(
-            f"""
-            color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:10pt;
-            """
-        )
-
-        return lbl
-
-    def create_value(
+    def setValue(
         self,
-        text,
-        color=None,
-    ):
-
-        lbl = QLabel(
-            text
-        )
-
-        lbl.setAlignment(
-            Qt.AlignmentFlag.AlignRight |
-            Qt.AlignmentFlag.AlignVCenter
-        )
-
-        lbl.setStyleSheet(
-            f"""
-            color:{color or Theme.Colors.TEXT};
-            font-size:10pt;
-            font-weight:600;
-            """
-        )
-
-        return lbl
-
-    def stat_row(
-        self,
-        title,
         value,
-        color=None,
     ):
 
-        row = QHBoxLayout()
-
-        row.setContentsMargins(
+        self.value = max(
             0,
-            0,
-            0,
-            0,
+            min(
+                100,
+                int(value),
+            ),
         )
 
-        row.setSpacing(
-            10
+        self.update()
+
+    def paintEvent(
+        self,
+        event,
+    ):
+
+        painter = QPainter(
+            self
         )
 
-        row.addWidget(
-            self.create_caption(
-                title
-            )
+        painter.setRenderHint(
+            QPainter.RenderHint.Antialiasing
         )
 
-        row.addStretch()
-
-        value_label = self.create_value(
-            value,
-            color,
+        rect = self.rect().adjusted(
+            12,
+            12,
+            -12,
+            -12,
         )
 
-        row.addWidget(
-            value_label
+        #
+        # Background ring
+        #
+
+        background_pen = QPen(
+            Theme.Colors.BORDER
         )
 
-        return row, value_label
+        background_pen.setWidth(
+            12
+        )
 
-    # =====================================================
-    # UI
-    # =====================================================
+        background_pen.setCapStyle(
+            Qt.PenCapStyle.RoundCap
+        )
 
-    def build(self):
+        painter.setPen(
+            background_pen
+        )
 
-        self.content_layout.setSpacing(
-            8
+        painter.drawArc(
+            rect,
+            90 * 16,
+            -360 * 16,
+        )
+
+        #
+        # Progress ring
+        #
+
+        progress_pen = QPen(
+            Theme.Colors.PRIMARY
+        )
+
+        progress_pen.setWidth(
+            12
+        )
+
+        progress_pen.setCapStyle(
+            Qt.PenCapStyle.RoundCap
+        )
+
+        painter.setPen(
+            progress_pen
+        )
+
+        span = int(
+            -360
+            * 16
+            * self.value
+            / 100
+        )
+
+        painter.drawArc(
+            rect,
+            90 * 16,
+            span,
         )
 
         #
         # Percentage
         #
 
-        self.percent = QLabel(
-            "0%"
+        painter.setPen(
+            Theme.Colors.TEXT
         )
 
-        self.percent.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
+        painter.setFont(
+            QFont(
+                "Segoe UI",
+                22,
+                QFont.Weight.Bold,
+            )
         )
 
-        self.percent.setStyleSheet(
-            f"""
-            color:{Theme.Colors.TEXT};
-            font-size:28pt;
-            font-weight:700;
-            """
-        )
-
-        self.content_layout.addWidget(
-            self.percent
+        painter.drawText(
+            rect,
+            Qt.AlignmentFlag.AlignCenter,
+            f"{self.value}%",
         )
 
         #
-        # Progress Bar
+        # Label
         #
 
-        self.progress = QProgressBar()
-
-        self.progress.setRange(
+        label_rect = rect.adjusted(
             0,
-            100,
+            38,
+            0,
+            38,
         )
 
-        self.progress.setValue(
-            0
+        painter.setPen(
+            Theme.Colors.TEXT_SECONDARY
         )
 
-        self.progress.setTextVisible(
-            False
+        painter.setFont(
+            QFont(
+                "Segoe UI",
+                9,
+                QFont.Weight.Normal,
+            )
         )
 
-        self.progress.setFixedHeight(
+        painter.drawText(
+            label_rect,
+            Qt.AlignmentFlag.AlignCenter,
+            (
+                "Completed"
+                if self.value == 100
+                else "Progress"
+            ),
+        )
+
+
+class ProgressCard(BaseCard):
+
+    def __init__(self):
+
+        self._started_at = None
+
+        super().__init__(
+            title="Live Backup Progress",
+            minimum_height=250,
+        )
+
+        self.build_progress_ui()
+
+    # ==========================================================
+    # UI
+    # ==========================================================
+
+    def build_progress_ui(self):
+
+        self.content_layout.setSpacing(
             10
         )
 
-        self.progress.setStyleSheet(
-            f"""
-            QProgressBar
-            {{
-                background:{Theme.Colors.BORDER};
-                border:none;
-                border-radius:5px;
-            }}
+        main_layout = QHBoxLayout()
 
-            QProgressBar::chunk
-            {{
-                background:{Theme.Colors.PRIMARY};
-                border-radius:5px;
+        main_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        main_layout.setSpacing(
+            24
+        )
+
+        #
+        # Circular progress
+        #
+
+        self.circular = CircularProgress()
+
+        self.circular.setFixedSize(
+            150,
+            150,
+        )
+
+        main_layout.addWidget(
+            self.circular,
+            0,
+            Qt.AlignmentFlag.AlignVCenter,
+        )
+
+        #
+        # Center information
+        #
+
+        center_layout = QVBoxLayout()
+
+        center_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        center_layout.setSpacing(
+            6
+        )
+
+        self.status_title = QLabel(
+            "Waiting for backup..."
+        )
+
+        self.status_title.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                font-size:15pt;
+                font-weight:700;
+                background:transparent;
             }}
             """
         )
 
-        self.content_layout.addWidget(
-            self.progress
+        center_layout.addWidget(
+            self.status_title
+        )
+
+        self.status_description = QLabel(
+            "Backup process is ready."
+        )
+
+        self.status_description.setWordWrap(
+            True
+        )
+
+        self.status_description.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                font-size:10pt;
+                background:transparent;
+            }}
+            """
+        )
+
+        center_layout.addWidget(
+            self.status_description
         )
 
         #
-        # Statistics
+        # Steps
         #
 
-        stats = QWidget()
+        steps_container = QWidget()
 
-        stats_layout = QVBoxLayout(
-            stats
+        steps_layout = QGridLayout(
+            steps_container
         )
 
-        stats_layout.setContentsMargins(
+        steps_layout.setContentsMargins(
+            0,
+            8,
             0,
             0,
-            0,
-            0,
         )
 
-        stats_layout.setSpacing(
-            5
+        steps_layout.setHorizontalSpacing(
+            18
         )
 
-        self.files_row, self.files_value = (
-            self.stat_row(
-                "Files",
-                "0 / 0",
+        steps_layout.setVerticalSpacing(
+            4
+        )
+
+        self.step_labels = []
+
+        step_names = [
+            "Preparing",
+            "Files",
+            "Database",
+            "Compression",
+            "Verify",
+        ]
+
+        for index, name in enumerate(
+            step_names
+        ):
+
+            label = QLabel(
+                f"● {name}"
             )
-        )
 
-        self.speed_row, self.speed_value = (
-            self.stat_row(
-                "Speed",
-                "0 MB/s",
+            label.setStyleSheet(
+                f"""
+                QLabel {{
+                    color:{Theme.Colors.TEXT_SECONDARY};
+                    font-size:9pt;
+                    font-weight:600;
+                    background:transparent;
+                }}
+                """
             )
-        )
 
-        self.remaining_row, self.remaining_value = (
-            self.stat_row(
-                "Remaining",
-                "--:--",
+            steps_layout.addWidget(
+                label,
+                0,
+                index,
             )
-        )
 
-        self.copied_row, self.copied_value = (
-            self.stat_row(
-                "Copied",
-                "0 MB",
-                Theme.Colors.SUCCESS,
+            self.step_labels.append(
+                label
             )
-        )
 
-        stats_layout.addLayout(
-            self.files_row
-        )
-
-        stats_layout.addLayout(
-            self.speed_row
-        )
-
-        stats_layout.addLayout(
-            self.remaining_row
-        )
-
-        stats_layout.addLayout(
-            self.copied_row
-        )
-
-        self.content_layout.addWidget(
-            stats
+        center_layout.addWidget(
+            steps_container
         )
 
         #
@@ -269,27 +372,36 @@ class ProgressCard(BaseCard):
 
         divider.setStyleSheet(
             f"""
-            color:{Theme.Colors.BORDER};
-            background:{Theme.Colors.BORDER};
+            QFrame {{
+                color:{Theme.Colors.BORDER};
+                background:{Theme.Colors.BORDER};
+                border:none;
+                max-height:1px;
+            }}
             """
         )
 
-        self.content_layout.addWidget(
+        center_layout.addWidget(
             divider
         )
 
         #
-        # Current Task
+        # Current task
         #
 
-        self.task_title = QLabel(
+        task_row = QHBoxLayout()
+
+        task_title = QLabel(
             "Current Task"
         )
 
-        self.task_title.setStyleSheet(
+        task_title.setStyleSheet(
             f"""
-            color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:10pt;
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                font-size:9pt;
+                background:transparent;
+            }}
             """
         )
 
@@ -297,31 +409,253 @@ class ProgressCard(BaseCard):
             "Waiting..."
         )
 
-        self.task_value.setWordWrap(
-            True
-        )
-
         self.task_value.setStyleSheet(
             f"""
-            color:{Theme.Colors.TEXT};
-            font-size:11pt;
-            font-weight:600;
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                font-size:10pt;
+                font-weight:600;
+                background:transparent;
+            }}
+            """
+        )
+
+        task_row.addWidget(
+            task_title
+        )
+
+        task_row.addStretch()
+
+        task_row.addWidget(
+            self.task_value
+        )
+
+        center_layout.addLayout(
+            task_row
+        )
+
+        main_layout.addLayout(
+            center_layout,
+            1,
+        )
+
+        #
+        # Right statistics
+        #
+
+        stats_frame = QFrame()
+
+        stats_frame.setStyleSheet(
+            f"""
+            QFrame {{
+                background:transparent;
+                border:none;
+            }}
+            """
+        )
+
+        stats_layout = QVBoxLayout(
+            stats_frame
+        )
+
+        stats_layout.setContentsMargins(
+            18,
+            0,
+            0,
+            0,
+        )
+
+        stats_layout.setSpacing(
+            14
+        )
+
+        elapsed_title = QLabel(
+            "Elapsed Time"
+        )
+
+        elapsed_title.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                font-size:9pt;
+                background:transparent;
+            }}
+            """
+        )
+
+        self.elapsed_value = QLabel(
+            "00:00:00"
+        )
+
+        self.elapsed_value.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                font-size:11pt;
+                font-weight:700;
+                background:transparent;
+            }}
+            """
+        )
+
+        stats_layout.addWidget(
+            elapsed_title
+        )
+
+        stats_layout.addWidget(
+            self.elapsed_value
+        )
+
+        speed_title = QLabel(
+            "Speed"
+        )
+
+        speed_title.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                font-size:9pt;
+                background:transparent;
+            }}
+            """
+        )
+
+        self.speed_value = QLabel(
+            "--"
+        )
+
+        self.speed_value.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                font-size:11pt;
+                font-weight:700;
+                background:transparent;
+            }}
+            """
+        )
+
+        stats_layout.addWidget(
+            speed_title
+        )
+
+        stats_layout.addWidget(
+            self.speed_value
+        )
+
+        stats_layout.addStretch()
+
+        main_layout.addWidget(
+            stats_frame,
+            0,
+        )
+
+        self.content_layout.addLayout(
+            main_layout
+        )
+
+        #
+        # Bottom progress line
+        #
+
+        self.progress_line = QFrame()
+
+        self.progress_line.setFixedHeight(
+            8
+        )
+
+        self.progress_line.setStyleSheet(
+            f"""
+            QFrame {{
+                background:{Theme.Colors.BORDER};
+                border:none;
+                border-radius:4px;
+            }}
             """
         )
 
         self.content_layout.addWidget(
-            self.task_title
+            self.progress_line
         )
 
-        self.content_layout.addWidget(
-            self.task_value
+    # ==========================================================
+    # STEPS
+    # ==========================================================
+
+    def update_steps(
+        self,
+        current_step,
+        total_steps,
+    ):
+
+        if total_steps <= 0:
+            return
+
+        step_count = len(
+            self.step_labels
         )
 
-        self.content_layout.addStretch()
+        for index, label in enumerate(
+            self.step_labels
+        ):
 
-    # =====================================================
+            step_number = index + 1
+
+            if step_number < current_step:
+
+                color = (
+                    Theme.Colors.SUCCESS
+                )
+
+                prefix = "●"
+
+            elif step_number == current_step:
+
+                color = (
+                    Theme.Colors.PRIMARY
+                )
+
+                prefix = "●"
+
+            else:
+
+                color = (
+                    Theme.Colors.TEXT_SECONDARY
+                )
+
+                prefix = "○"
+
+            text = label.text()
+
+            if " " in text:
+
+                name = text.split(
+                    " ",
+                    1,
+                )[1]
+
+            else:
+
+                name = text
+
+            label.setText(
+                f"{prefix} {name}"
+            )
+
+            label.setStyleSheet(
+                f"""
+                QLabel {{
+                    color:{color};
+                    font-size:9pt;
+                    font-weight:600;
+                    background:transparent;
+                }}
+                """
+            )
+
+    # ==========================================================
     # LIVE PROGRESS
-    # =====================================================
+    # ==========================================================
 
     def update_progress(
         self,
@@ -331,59 +665,146 @@ class ProgressCard(BaseCard):
         task,
     ):
 
-        self.percent.setText(
-            f"{percentage}%"
-        )
+        if self._started_at is None:
 
-        self.progress.setValue(
+            self._started_at = time.monotonic()
+
+        self.circular.setValue(
             percentage
         )
 
-        self.files_value.setText(
-            f"Step {current_step} / {total_steps}"
+        self.update_steps(
+            current_step,
+            total_steps,
         )
 
         self.task_value.setText(
             task
+            if task
+            else "Working..."
         )
 
-    # =====================================================
-    # RESET
-    # =====================================================
-
-    def reset(self):
-
-        self.percent.setText(
-            "0%"
+        self.status_title.setText(
+            "Backup in progress..."
         )
 
-        self.progress.setValue(
-            0
+        self.status_description.setText(
+            "The backup process is currently running."
         )
 
-        self.files_value.setText(
-            "0 / 0"
+        elapsed = int(
+            time.monotonic()
+            - self._started_at
+        )
+
+        hours = elapsed // 3600
+        minutes = (
+            elapsed % 3600
+        ) // 60
+        seconds = elapsed % 60
+
+        self.elapsed_value.setText(
+            f"{hours:02d}:"
+            f"{minutes:02d}:"
+            f"{seconds:02d}"
         )
 
         self.speed_value.setText(
-            "0 MB/s"
+            "--"
         )
 
-        self.remaining_value.setText(
-            "--:--"
+        progress_style = f"""
+            QFrame {{
+                background:qlineargradient(
+                    x1:0,
+                    y1:0,
+                    x2:1,
+                    y2:0,
+                    stop:0 {Theme.Colors.PRIMARY},
+                    stop:{max(0.0, min(1.0, percentage / 100))} {Theme.Colors.PRIMARY},
+                    stop:{max(0.0, min(1.0, percentage / 100))} {Theme.Colors.BORDER},
+                    stop:1 {Theme.Colors.BORDER}
+                );
+                border:none;
+                border-radius:4px;
+            }}
+        """
+
+        self.progress_line.setStyleSheet(
+            progress_style
         )
 
-        self.copied_value.setText(
-            "0 MB"
+    # ==========================================================
+    # RESET
+    # ==========================================================
+
+    def reset(self):
+
+        self._started_at = None
+
+        self.circular.setValue(
+            0
         )
 
         self.task_value.setText(
             "Waiting..."
         )
 
-    # =====================================================
+        self.status_title.setText(
+            "Waiting for backup..."
+        )
+
+        self.status_description.setText(
+            "Backup process is ready."
+        )
+
+        self.elapsed_value.setText(
+            "00:00:00"
+        )
+
+        self.speed_value.setText(
+            "--"
+        )
+
+        for label in self.step_labels:
+
+            name = label.text()
+
+            if " " in name:
+
+                name = name.split(
+                    " ",
+                    1,
+                )[1]
+
+            label.setText(
+                f"○ {name}"
+            )
+
+            label.setStyleSheet(
+                f"""
+                QLabel {{
+                    color:{Theme.Colors.TEXT_SECONDARY};
+                    font-size:9pt;
+                    font-weight:600;
+                    background:transparent;
+                }}
+                """
+            )
+
+        self.progress_line.setStyleSheet(
+            f"""
+            QFrame {{
+                background:{Theme.Colors.BORDER};
+                border:none;
+                border-radius:4px;
+            }}
+            """
+        )
+
+    # ==========================================================
     # FINISH
-    # =====================================================
+    # ==========================================================
 
     def finish(
         self,
@@ -392,20 +813,83 @@ class ProgressCard(BaseCard):
 
         if success:
 
-            self.percent.setText(
-                "100%"
-            )
-
-            self.progress.setValue(
+            self.circular.setValue(
                 100
             )
 
+            self.status_title.setText(
+                "Backup Completed Successfully"
+            )
+
+            self.status_description.setText(
+                "All available backup tasks completed successfully."
+            )
+
             self.task_value.setText(
-                "Backup Completed."
+                "Backup completed successfully."
+            )
+
+            self.step_label.setText(
+                "Completed"
+            )
+
+            self.elapsed_value.setText(
+                self.elapsed_value.text()
+            )
+
+            self.speed_value.setText(
+                "--"
+            )
+
+            for label in self.step_labels:
+
+                label.setText(
+                    "● "
+                    + (
+                        label.text().split(
+                            " ",
+                            1,
+                        )[1]
+                        if " " in label.text()
+                        else label.text()
+                    )
+                )
+
+                label.setStyleSheet(
+                    f"""
+                    QLabel {{
+                        color:{Theme.Colors.SUCCESS};
+                        font-size:9pt;
+                        font-weight:600;
+                        background:transparent;
+                    }}
+                    """
+                )
+
+            self.progress_line.setStyleSheet(
+                f"""
+                QFrame {{
+                    background:{Theme.Colors.PRIMARY};
+                    border:none;
+                    border-radius:4px;
+                }}
+                """
             )
 
         else:
 
+            self.status_title.setText(
+                "Backup Failed"
+            )
+
+            self.status_description.setText(
+                "The backup process did not complete successfully."
+            )
+
             self.task_value.setText(
-                "Backup Failed."
+                "Backup failed."
+            )
+
+            self.speed_value.setText(
+                "--"
             )
