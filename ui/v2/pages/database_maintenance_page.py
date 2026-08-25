@@ -21,10 +21,6 @@ from core.database.database_context import (
     database_context,
 )
 
-from ui.v2.pages.database_maintenance.extra_lock_page import (
-    ExtraLockPage,
-)
-
 from ui.v2.styles.icons import Icons
 from ui.v2.widgets.common.svg_icon import SvgIcon
 
@@ -38,7 +34,6 @@ class DatabaseMaintenancePage(QWidget):
         self.thread = None
         self.controller = None
         self.current_operation = None
-        self.extra_lock_page = None
 
         self.setup_ui()
 
@@ -57,40 +52,32 @@ class DatabaseMaintenancePage(QWidget):
         )
 
         main_layout.setContentsMargins(
+            20,
             18,
-            18,
-            18,
-            18,
+            20,
+            22,
         )
 
         main_layout.setSpacing(
-            12
+            14
         )
 
-        card = QFrame()
+        # ======================================================
+        # PAGE HEADER
+        # ======================================================
 
-        card.setObjectName(
-            "DatabaseMaintenanceCard"
+        header = QVBoxLayout()
+
+        header.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
         )
 
-        card_layout = QVBoxLayout(
-            card
+        header.setSpacing(
+            2
         )
-
-        card_layout.setContentsMargins(
-            20,
-            20,
-            20,
-            20,
-        )
-
-        card_layout.setSpacing(
-            12
-        )
-
-        #
-        # Title
-        #
 
         title = QLabel(
             "SQL Tools"
@@ -99,55 +86,105 @@ class DatabaseMaintenancePage(QWidget):
         title.setStyleSheet(
             """
             QLabel {
-                font-size: 18px;
-                font-weight: bold;
+                background:transparent;
+                border:none;
+                color:#F5F7FA;
+                font-size:26pt;
+                font-weight:700;
+                padding:0;
+                margin:0;
             }
             """
         )
 
-        card_layout.addWidget(
+        subtitle = QLabel(
+            "Database maintenance and recovery tools"
+        )
+
+        subtitle.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#98A3B3;
+                font-size:10.5pt;
+                font-weight:400;
+                padding:0;
+                margin:0;
+            }
+            """
+        )
+
+        header.addWidget(
             title
         )
 
-        #
-        # Action Buttons
-        #
+        header.addWidget(
+            subtitle
+        )
 
-        buttons_layout = QHBoxLayout()
+        main_layout.addLayout(
+            header
+        )
 
-        buttons_layout.setSpacing(
-            10
+        # ======================================================
+        # SQL ACTIONS
+        # ======================================================
+
+        actions_title = QLabel(
+            "SQL Actions"
+        )
+
+        actions_title.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:10pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        main_layout.addWidget(
+            actions_title
+        )
+
+        actions_layout = QHBoxLayout()
+
+        actions_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0,
+        )
+
+        actions_layout.setSpacing(
+            24
         )
 
         self.delete_button = (
             self.create_action_button(
-                "Delete MyDATA Response",
+                "▶  Delete MyDATA Response",
                 Icons.DELETE,
-                "#e53935",
+                "#E53935",
             )
         )
 
         self.rebuild_button = (
             self.create_action_button(
-                "Rebuild Database",
+                "▶  Rebuild Database",
                 Icons.REBUILD,
-                "#1e88e5",
+                "#29A8FF",
             )
         )
 
         self.shrink_button = (
             self.create_action_button(
-                "Shrink Database",
+                "▶  Shrink Database",
                 Icons.DATABASE,
-                "#fb8c00",
-            )
-        )
-
-        self.extra_lock_button = (
-            self.create_action_button(
-                "Extra Lock",
-                Icons.EXTRA_LOCK,
-                "#8e24aa",
+                "#FF9800",
             )
         )
 
@@ -163,67 +200,511 @@ class DatabaseMaintenancePage(QWidget):
             self.shrink_database
         )
 
-        self.extra_lock_button.clicked.connect(
-            self.open_extra_lock
+        actions_layout.addWidget(
+            self.delete_button,
+            1
         )
 
-        buttons_layout.addWidget(
-            self.delete_button
+        actions_layout.addWidget(
+            self.rebuild_button,
+            1
         )
 
-        buttons_layout.addWidget(
-            self.rebuild_button
+        actions_layout.addWidget(
+            self.shrink_button,
+            1
         )
 
-        buttons_layout.addWidget(
-            self.shrink_button
+        actions_layout.addStretch()
+
+        main_layout.addLayout(
+            actions_layout
         )
 
-        buttons_layout.addWidget(
-            self.extra_lock_button
+        # ======================================================
+        # SQL OPERATION
+        # ======================================================
+
+        operation_card = QFrame()
+
+        operation_card.setObjectName(
+            "SqlOperationCard"
         )
 
-        card_layout.addLayout(
-            buttons_layout
-        )
-
-        #
-        # Embedded Extra Lock
-        #
-
-        self.extra_lock_page = ExtraLockPage(
-            self
-        )
-
-        self.extra_lock_page.setMinimumHeight(
-            480
-        )
-
-        self.extra_lock_page.hide()
-
-        card_layout.addWidget(
-            self.extra_lock_page,
-            1,
-        )
-
-        #
-        # Status
-        #
-
-        self.status_title = QLabel(
-            "Status"
-        )
-
-        self.status_title.setStyleSheet(
+        operation_card.setStyleSheet(
             """
-            QLabel {
-                font-weight: bold;
+            QFrame#SqlOperationCard {
+                background:#25262B;
+                border:1px solid #393C43;
             }
             """
         )
 
-        card_layout.addWidget(
-            self.status_title
+        operation_layout = QVBoxLayout(
+            operation_card
+        )
+
+        operation_layout.setContentsMargins(
+            16,
+            14,
+            16,
+            16
+        )
+
+        operation_layout.setSpacing(
+            10
+        )
+
+        operation_title = QLabel(
+            "SQL Operation"
+        )
+
+        operation_title.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:11pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        operation_layout.addWidget(
+            operation_title
+        )
+
+        operation_accent = QLabel()
+
+        operation_accent.setFixedHeight(
+            3
+        )
+
+        operation_accent.setStyleSheet(
+            """
+            QLabel {
+                background:#AB47BC;
+                border:none;
+            }
+            """
+        )
+
+        operation_layout.addWidget(
+            operation_accent
+        )
+
+        operation_header = QHBoxLayout()
+
+        operation_label = QLabel(
+            "Current Operation"
+        )
+
+        operation_label.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:9pt;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        self.operation_value = QLabel(
+            "Waiting..."
+        )
+
+        self.operation_value.setAlignment(
+            Qt.AlignmentFlag.AlignRight
+            | Qt.AlignmentFlag.AlignVCenter
+        )
+
+        self.operation_value.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:10pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        operation_header.addWidget(
+            operation_label
+        )
+
+        operation_header.addStretch()
+
+        operation_header.addWidget(
+            self.operation_value
+        )
+
+        operation_layout.addLayout(
+            operation_header
+        )
+
+        operation_state_row = QHBoxLayout()
+
+        state_label = QLabel(
+            "State"
+        )
+
+        state_label.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:9pt;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        self.operation_state_value = QLabel(
+            "Ready"
+        )
+
+        self.operation_state_value.setStyleSheet(
+            """
+            QLabel {
+                color:#53C653;
+                font-size:9pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        operation_state_row.addWidget(
+            state_label
+        )
+
+        operation_state_row.addStretch()
+
+        operation_state_row.addWidget(
+            self.operation_state_value
+        )
+
+        operation_layout.addLayout(
+            operation_state_row
+        )
+
+        self.operation_task = QLabel(
+            "SQL maintenance operation is ready."
+        )
+
+        self.operation_task.setStyleSheet(
+            """
+            QLabel {
+                color:#D9DCE2;
+                font-size:10pt;
+                font-weight:600;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        operation_layout.addWidget(
+            self.operation_task
+        )
+
+        main_layout.addWidget(
+            operation_card
+        )
+
+        # ======================================================
+        # DATABASE / LIVE LOGS
+        # ======================================================
+
+        operation_area = QWidget()
+
+        operation_area_layout = QHBoxLayout(
+            operation_area
+        )
+
+        operation_area_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
+        operation_area_layout.setSpacing(
+            14
+        )
+
+        # ======================================================
+        # DATABASE INFORMATION
+        # ======================================================
+
+        database_card = QFrame()
+
+        database_card.setObjectName(
+            "SqlDatabaseCard"
+        )
+
+        database_card.setStyleSheet(
+            """
+            QFrame#SqlDatabaseCard {
+                background:#25262B;
+                border:1px solid #393C43;
+            }
+            """
+        )
+
+        database_layout = QVBoxLayout(
+            database_card
+        )
+
+        database_layout.setContentsMargins(
+            16,
+            14,
+            16,
+            16
+        )
+
+        database_layout.setSpacing(
+            10
+        )
+
+        database_title = QLabel(
+            "Database Information"
+        )
+
+        database_title.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:11pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            database_title
+        )
+
+        database_accent = QLabel()
+
+        database_accent.setFixedHeight(
+            3
+        )
+
+        database_accent.setStyleSheet(
+            """
+            QLabel {
+                background:#AB47BC;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            database_accent
+        )
+
+        database_caption = QLabel(
+            "Database"
+        )
+
+        database_caption.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:9pt;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            database_caption
+        )
+
+        self.database_name_value = QLabel(
+            "Not selected"
+        )
+
+        self.database_name_value.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:10pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            self.database_name_value
+        )
+
+        server_caption = QLabel(
+            "SQL Server"
+        )
+
+        server_caption.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:9pt;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            server_caption
+        )
+
+        self.database_server_value = QLabel(
+            "-"
+        )
+
+        self.database_server_value.setStyleSheet(
+            """
+            QLabel {
+                color:#B7BBC3;
+                font-size:9pt;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            self.database_server_value
+        )
+
+        status_caption = QLabel(
+            "Status"
+        )
+
+        status_caption.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:9pt;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            status_caption
+        )
+
+        self.database_state_value = QLabel(
+            "Waiting..."
+        )
+
+        self.database_state_value.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:9pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        database_layout.addWidget(
+            self.database_state_value
+        )
+
+        database_layout.addStretch()
+
+        operation_area_layout.addWidget(
+            database_card,
+            3
+        )
+
+        # ======================================================
+        # LIVE LOGS
+        # ======================================================
+
+        logs_card = QFrame()
+
+        logs_card.setObjectName(
+            "SqlLogsCard"
+        )
+
+        logs_card.setStyleSheet(
+            """
+            QFrame#SqlLogsCard {
+                background:#25262B;
+                border:1px solid #393C43;
+            }
+            """
+        )
+
+        logs_layout = QVBoxLayout(
+            logs_card
+        )
+
+        logs_layout.setContentsMargins(
+            16,
+            14,
+            16,
+            16
+        )
+
+        logs_layout.setSpacing(
+            10
+        )
+
+        logs_title = QLabel(
+            "Live Logs"
+        )
+
+        logs_title.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:11pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        logs_layout.addWidget(
+            logs_title
+        )
+
+        logs_accent = QLabel()
+
+        logs_accent.setFixedHeight(
+            3
+        )
+
+        logs_accent.setStyleSheet(
+            """
+            QLabel {
+                background:#29A8FF;
+                border:none;
+            }
+            """
+        )
+
+        logs_layout.addWidget(
+            logs_accent
         )
 
         self.status = QTextEdit()
@@ -232,31 +713,208 @@ class DatabaseMaintenancePage(QWidget):
             True
         )
 
-        self.status.setMinimumHeight(
-            180
-        )
-
         self.status.setPlaceholderText(
-            "Τα αποτελέσματα των εργασιών "
-            "θα εμφανιστούν εδώ."
+            "The results of database operations will appear here."
         )
 
-        card_layout.addWidget(
-            self.status
+        self.status.setStyleSheet(
+            """
+            QTextEdit {
+                background:#202226;
+                color:#D9DCE2;
+                border:none;
+                padding:10px;
+                font-size:9pt;
+            }
+
+            QScrollBar:vertical {
+                background:#202226;
+                width:10px;
+                margin:0;
+            }
+
+            QScrollBar::handle:vertical {
+                background:#3B3F46;
+                min-height:30px;
+            }
+
+            QScrollBar::add-line:vertical,
+            QScrollBar::sub-line:vertical {
+                height:0;
+            }
+            """
+        )
+
+        logs_layout.addWidget(
+            self.status,
+            1
+        )
+
+        operation_area_layout.addWidget(
+            logs_card,
+            7
         )
 
         main_layout.addWidget(
-            card
+            operation_area,
+            1
         )
 
-        main_layout.addStretch()
+        # ======================================================
+        # SQL STATISTICS
+        # ======================================================
 
-        self.status_title.show()
-        self.status.show()
-        self.extra_lock_page.hide()
+        statistics_card = QFrame()
+
+        statistics_card.setObjectName(
+            "SqlStatisticsCard"
+        )
+
+        statistics_card.setStyleSheet(
+            """
+            QFrame#SqlStatisticsCard {
+                background:#25262B;
+                border:1px solid #393C43;
+            }
+            """
+        )
+
+        statistics_layout = QVBoxLayout(
+            statistics_card
+        )
+
+        statistics_layout.setContentsMargins(
+            16,
+            14,
+            16,
+            16
+        )
+
+        statistics_layout.setSpacing(
+            8
+        )
+
+        statistics_title = QLabel(
+            "SQL Statistics"
+        )
+
+        statistics_title.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:11pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        statistics_layout.addWidget(
+            statistics_title
+        )
+
+        statistics_accent = QLabel()
+
+        statistics_accent.setFixedHeight(
+            3
+        )
+
+        statistics_accent.setStyleSheet(
+            """
+            QLabel {
+                background:#FF9800;
+                border:none;
+            }
+            """
+        )
+
+        statistics_layout.addWidget(
+            statistics_accent
+        )
+
+        statistics_row = QHBoxLayout()
+
+        statistics_row.setSpacing(
+            18
+        )
+
+        self.operation_db_value = (
+            self._create_stat_value(
+                "-"
+            )
+        )
+
+        self.affected_rows_value = (
+            self._create_stat_value(
+                "-"
+            )
+        )
+
+        self.operation_result_value = (
+            self._create_stat_value(
+                "Ready"
+            )
+        )
+
+        self.operation_time_value = (
+            self._create_stat_value(
+                "--"
+            )
+        )
+
+        statistics_row.addWidget(
+            self._create_stat(
+                "Database",
+                self.operation_db_value
+            )
+        )
+
+        statistics_row.addWidget(
+            self._create_stat(
+                "Affected Rows",
+                self.affected_rows_value
+            )
+        )
+
+        statistics_row.addWidget(
+            self._create_stat(
+                "Result",
+                self.operation_result_value
+            )
+        )
+
+        statistics_row.addWidget(
+            self._create_stat(
+                "Status",
+                self.operation_time_value
+            )
+        )
+
+        statistics_layout.addLayout(
+            statistics_row
+        )
+
+        main_layout.addWidget(
+            statistics_card
+        )
+
+        # ======================================================
+        # INITIAL DATABASE
+        # ======================================================
+
+        active_database = (
+            database_context.active()
+        )
+
+        if active_database:
+
+            self.on_database_changed(
+                active_database
+            )
 
     # ==========================================================
-    # SQL Tool Button
+    # ACTION BUTTON
     # ==========================================================
 
     def create_action_button(
@@ -269,15 +927,15 @@ class DatabaseMaintenancePage(QWidget):
         button = QPushButton()
 
         button.setObjectName(
-            "SqlToolButton"
-        )
-
-        button.setMinimumHeight(
-            48
+            "SqlActionButton"
         )
 
         button.setCursor(
-            Qt.PointingHandCursor
+            Qt.CursorShape.PointingHandCursor
+        )
+
+        button.setMinimumHeight(
+            32
         )
 
         layout = QHBoxLayout(
@@ -285,54 +943,19 @@ class DatabaseMaintenancePage(QWidget):
         )
 
         layout.setContentsMargins(
-            10,
-            6,
-            12,
-            6,
+            0,
+            0,
+            0,
+            0
         )
 
         layout.setSpacing(
-            9
-        )
-
-        icon_container = QFrame()
-
-        icon_container.setFixedSize(
-            34,
-            34,
-        )
-
-        icon_container.setStyleSheet(
-            f"""
-            QFrame {{
-                background:{accent};
-                border-radius:8px;
-            }}
-            """
-        )
-
-        icon_layout = QHBoxLayout(
-            icon_container
-        )
-
-        icon_layout.setContentsMargins(
-            5,
-            5,
-            5,
-            5,
-        )
-
-        icon_layout.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
+            6
         )
 
         icon = SvgIcon(
             icon_path,
-            size=22,
-        )
-
-        icon_layout.addWidget(
-            icon
+            size=17
         )
 
         label = QLabel(
@@ -340,18 +963,19 @@ class DatabaseMaintenancePage(QWidget):
         )
 
         label.setStyleSheet(
-            """
-            QLabel {
+            f"""
+            QLabel {{
                 background:transparent;
-                color:#ffffff;
-                font-size:10pt;
+                border:none;
+                color:{accent};
+                font-size:9pt;
                 font-weight:600;
-            }
+            }}
             """
         )
 
         layout.addWidget(
-            icon_container
+            icon
         )
 
         layout.addWidget(
@@ -362,25 +986,36 @@ class DatabaseMaintenancePage(QWidget):
 
         button.setStyleSheet(
             """
-            QPushButton#SqlToolButton {
-                background:#25262a;
-                border:1px solid #3a3b40;
-                border-radius:10px;
-                text-align:left;
+            QPushButton#SqlActionButton {
+                background:transparent;
+                border:none;
+                outline:none;
+                padding:0;
+                margin:0;
             }
 
-            QPushButton#SqlToolButton:hover {
-                background:#2d2f34;
-                border:1px solid #55575e;
+            QPushButton#SqlActionButton:hover {
+                background:transparent;
+                border:none;
+                outline:none;
             }
 
-            QPushButton#SqlToolButton:pressed {
-                background:#202125;
+            QPushButton#SqlActionButton:pressed {
+                background:transparent;
+                border:none;
+                outline:none;
             }
 
-            QPushButton#SqlToolButton:disabled {
-                background:#25262a;
-                border:1px solid #333438;
+            QPushButton#SqlActionButton:focus {
+                background:transparent;
+                border:none;
+                outline:none;
+            }
+
+            QPushButton#SqlActionButton:disabled {
+                background:transparent;
+                border:none;
+                outline:none;
             }
             """
         )
@@ -388,7 +1023,82 @@ class DatabaseMaintenancePage(QWidget):
         return button
 
     # ==========================================================
-    # Database
+    # STAT
+    # ==========================================================
+
+    def _create_stat_value(
+        self,
+        text
+    ):
+
+        label = QLabel(
+            text
+        )
+
+        label.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:9pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        return label
+
+    def _create_stat(
+        self,
+        title,
+        value
+    ):
+
+        widget = QWidget()
+
+        layout = QVBoxLayout(
+            widget
+        )
+
+        layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
+        layout.setSpacing(
+            2
+        )
+
+        title_label = QLabel(
+            title
+        )
+
+        title_label.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:8pt;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        layout.addWidget(
+            title_label
+        )
+
+        layout.addWidget(
+            value
+        )
+
+        return widget
+
+    # ==========================================================
+    # DATABASE
     # ==========================================================
 
     def on_database_changed(
@@ -397,70 +1107,77 @@ class DatabaseMaintenancePage(QWidget):
     ):
 
         if not database:
+
+            self.database_name_value.setText(
+                "Not selected"
+            )
+
+            self.database_server_value.setText(
+                "-"
+            )
+
+            self.database_state_value.setText(
+                "Not Connected"
+            )
+
+            self.operation_db_value.setText(
+                "-"
+            )
+
             return
+
+        name = database.get(
+            "name",
+            "Unknown"
+        )
+
+        server = database.get(
+            "server",
+            "Unknown"
+        )
+
+        self.database_name_value.setText(
+            name
+        )
+
+        self.database_server_value.setText(
+            server
+        )
+
+        self.database_state_value.setText(
+            "Connected"
+        )
+
+        self.database_state_value.setStyleSheet(
+            """
+            QLabel {
+                color:#53C653;
+                font-size:9pt;
+                font-weight:700;
+                background:transparent;
+                border:none;
+            }
+            """
+        )
+
+        self.operation_db_value.setText(
+            name
+        )
 
         self.append_status(
             ""
         )
 
         self.append_status(
-            f"Database selected: "
-            f"{database.get('name', 'Unknown')}"
+            f"Database selected: {name}"
         )
 
         self.append_status(
-            f"Server: "
-            f"{database.get('server', 'Unknown')}"
+            f"Server: {server}"
         )
 
     # ==========================================================
-    # Extra Lock
-    # ==========================================================
-
-    def open_extra_lock(self):
-
-        if not database_context.is_selected():
-
-            self.append_status(
-                ""
-            )
-
-            self.append_status(
-                "Δεν έχει επιλεγεί βάση δεδομένων."
-            )
-
-            self.append_status(
-                "Παρακαλώ επίλεξε βάση από το Dashboard."
-            )
-
-            return
-
-        if self.extra_lock_page.isVisible():
-
-            self.extra_lock_page.hide()
-
-            self.status_title.show()
-            self.status.show()
-
-            self.extra_lock_button.setText(
-                "Extra Lock"
-            )
-
-            return
-
-        self.extra_lock_page.load_values()
-
-        self.status_title.hide()
-        self.status.hide()
-
-        self.extra_lock_page.show()
-
-        self.extra_lock_button.setText(
-            "Close Extra Lock"
-        )
-
-    # ==========================================================
-    # Helpers
+    # HELPERS
     # ==========================================================
 
     def append_status(
@@ -489,10 +1206,6 @@ class DatabaseMaintenancePage(QWidget):
             enabled
         )
 
-        self.extra_lock_button.setEnabled(
-            enabled
-        )
-
     def show_result(
         self,
         result,
@@ -517,6 +1230,28 @@ class DatabaseMaintenancePage(QWidget):
                     f"{affected_rows}"
                 )
 
+                self.affected_rows_value.setText(
+                    str(
+                        affected_rows
+                    )
+                )
+
+            self.operation_state_value.setText(
+                "Completed"
+            )
+
+            self.operation_result_value.setText(
+                "Success"
+            )
+
+            self.database_state_value.setText(
+                "Connected"
+            )
+
+            self.operation_task.setText(
+                f"{result['step']} completed successfully."
+            )
+
         else:
 
             self.append_status(
@@ -527,8 +1262,24 @@ class DatabaseMaintenancePage(QWidget):
                 result["message"]
             )
 
+            self.operation_state_value.setText(
+                "Failed"
+            )
+
+            self.operation_result_value.setText(
+                "Failed"
+            )
+
+            self.database_state_value.setText(
+                "Operation failed"
+            )
+
+            self.operation_task.setText(
+                f"{result['step']} failed."
+            )
+
     # ==========================================================
-    # Operations
+    # OPERATIONS
     # ==========================================================
 
     def start_operation(
@@ -540,6 +1291,7 @@ class DatabaseMaintenancePage(QWidget):
         if self.thread is not None:
 
             if self.thread.isRunning():
+
                 return
 
         database = (
@@ -587,6 +1339,33 @@ class DatabaseMaintenancePage(QWidget):
             "Running..."
         )
 
+        self.operation_value.setText(
+            title
+        )
+
+        self.operation_db_value.setText(
+            database.get(
+                "name",
+                "Unknown"
+            )
+        )
+
+        self.operation_state_value.setText(
+            "Running"
+        )
+
+        self.operation_task.setText(
+            f"Running {title}..."
+        )
+
+        self.operation_result_value.setText(
+            "Running"
+        )
+
+        self.affected_rows_value.setText(
+            "-"
+        )
+
         self.thread = QThread(
             self
         )
@@ -618,15 +1397,17 @@ class DatabaseMaintenancePage(QWidget):
         self.controller.start()
 
     # ==========================================================
-    # Started
+    # STARTED
     # ==========================================================
 
-    def on_started(self):
+    def on_started(
+        self
+    ):
 
         pass
 
     # ==========================================================
-    # Finished
+    # FINISHED
     # ==========================================================
 
     def on_finished(
@@ -639,7 +1420,7 @@ class DatabaseMaintenancePage(QWidget):
         )
 
     # ==========================================================
-    # Error
+    # ERROR
     # ==========================================================
 
     def on_error(
@@ -651,11 +1432,25 @@ class DatabaseMaintenancePage(QWidget):
             f"✗ Error: {message}"
         )
 
+        self.operation_state_value.setText(
+            "Failed"
+        )
+
+        self.operation_result_value.setText(
+            "Failed"
+        )
+
+        self.operation_task.setText(
+            "SQL operation failed."
+        )
+
     # ==========================================================
-    # Thread Finished
+    # THREAD FINISHED
     # ==========================================================
 
-    def on_thread_finished(self):
+    def on_thread_finished(
+        self
+    ):
 
         self.append_status(
             ""
@@ -664,6 +1459,18 @@ class DatabaseMaintenancePage(QWidget):
         self.append_status(
             "Ready."
         )
+
+        if (
+            self.operation_state_value.text()
+            not in {
+                "Completed",
+                "Failed",
+            }
+        ):
+
+            self.operation_state_value.setText(
+                "Ready"
+            )
 
         self.set_buttons_enabled(
             True
@@ -674,10 +1481,12 @@ class DatabaseMaintenancePage(QWidget):
         self.thread = None
 
     # ==========================================================
-    # Delete MyDATA Response
+    # DELETE MYDATA RESPONSE
     # ==========================================================
 
-    def delete_mydata_response(self):
+    def delete_mydata_response(
+        self
+    ):
 
         self.start_operation(
             "delete",
@@ -685,10 +1494,12 @@ class DatabaseMaintenancePage(QWidget):
         )
 
     # ==========================================================
-    # Rebuild Database
+    # REBUILD DATABASE
     # ==========================================================
 
-    def rebuild_database(self):
+    def rebuild_database(
+        self
+    ):
 
         self.start_operation(
             "rebuild",
@@ -696,10 +1507,12 @@ class DatabaseMaintenancePage(QWidget):
         )
 
     # ==========================================================
-    # Shrink Database
+    # SHRINK DATABASE
     # ==========================================================
 
-    def shrink_database(self):
+    def shrink_database(
+        self
+    ):
 
         self.start_operation(
             "shrink",

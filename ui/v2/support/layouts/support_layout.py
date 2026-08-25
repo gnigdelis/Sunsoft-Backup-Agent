@@ -1,18 +1,19 @@
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
+    QHBoxLayout,
+    QLabel,
     QMessageBox,
 )
 
-from core.configuration.udl_locator import UDLLocator
-from core.controllers.support_controller import SupportController
+from core.services.support_service import SupportService
+from core.database.database_context import database_context
 
-from ui.v2.widgets.header.header import Header
-from ui.v2.widgets.footer.footer import Footer
+from ui.v2.styles.theme import Theme
 
 from ui.v2.support.sections.search_section import SearchSection
 from ui.v2.support.sections.results_section import ResultsSection
-from ui.v2.support.sections.batch_section import BatchSection
 
 
 class SupportLayout(QWidget):
@@ -21,141 +22,500 @@ class SupportLayout(QWidget):
 
         super().__init__()
 
+        self.service = SupportService()
+
         self.setup_ui()
 
-        #
-        # Controller
-        #
+        self.connect_events()
 
-        self.controller = SupportController(
-
-            UDLLocator.find()
-
+        database_context.database_changed.connect(
+            self.update_connection_status
         )
 
-        self.connect_signals()
+        self.update_connection_status(
+            database_context.active()
+        )
+
+    # ==========================================================
+    # UI
+    # ==========================================================
 
     def setup_ui(self):
 
-        layout = QVBoxLayout(self)
+        root = QVBoxLayout(
+            self
+        )
 
-        layout.setContentsMargins(
+        root.setContentsMargins(
             20,
+            18,
             20,
-            20,
-            20,
+            22
         )
 
-        layout.setSpacing(15)
-
-        self.header = Header()
-
-        self.search = SearchSection()
-
-        self.results = ResultsSection()
-
-        self.batch = BatchSection()
-
-        self.footer = Footer()
-
-        layout.addWidget(self.header)
-
-        layout.addWidget(self.search)
-
-        layout.addWidget(self.results)
-
-        layout.addWidget(self.batch)
-
-        layout.addWidget(self.footer)
-
-    def connect_signals(self):
-
-        #
-        # Search
-        #
-
-        self.search.search_clicked.connect(
-
-            self.controller.search_invoice
-
+        root.setSpacing(
+            14
         )
 
-        #
-        # Reset
-        #
+        # ======================================================
+        # HEADER
+        # ======================================================
 
-        self.results.reset_clicked.connect(
+        header = QHBoxLayout()
 
-            self.controller.reset_status
+        title_block = QVBoxLayout()
 
+        title_block.setSpacing(
+            2
         )
 
-        #
-        # Search Result
-        #
-
-        self.controller.search_completed.connect(
-
-            self.results.set_result
-
+        title = QLabel(
+            "Delete Pending Order"
         )
 
-        self.controller.search_failed.connect(
-
-            self.on_search_failed
-
+        title.setStyleSheet(
+            """
+            QLabel {
+                color:#F4F5F7;
+                font-size:24pt;
+                font-weight:700;
+            }
+            """
         )
 
-        #
-        # Reset Result
-        #
-
-        self.controller.reset_completed.connect(
-
-            self.on_reset_completed
-
+        subtitle = QLabel(
+            "Find and close pending records of an order"
         )
 
-        self.controller.reset_failed.connect(
-
-            self.on_reset_failed
-
+        subtitle.setStyleSheet(
+            """
+            QLabel {
+                color:#9FA4AE;
+                font-size:10pt;
+            }
+            """
         )
 
-    def on_search_failed(self, message):
-
-        self.results.clear()
-
-        QMessageBox.warning(
-
-            self,
-
-            "Search",
-
-            message,
-
+        title_block.addWidget(
+            title
         )
 
-    def on_reset_completed(self, result):
-
-        QMessageBox.information(
-
-            self,
-
-            "Support",
-
-            f"{result.affected_rows} record(s) updated.",
-
+        title_block.addWidget(
+            subtitle
         )
 
-    def on_reset_failed(self, message):
-
-        QMessageBox.critical(
-
-            self,
-
-            "Support",
-
-            message,
-
+        header.addLayout(
+            title_block
         )
+
+        header.addStretch()
+
+        self.connection_status = QLabel(
+            "Not Connected"
+        )
+
+        self.connection_status.setAlignment(
+            Qt.AlignmentFlag.AlignRight
+            | Qt.AlignmentFlag.AlignVCenter
+        )
+
+        header.addWidget(
+            self.connection_status
+        )
+
+        root.addLayout(
+            header
+        )
+
+        # ======================================================
+        # CONTENT
+        # ======================================================
+
+        content = QHBoxLayout()
+
+        content.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
+        content.setSpacing(
+            16
+        )
+
+        self.search_section = SearchSection()
+
+        self.results_section = ResultsSection()
+
+        content.addWidget(
+            self.search_section,
+            1
+        )
+
+        content.addWidget(
+            self.results_section,
+            1
+        )
+
+        root.addLayout(
+            content,
+            1
+        )
+
+        # ======================================================
+        # FOOTER STATUS
+        # ======================================================
+
+        self.page_status = QLabel(
+            "Ready."
+        )
+
+        self.page_status.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                background:#202226;
+                border:1px solid #34373D;
+                padding:7px 10px;
+                font-size:8.5pt;
+            }}
+            """
+        )
+
+        root.addWidget(
+            self.page_status
+        )
+
+    # ==========================================================
+    # EVENTS
+    # ==========================================================
+
+    def connect_events(self):
+
+        self.search_section.search_clicked.connect(
+            self._search_order
+        )
+
+        self.results_section.delete_clicked.connect(
+            self._delete_pending_order
+        )
+
+    # ==========================================================
+    # CONNECTION STATUS
+    # ==========================================================
+
+    def update_connection_status(
+        self,
+        database
+    ):
+
+        if database:
+
+            self.connection_status.setText(
+                "Connected"
+            )
+
+            self.connection_status.setStyleSheet(
+                """
+                QLabel {
+                    color:#53C653;
+                    background:transparent;
+                    border:none;
+                    padding:0;
+                    font-size:9pt;
+                    font-weight:700;
+                }
+                """
+            )
+
+        else:
+
+            self.connection_status.setText(
+                "Not Connected"
+            )
+
+            self.connection_status.setStyleSheet(
+                """
+                QLabel {
+                    color:#FF9800;
+                    background:transparent;
+                    border:none;
+                    padding:0;
+                    font-size:9pt;
+                    font-weight:700;
+                }
+                """
+            )
+
+    # ==========================================================
+    # SEARCH
+    # ==========================================================
+
+    def _search_order(
+        self,
+        order_number,
+        order_date,
+    ):
+
+        if not database_context.active():
+
+            QMessageBox.warning(
+                self,
+                "Database Required",
+                "Please select a database from the Dashboard.",
+            )
+
+            return
+
+        self.results_section.clear_result()
+
+        self.search_section.set_busy(
+            True
+        )
+
+        self.page_status.setText(
+            "Searching order..."
+        )
+
+        try:
+
+            result = (
+                self.service.search_invoice(
+                    order_number,
+                    order_date,
+                )
+            )
+
+            if not result.found:
+
+                self.results_section.show_not_found()
+
+                self.search_section.set_status(
+                    result.message
+                    or "Order not found.",
+                    "warning"
+                )
+
+                self.page_status.setText(
+                    "Order not found."
+                )
+
+                return
+
+            self.results_section.show_result(
+                order_number=order_number,
+                order_date=order_date,
+                rows=result.rows,
+                pending_records=result.pending_records,
+                total_records=result.total_records,
+            )
+
+            if result.pending_records > 0:
+
+                self.search_section.set_status(
+                    (
+                        f"Order found. "
+                        f"{result.pending_records} "
+                        "pending record(s)."
+                    ),
+                    "warning"
+                )
+
+                self.page_status.setText(
+                    "Pending records found. Ready to close."
+                )
+
+            else:
+
+                self.search_section.set_status(
+                    "Order is already closed.",
+                    "success"
+                )
+
+                self.page_status.setText(
+                    "No pending records found."
+                )
+
+        except Exception as error:
+
+            self.results_section.show_error(
+                str(error)
+            )
+
+            self.search_section.set_status(
+                str(error),
+                "error"
+            )
+
+            self.page_status.setText(
+                "Search failed."
+            )
+
+        finally:
+
+            self.search_section.set_busy(
+                False
+            )
+
+    # ==========================================================
+    # CLOSE PENDING ORDER
+    # ==========================================================
+
+    def _delete_pending_order(
+        self
+    ):
+
+        order_number = (
+            self.results_section.order_number
+        )
+
+        order_date = (
+            self.results_section.order_date
+        )
+
+        if (
+            order_number is None
+            or order_date is None
+        ):
+
+            return
+
+        confirmation = QMessageBox(
+            self
+        )
+
+        confirmation.setWindowTitle(
+            "Delete Pending Order"
+        )
+
+        confirmation.setText(
+            (
+                f"Close the pending records "
+                f"of order {order_number}?"
+            )
+        )
+
+        confirmation.setInformativeText(
+            (
+                "All records of this order whose "
+                "SalesTransStatus is different from 1 "
+                "will be changed to 1."
+            )
+        )
+
+        delete_button = (
+            confirmation.addButton(
+                "Delete",
+                QMessageBox.AcceptRole
+            )
+        )
+
+        confirmation.addButton(
+            "Cancel",
+            QMessageBox.RejectRole
+        )
+
+        confirmation.exec()
+
+        if (
+            confirmation.clickedButton()
+            != delete_button
+        ):
+
+            return
+
+        self.results_section.delete_button.setEnabled(
+            False
+        )
+
+        self.page_status.setText(
+            "Closing pending order..."
+        )
+
+        try:
+
+            result = (
+                self.service.close_pending_order(
+                    order_number,
+                    order_date,
+                )
+            )
+
+            if not result.get(
+                "success",
+                False
+            ):
+
+                message = (
+                    result.get(
+                        "message",
+                        "Unable to close pending order."
+                    )
+                )
+
+                self.results_section.result_status.setText(
+                    message
+                )
+
+                self.results_section.result_status.setStyleSheet(
+                    """
+                    QLabel {
+                        color:#FF5C5C;
+                        font-size:9pt;
+                        font-weight:600;
+                    }
+                    """
+                )
+
+                self.page_status.setText(
+                    "Operation failed."
+                )
+
+                return
+
+            affected_rows = (
+                result.get(
+                    "affected_rows",
+                    0
+                )
+            )
+
+            self.results_section.show_deleted(
+                affected_rows
+            )
+
+            self.search_section.set_status(
+                (
+                    f"Closed {affected_rows} "
+                    "pending record(s)."
+                ),
+                "success"
+            )
+
+            self.page_status.setText(
+                (
+                    f"Order {order_number} "
+                    "closed successfully."
+                )
+            )
+
+        except Exception as error:
+
+            self.results_section.result_status.setText(
+                str(error)
+            )
+
+            self.results_section.result_status.setStyleSheet(
+                """
+                QLabel {
+                    color:#FF5C5C;
+                    font-size:9pt;
+                    font-weight:600;
+                }
+                """
+            )
+
+            self.page_status.setText(
+                "Operation failed."
+            )

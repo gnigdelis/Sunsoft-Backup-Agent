@@ -1,10 +1,6 @@
-﻿from pathlib import Path
-
-from PySide6.QtCore import QObject
+﻿from PySide6.QtCore import QObject
 
 from core.services.backup_service import backup_service
-from core.database.database_context import database_context
-from core.common.result import Result
 
 
 class BackupController(QObject):
@@ -15,11 +11,18 @@ class BackupController(QObject):
     never directly with the BackupRunner.
     """
 
-    def __init__(self, parent=None):
+    def __init__(
+        self,
+        parent=None,
+    ):
 
-        super().__init__(parent)
+        super().__init__(
+            parent
+        )
 
-        self.runner = backup_service.runner
+        self.runner = (
+            backup_service.runner
+        )
 
     # -------------------------------------------------
     # Backup Commands
@@ -27,46 +30,11 @@ class BackupController(QObject):
 
     def start_backup(self):
 
-        # -------------------------------------------------
-        # Database Selection Validation
-        # -------------------------------------------------
-
-        if not database_context.is_selected():
-
-            return Result.error(
-                "No database selected. "
-                "Please select a database before starting the backup."
-            )
-
-        udl_path = (
-            database_context.active_udl()
-        )
-
-        if not udl_path:
-
-            return Result.error(
-                "No database selected. "
-                "Please select a database before starting the backup."
-            )
-
-        if not Path(udl_path).exists():
-
-            return Result.error(
-                "The selected UDL file is no longer available.\n"
-                f"UDL: {udl_path}"
-            )
-
-        # -------------------------------------------------
-        # Start Backup
-        # -------------------------------------------------
-
         backup_service.start_backup()
 
-        return Result.success(
-            data={
-                "udl_path": udl_path,
-            }
-        )
+    def cancel_backup(self):
+
+        return self.runner.cancel()
 
     # -------------------------------------------------
     # Status

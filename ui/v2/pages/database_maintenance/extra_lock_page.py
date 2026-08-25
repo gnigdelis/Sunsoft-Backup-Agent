@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
 )
 
 from core.database.database_context import database_context
+
 from core.maintenance.extra_lock_service import (
     extra_lock_service,
 )
@@ -19,9 +20,14 @@ from core.maintenance.extra_lock_service import (
 
 class ExtraLockPage(QWidget):
 
-    def __init__(self, parent=None):
+    def __init__(
+        self,
+        parent=None
+    ):
 
-        super().__init__(parent)
+        super().__init__(
+            parent
+        )
 
         self.spinboxes = []
 
@@ -33,6 +39,10 @@ class ExtraLockPage(QWidget):
 
         self.load_values()
 
+    # ==========================================================
+    # UI
+    # ==========================================================
+
     def setup_ui(self):
 
         main_layout = QVBoxLayout(
@@ -40,19 +50,19 @@ class ExtraLockPage(QWidget):
         )
 
         main_layout.setContentsMargins(
-            18,
-            18,
-            18,
-            18,
+            0,
+            0,
+            0,
+            0,
         )
 
         main_layout.setSpacing(
-            12
+            14
         )
 
-        #
-        # Main card
-        #
+        # ======================================================
+        # EXTRA LOCK CARD
+        # ======================================================
 
         card = QFrame()
 
@@ -60,24 +70,33 @@ class ExtraLockPage(QWidget):
             "ExtraLockCard"
         )
 
+        card.setStyleSheet(
+            """
+            QFrame#ExtraLockCard {
+                background:#25262B;
+                border:1px solid #393C43;
+            }
+            """
+        )
+
         card_layout = QVBoxLayout(
             card
         )
 
         card_layout.setContentsMargins(
-            20,
-            20,
-            20,
-            20,
+            16,
+            14,
+            16,
+            16,
         )
 
         card_layout.setSpacing(
             12
         )
 
-        #
-        # Title
-        #
+        # ======================================================
+        # TITLE
+        # ======================================================
 
         title = QLabel(
             "Extra Lock"
@@ -86,8 +105,13 @@ class ExtraLockPage(QWidget):
         title.setStyleSheet(
             """
             QLabel {
-                font-size: 18px;
-                font-weight: bold;
+                background:transparent;
+                border:none;
+                color:#F5F7FA;
+                font-size:11pt;
+                font-weight:700;
+                padding:0;
+                margin:0;
             }
             """
         )
@@ -96,13 +120,35 @@ class ExtraLockPage(QWidget):
             title
         )
 
-        #
-        # Description
-        #
+        # ======================================================
+        # ACCENT
+        # ======================================================
+
+        accent = QLabel()
+
+        accent.setFixedHeight(
+            3
+        )
+
+        accent.setStyleSheet(
+            """
+            QLabel {
+                background:#AB47BC;
+                border:none;
+            }
+            """
+        )
+
+        card_layout.addWidget(
+            accent
+        )
+
+        # ======================================================
+        # DESCRIPTION
+        # ======================================================
 
         description = QLabel(
-            "Προβολή και διαχείριση των ενεργών "
-            "Extra Lock επιλογών της βάσης."
+            "View and manage the active Extra Lock settings for the selected database."
         )
 
         description.setWordWrap(
@@ -112,8 +158,12 @@ class ExtraLockPage(QWidget):
         description.setStyleSheet(
             """
             QLabel {
-                color: #bdbdbd;
-                font-size: 13px;
+                background:transparent;
+                border:none;
+                color:#98A3B3;
+                font-size:9pt;
+                padding:0;
+                margin:0;
             }
             """
         )
@@ -122,29 +172,95 @@ class ExtraLockPage(QWidget):
             description
         )
 
-        #
-        # Database information
-        #
+        # ======================================================
+        # DATABASE INFORMATION
+        # ======================================================
+
+        database_info = QHBoxLayout()
+
+        database_info.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
+        database_caption = QLabel(
+            "Database"
+        )
+
+        database_caption.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#98A3B3;
+                font-size:9pt;
+            }
+            """
+        )
 
         self.database_label = QLabel(
-            "Βάση: -"
+            "Not selected"
+        )
+
+        self.database_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight
         )
 
         self.database_label.setStyleSheet(
             """
             QLabel {
-                font-weight: bold;
+                background:transparent;
+                border:none;
+                color:#F5F7FA;
+                font-size:9pt;
+                font-weight:700;
+            }
+            """
+        )
+
+        database_info.addWidget(
+            database_caption
+        )
+
+        database_info.addStretch()
+
+        database_info.addWidget(
+            self.database_label
+        )
+
+        card_layout.addLayout(
+            database_info
+        )
+
+        # ======================================================
+        # OPTIONS TITLE
+        # ======================================================
+
+        options_title = QLabel(
+            "Active Extra Lock Options"
+        )
+
+        options_title.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#F4F5F7;
+                font-size:10pt;
+                font-weight:700;
             }
             """
         )
 
         card_layout.addWidget(
-            self.database_label
+            options_title
         )
 
-        #
-        # Scroll area
-        #
+        # ======================================================
+        # SCROLL AREA
+        # ======================================================
 
         scroll = QScrollArea()
 
@@ -153,10 +269,44 @@ class ExtraLockPage(QWidget):
         )
 
         scroll.setFrameShape(
-            QFrame.NoFrame
+            QFrame.Shape.NoFrame
+        )
+
+        scroll.setStyleSheet(
+            """
+            QScrollArea {
+                background:transparent;
+                border:none;
+            }
+
+            QScrollBar:vertical {
+                background:#202226;
+                width:10px;
+                margin:0;
+            }
+
+            QScrollBar::handle:vertical {
+                background:#3B3F46;
+                min-height:30px;
+            }
+
+            QScrollBar::add-line:vertical,
+            QScrollBar::sub-line:vertical {
+                height:0;
+            }
+            """
         )
 
         content = QWidget()
+
+        content.setStyleSheet(
+            """
+            QWidget {
+                background:transparent;
+                border:none;
+            }
+            """
+        )
 
         self.items_layout = QVBoxLayout(
             content
@@ -164,13 +314,13 @@ class ExtraLockPage(QWidget):
 
         self.items_layout.setContentsMargins(
             0,
-            5,
+            2,
             0,
-            5,
+            2
         )
 
         self.items_layout.setSpacing(
-            8
+            6
         )
 
         scroll.setWidget(
@@ -179,33 +329,98 @@ class ExtraLockPage(QWidget):
 
         card_layout.addWidget(
             scroll,
-            1,
+            1
         )
 
-        #
-        # Buttons
-        #
+        # ======================================================
+        # BUTTONS
+        # ======================================================
 
         buttons_layout = QHBoxLayout()
 
+        buttons_layout.setContentsMargins(
+            0,
+            4,
+            0,
+            0
+        )
+
         buttons_layout.setSpacing(
-            10
+            12
         )
 
         self.reload_button = QPushButton(
-            "Ανανέωση"
+            "↻  Refresh"
         )
 
         self.save_button = QPushButton(
-            "Αποθήκευση"
+            "▶  Save Changes"
+        )
+
+        self.reload_button.setCursor(
+            Qt.CursorShape.PointingHandCursor
+        )
+
+        self.save_button.setCursor(
+            Qt.CursorShape.PointingHandCursor
         )
 
         self.reload_button.setMinimumHeight(
-            42
+            36
         )
 
         self.save_button.setMinimumHeight(
-            42
+            36
+        )
+
+        self.reload_button.setStyleSheet(
+            """
+            QPushButton {
+                background:transparent;
+                border:none;
+                color:#29A8FF;
+                font-size:9pt;
+                font-weight:600;
+                padding:0;
+            }
+
+            QPushButton:hover {
+                color:#65C5FF;
+            }
+
+            QPushButton:pressed {
+                color:#1688D3;
+            }
+
+            QPushButton:disabled {
+                color:#59616B;
+            }
+            """
+        )
+
+        self.save_button.setStyleSheet(
+            """
+            QPushButton {
+                background:transparent;
+                border:none;
+                color:#E53935;
+                font-size:9pt;
+                font-weight:600;
+                padding:0;
+            }
+
+            QPushButton:hover {
+                color:#FF5A56;
+            }
+
+            QPushButton:pressed {
+                color:#C62828;
+            }
+
+            QPushButton:disabled {
+                color:#59616B;
+            }
+            """
         )
 
         self.reload_button.clicked.connect(
@@ -231,11 +446,12 @@ class ExtraLockPage(QWidget):
         )
 
         main_layout.addWidget(
-            card
+            card,
+            1
         )
 
     # ==========================================================
-    # Database
+    # DATABASE
     # ==========================================================
 
     def on_database_changed(
@@ -246,7 +462,7 @@ class ExtraLockPage(QWidget):
         if not database:
 
             self.database_label.setText(
-                "Βάση: -"
+                "Not selected"
             )
 
             self.clear_items()
@@ -254,20 +470,21 @@ class ExtraLockPage(QWidget):
             return
 
         self.database_label.setText(
-            "Βάση: "
-            + database.get(
+            database.get(
                 "name",
-                "Unknown",
+                "Unknown"
             )
         )
 
         self.load_values()
 
     # ==========================================================
-    # Helpers
+    # HELPERS
     # ==========================================================
 
-    def clear_items(self):
+    def clear_items(
+        self
+    ):
 
         self.spinboxes.clear()
 
@@ -284,10 +501,12 @@ class ExtraLockPage(QWidget):
                 widget.deleteLater()
 
     # ==========================================================
-    # Load
+    # LOAD
     # ==========================================================
 
-    def load_values(self):
+    def load_values(
+        self
+    ):
 
         self.clear_items()
 
@@ -298,7 +517,7 @@ class ExtraLockPage(QWidget):
         if not database:
 
             self.database_label.setText(
-                "Βάση: Δεν έχει επιλεγεί"
+                "Not selected"
             )
 
             self.set_controls_enabled(
@@ -308,10 +527,9 @@ class ExtraLockPage(QWidget):
             return
 
         self.database_label.setText(
-            "Βάση: "
-            + database.get(
+            database.get(
                 "name",
-                "Unknown",
+                "Unknown"
             )
         )
 
@@ -325,8 +543,21 @@ class ExtraLockPage(QWidget):
 
                 row = QFrame()
 
-                row.setFrameShape(
-                    QFrame.StyledPanel
+                row.setObjectName(
+                    "ExtraLockRow"
+                )
+
+                row.setStyleSheet(
+                    """
+                    QFrame#ExtraLockRow {
+                        background:#202226;
+                        border:1px solid #34373D;
+                    }
+
+                    QFrame#ExtraLockRow:hover {
+                        border:1px solid #454A52;
+                    }
+                    """
                 )
 
                 row_layout = QHBoxLayout(
@@ -334,10 +565,14 @@ class ExtraLockPage(QWidget):
                 )
 
                 row_layout.setContentsMargins(
+                    12,
+                    7,
                     10,
-                    6,
-                    10,
-                    6,
+                    7
+                )
+
+                row_layout.setSpacing(
+                    10
                 )
 
                 name_label = QLabel(
@@ -346,6 +581,18 @@ class ExtraLockPage(QWidget):
 
                 name_label.setMinimumWidth(
                     180
+                )
+
+                name_label.setStyleSheet(
+                    """
+                    QLabel {
+                        background:transparent;
+                        border:none;
+                        color:#D9DCE2;
+                        font-size:9pt;
+                        font-weight:600;
+                    }
+                    """
                 )
 
                 value = QSpinBox()
@@ -363,11 +610,42 @@ class ExtraLockPage(QWidget):
                 )
 
                 value.setAlignment(
-                    Qt.AlignCenter
+                    Qt.AlignmentFlag.AlignCenter
                 )
 
                 value.setMinimumWidth(
-                    90
+                    82
+                )
+
+                value.setFixedHeight(
+                    28
+                )
+
+                value.setStyleSheet(
+                    """
+                    QSpinBox {
+                        background:#25262B;
+                        color:#F4F5F7;
+                        border:1px solid #393C43;
+                        padding:2px 6px;
+                        font-size:9pt;
+                    }
+
+                    QSpinBox:hover {
+                        border:1px solid #555A63;
+                    }
+
+                    QSpinBox:focus {
+                        border:1px solid #AB47BC;
+                    }
+
+                    QSpinBox::up-button,
+                    QSpinBox::down-button {
+                        background:#2B2D33;
+                        border:none;
+                        width:18px;
+                    }
+                    """
                 )
 
                 row_layout.addWidget(
@@ -403,21 +681,23 @@ class ExtraLockPage(QWidget):
             QMessageBox.critical(
                 self,
                 "Extra Lock",
-                f"Αδυναμία ανάγνωσης:\n\n{exc}",
+                f"Unable to load Extra Lock settings:\n\n{exc}",
             )
 
     # ==========================================================
-    # Save
+    # SAVE
     # ==========================================================
 
-    def save_values(self):
+    def save_values(
+        self
+    ):
 
         if not database_context.is_selected():
 
             QMessageBox.warning(
                 self,
                 "Extra Lock",
-                "Δεν έχει επιλεγεί βάση δεδομένων.",
+                "No database is selected.",
             )
 
             return
@@ -429,15 +709,17 @@ class ExtraLockPage(QWidget):
 
         confirmation = QMessageBox.question(
             self,
-            "Επιβεβαίωση",
-            "Θέλεις να αποθηκεύσεις τις αλλαγές "
-            "στις Extra Lock επιλογές;",
-            QMessageBox.Yes
-            | QMessageBox.No,
-            QMessageBox.No,
+            "Confirm Changes",
+            "Save the changes to the Extra Lock settings?",
+            QMessageBox.StandardButton.Yes
+            | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
         )
 
-        if confirmation != QMessageBox.Yes:
+        if (
+            confirmation
+            != QMessageBox.StandardButton.Yes
+        ):
 
             return
 
@@ -456,7 +738,7 @@ class ExtraLockPage(QWidget):
             QMessageBox.information(
                 self,
                 "Extra Lock",
-                "Οι αλλαγές αποθηκεύτηκαν επιτυχώς.",
+                "The changes were saved successfully.",
             )
 
             self.load_values()
@@ -466,7 +748,7 @@ class ExtraLockPage(QWidget):
             QMessageBox.critical(
                 self,
                 "Extra Lock",
-                f"Η αποθήκευση απέτυχε:\n\n{exc}",
+                f"Saving failed:\n\n{exc}",
             )
 
             self.set_controls_enabled(
@@ -474,7 +756,7 @@ class ExtraLockPage(QWidget):
             )
 
     # ==========================================================
-    # Controls
+    # CONTROLS
     # ==========================================================
 
     def set_controls_enabled(

@@ -1,19 +1,14 @@
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QSize
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QWidget,
+    QLabel,
     QPushButton,
     QHBoxLayout,
-    QVBoxLayout,
-    QLabel,
     QDialog,
 )
 
-from ui.v2.styles.theme import Theme
-from ui.v2.styles.icons import Icons
-from ui.v2.widgets.common.status_chip import StatusChip
-from ui.v2.widgets.common.svg_icon import SvgIcon
 from ui.v2.widgets.header.database_selector import DatabaseSelector
-
 from core.database.database_context import database_context
 
 
@@ -29,9 +24,15 @@ class Header(QWidget):
             database_context.active()
         )
 
+    # ==========================================================
+    # UI
+    # ==========================================================
+
     def setup_ui(self):
 
-        self.setFixedHeight(52)
+        self.setFixedHeight(
+            48
+        )
 
         layout = QHBoxLayout(
             self
@@ -41,89 +42,134 @@ class Header(QWidget):
             0,
             0,
             0,
-            0,
+            0
         )
 
-        layout.setSpacing(10)
+        layout.setSpacing(
+            12
+        )
 
-        #
-        # Right side
-        #
+        # ======================================================
+        # RIGHT SIDE
+        # ======================================================
 
         right = QHBoxLayout()
 
-        right.setSpacing(12)
-
-        self.connected = StatusChip(
-            "Not Connected",
-            "warning",
+        right.setContentsMargins(
+            0,
+            0,
+            0,
+            0
         )
 
+        right.setSpacing(
+            12
+        )
+
+        # ======================================================
+        # CONNECTION STATUS
         #
-        # Settings / UDL
+        # ONLY an indicator.
+        # It does NOT open anything.
+        # ======================================================
+
+        self.connected = QLabel(
+            "Not Connected"
+        )
+
+        self.connected.setAlignment(
+            Qt.AlignmentFlag.AlignRight
+            | Qt.AlignmentFlag.AlignVCenter
+        )
+
+        self.connected.setMinimumWidth(
+            110
+        )
+
+        self.connected.setFixedHeight(
+            32
+        )
+
+        self.connected.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#FF9800;
+                padding:0;
+                margin:0;
+                font-size:9pt;
+                font-weight:700;
+            }
+            """
+        )
+
+        # ======================================================
+        # GEAR
         #
+        # Opens Select Database
+        # ======================================================
 
         self.settings_button = QPushButton()
 
         self.settings_button.setCursor(
-            Qt.PointingHandCursor
+            Qt.CursorShape.PointingHandCursor
         )
 
         self.settings_button.setFixedSize(
-            42,
-            42,
+            36,
+            36
         )
 
-        self.settings_button.setObjectName(
-            "HeaderSettingsButton"
+        self.settings_button.setFlat(
+            True
         )
 
-        settings_layout = QHBoxLayout(
-            self.settings_button
+        self.settings_button.setIcon(
+            QIcon(
+                "assets/icons/navigation/settings.svg"
+            )
         )
 
-        settings_layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0,
+        self.settings_button.setIconSize(
+            QSize(
+                24,
+                24
+            )
         )
 
-        settings_layout.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
-        settings_icon = SvgIcon(
-            Icons.SETTINGS,
-            size=20,
-        )
-
-        settings_layout.addWidget(
-            settings_icon
+        self.settings_button.setToolTip(
+            "Select Database"
         )
 
         self.settings_button.setStyleSheet(
-            f"""
-            QPushButton#HeaderSettingsButton {{
-                background:#172131;
-                border:1px solid {Theme.Colors.BORDER};
-                border-radius:10px;
-            }}
+            """
+            QPushButton {
+                background:transparent;
+                border:none;
+                padding:0;
+                margin:0;
+            }
 
-            QPushButton#HeaderSettingsButton:hover {{
-                background:#202D3F;
-                border:1px solid {Theme.Colors.BORDER_LIGHT};
-            }}
+            QPushButton:hover {
+                background:transparent;
+                border:none;
+            }
 
-            QPushButton#HeaderSettingsButton:pressed {{
-                background:#141D2A;
-            }}
+            QPushButton:pressed {
+                background:transparent;
+                border:none;
+            }
             """
         )
 
         self.settings_button.clicked.connect(
             self.open_database_selector
         )
+
+        # ======================================================
+        # ADD
+        # ======================================================
 
         right.addWidget(
             self.connected
@@ -139,33 +185,48 @@ class Header(QWidget):
             right
         )
 
-        #
+        # ======================================================
         # DATABASE CHANGE
-        #
+        # ======================================================
 
         database_context.database_changed.connect(
             self.update_database_display
         )
 
-    def open_database_selector(self):
+    # ==========================================================
+    # DATABASE SELECTOR
+    # ==========================================================
+
+    def open_database_selector(
+        self
+    ):
 
         dialog = DatabaseSelector(
             self
         )
 
-        if dialog.exec() != QDialog.Accepted:
+        if (
+            dialog.exec()
+            != QDialog.DialogCode.Accepted
+        ):
+
             return
 
         if not dialog.selected_udl:
+
             return
 
         database_context.select(
             dialog.selected_udl
         )
 
+    # ==========================================================
+    # DATABASE DISPLAY
+    # ==========================================================
+
     def update_database_display(
         self,
-        database,
+        database
     ):
 
         if not database:
@@ -174,8 +235,36 @@ class Header(QWidget):
                 "Not Connected"
             )
 
+            self.connected.setStyleSheet(
+                """
+                QLabel {
+                    background:transparent;
+                    border:none;
+                    color:#FF9800;
+                    padding:0;
+                    margin:0;
+                    font-size:9pt;
+                    font-weight:700;
+                }
+                """
+            )
+
             return
 
         self.connected.setText(
             "Connected"
+        )
+
+        self.connected.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#53C653;
+                padding:0;
+                margin:0;
+                font-size:9pt;
+                font-weight:700;
+            }
+            """
         )

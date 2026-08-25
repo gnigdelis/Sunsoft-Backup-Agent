@@ -1,4 +1,10 @@
-from PySide6.QtCore import QObject, QThread, Signal
+from threading import Event
+
+from PySide6.QtCore import (
+    QObject,
+    QThread,
+    Signal,
+)
 
 from core.backup_worker import BackupWorker
 
@@ -24,31 +30,37 @@ class BackupRunner(QObject):
 
         self.thread = None
         self.worker = None
+        self.cancel_event = None
 
     def start(self):
 
-        #
-        # ήδη τρέχει
-        #
-
+        # Already running.
         if self.thread is not None:
             return
 
+        self.cancel_event = Event()
+
         self.thread = QThread()
 
-        self.worker = BackupWorker()
+        self.worker = BackupWorker(
+            self.cancel_event
+        )
 
         self.worker.moveToThread(
             self.thread
         )
 
-        #
-        # Signals
-        #
+        # -------------------------------------------------
+        # Worker
+        # -------------------------------------------------
 
         self.thread.started.connect(
             self.worker.run
         )
+
+        # -------------------------------------------------
+        # Signals
+        # -------------------------------------------------
 
         self.worker.log_info.connect(
             self.log_info
@@ -74,6 +86,10 @@ class BackupRunner(QObject):
             self.thread.quit
         )
 
+        # -------------------------------------------------
+        # Cleanup
+        # -------------------------------------------------
+
         self.thread.finished.connect(
             self.thread.deleteLater
         )
@@ -84,7 +100,27 @@ class BackupRunner(QObject):
 
         self.thread.start()
 
+    def cancel(self):
+
+        if self.thread is None:
+            return False
+
+        if self.cancel_event is None:
+            return False
+
+        if self.cancel_event.is_set():
+            return False
+
+        self.cancel_event.set()
+
+        self.log_info.emit(
+            "Stopping backup at the next safe checkpoint..."
+        )
+
+        return True
+
     def cleanup(self):
 
         self.worker = None
         self.thread = None
+        self.cancel_event = None

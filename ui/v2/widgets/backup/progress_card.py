@@ -1,136 +1,410 @@
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QWidget,
     QLabel,
+    QHBoxLayout,
     QVBoxLayout,
     QProgressBar,
+    QWidget,
 )
 
 from ui.v2.styles.theme import Theme
+from ui.v2.widgets.cards.base_card import BaseCard
 
 
-class ProgressCard(QWidget):
+class ProgressCard(BaseCard):
 
     def __init__(self):
-        super().__init__()
-        self.setup_ui()
-
-    def setup_ui(self):
-
-        layout = QVBoxLayout(self)
-
-        layout.setContentsMargins(18, 18, 18, 18)
-        layout.setSpacing(10)
-
-        self.title = QLabel("Backup Progress")
-        self.title.setFont(
-            Theme.Typography.heading()
-        )
-        self.title.setStyleSheet(
-            f"color:{Theme.Colors.TEXT};"
+        super().__init__(
+            title="Backup Progress",
+            minimum_height=220,
         )
 
-        self.percent = QLabel("0%")
+        self.build()
+
+    def build(self):
+
+        self.content_layout.setSpacing(10)
+
+        # ======================================================
+        # RED ACCENT
+        # ======================================================
+
+        accent = QLabel()
+
+        accent.setFixedHeight(
+            3
+        )
+
+        accent.setStyleSheet(
+            """
+            QLabel {
+                background: #E53935;
+                border: none;
+                border-radius: 1px;
+            }
+            """
+        )
+
+        self.content_layout.insertWidget(
+            0,
+            accent
+        )
+
+        # ======================================================
+        # PERCENTAGE
+        # ======================================================
+
+        header = QHBoxLayout()
+
+        header.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
+        percent_title = QLabel(
+            "Progress"
+        )
+
+        percent_title.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                font-size:9pt;
+            }}
+            """
+        )
+
+        self.percent = QLabel(
+            "0%"
+        )
+
+        self.percent.setAlignment(
+            Qt.AlignmentFlag.AlignRight
+            | Qt.AlignmentFlag.AlignVCenter
+        )
+
         self.percent.setStyleSheet(
             f"""
-            color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:11pt;
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                font-size:11pt;
+                font-weight:700;
+            }}
             """
         )
 
-        self.task = QLabel("Waiting...")
-        self.task.setStyleSheet(
-            f"""
-            color:{Theme.Colors.TEXT};
-            font-size:10pt;
-            """
+        header.addWidget(
+            percent_title
         )
 
-        self.step = QLabel("Step 0 / 0")
-        self.step.setStyleSheet(
-            f"""
-            color:{Theme.Colors.TEXT_SECONDARY};
-            font-size:9pt;
-            """
+        header.addStretch()
+
+        header.addWidget(
+            self.percent
         )
+
+        self.content_layout.addLayout(
+            header
+        )
+
+        # ======================================================
+        # PROGRESS BAR
+        # ======================================================
 
         self.progress = QProgressBar()
 
-        self.progress.setRange(0, 100)
-        self.progress.setValue(0)
-        self.progress.setTextVisible(False)
-        self.progress.setFixedHeight(18)
+        self.progress.setRange(
+            0,
+            100
+        )
+
+        self.progress.setValue(
+            0
+        )
+
+        self.progress.setTextVisible(
+            False
+        )
+
+        self.progress.setFixedHeight(
+            10
+        )
 
         self.progress.setStyleSheet(
             f"""
             QProgressBar {{
-
-                border: none;
-                border-radius: 9px;
-                background: {Theme.Colors.SURFACE_LIGHT};
-
+                background:{Theme.Colors.BORDER};
+                border:none;
+                border-radius:5px;
             }}
 
             QProgressBar::chunk {{
-
-                border-radius: 9px;
-                background: #E53935;
-
+                background:{Theme.Colors.PRIMARY};
+                border-radius:5px;
             }}
             """
         )
 
-        layout.addWidget(self.title)
-        layout.addWidget(self.percent)
-        layout.addWidget(self.progress)
-        layout.addWidget(self.task)
-        layout.addWidget(self.step)
+        self.content_layout.addWidget(
+            self.progress
+        )
 
-        self.setStyleSheet(
+        # ======================================================
+        # STATISTICS
+        # ======================================================
+
+        stats = QWidget()
+
+        stats_layout = QHBoxLayout(
+            stats
+        )
+
+        stats_layout.setContentsMargins(
+            0,
+            4,
+            0,
+            4
+        )
+
+        stats_layout.setSpacing(
+            18
+        )
+
+        self.steps_value = self._value(
+            "Step 0 / 0"
+        )
+
+        self.speed_value = self._value(
+            "0 MB/s"
+        )
+
+        self.remaining_value = self._value(
+            "--:--"
+        )
+
+        self.copied_value = self._value(
+            "0 MB"
+        )
+
+        stats_layout.addWidget(
+            self._stat(
+                "Steps",
+                self.steps_value
+            )
+        )
+
+        stats_layout.addWidget(
+            self._stat(
+                "Speed",
+                self.speed_value
+            )
+        )
+
+        stats_layout.addWidget(
+            self._stat(
+                "Remaining",
+                self.remaining_value
+            )
+        )
+
+        stats_layout.addWidget(
+            self._stat(
+                "Copied",
+                self.copied_value
+            )
+        )
+
+        self.content_layout.addWidget(
+            stats
+        )
+
+        # ======================================================
+        # CURRENT TASK
+        # ======================================================
+
+        task_title = QLabel(
+            "Current Task"
+        )
+
+        task_title.setStyleSheet(
             f"""
-            ProgressCard {{
-
-                background: {Theme.Colors.SURFACE};
-                border: 1px solid {Theme.Colors.BORDER};
-                border-radius: 12px;
-
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                font-size:9pt;
             }}
             """
         )
+
+        self.task_value = QLabel(
+            "Waiting..."
+        )
+
+        self.task_value.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                font-size:10pt;
+                font-weight:600;
+            }}
+            """
+        )
+
+        self.task_value.setWordWrap(
+            True
+        )
+
+        self.content_layout.addWidget(
+            task_title
+        )
+
+        self.content_layout.addWidget(
+            self.task_value
+        )
+
+    def _value(
+        self,
+        text
+    ):
+
+        label = QLabel(
+            text
+        )
+
+        label.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                font-size:9pt;
+                font-weight:700;
+            }}
+            """
+        )
+
+        return label
+
+    def _stat(
+        self,
+        title,
+        value
+    ):
+
+        widget = QWidget()
+
+        layout = QVBoxLayout(
+            widget
+        )
+
+        layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
+        layout.setSpacing(
+            2
+        )
+
+        label = QLabel(
+            title
+        )
+
+        label.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                font-size:8pt;
+            }}
+            """
+        )
+
+        layout.addWidget(
+            label
+        )
+
+        layout.addWidget(
+            value
+        )
+
+        return widget
 
     def update_progress(
         self,
         percentage,
         current_step,
         total_steps,
-        current_task,
+        task,
     ):
 
-        percentage = max(
-            0,
-            min(100, percentage),
+        self.percent.setText(
+            f"{percentage}%"
         )
 
         self.progress.setValue(
             percentage
         )
 
-        self.percent.setText(
-            f"{percentage}%"
-        )
-
-        self.task.setText(
-            current_task
-        )
-
-        self.step.setText(
+        self.steps_value.setText(
             f"Step {current_step} / {total_steps}"
+        )
+
+        self.task_value.setText(
+            task
         )
 
     def reset(self):
 
-        self.update_progress(
-            0,
-            0,
-            0,
-            "Waiting...",
+        self.percent.setText(
+            "0%"
         )
+
+        self.progress.setValue(
+            0
+        )
+
+        self.steps_value.setText(
+            "Step 0 / 0"
+        )
+
+        self.speed_value.setText(
+            "0 MB/s"
+        )
+
+        self.remaining_value.setText(
+            "--:--"
+        )
+
+        self.copied_value.setText(
+            "0 MB"
+        )
+
+        self.task_value.setText(
+            "Waiting..."
+        )
+
+    def finish(
+        self,
+        success=True
+    ):
+
+        if success:
+
+            self.percent.setText(
+                "100%"
+            )
+
+            self.progress.setValue(
+                100
+            )
+
+            self.task_value.setText(
+                "Backup Completed."
+            )
+
+        else:
+
+            self.task_value.setText(
+                "Backup Failed."
+            )

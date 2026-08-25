@@ -3,36 +3,33 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
 )
 
-from ui.v2.support.widgets.amvrosia_repair_card import (
-    AmvrosiaRepairCard,
-)
+from ui.v2.support.layouts.support_layout import SupportLayout
 
 
 class SupportPage(QWidget):
 
     def __init__(self):
-
         super().__init__()
 
         self.setup_ui()
 
     def setup_ui(self):
 
-        layout = QVBoxLayout(self)
+        layout = QVBoxLayout(
+            self
+        )
 
         layout.setContentsMargins(
-            20,
-            20,
-            20,
-            20,
+            0,
+            0,
+            0,
+            0
         )
 
-        layout.setSpacing(20)
-
-        self.repair_card = AmvrosiaRepairCard()
+        layout.setSpacing(
+            0
+        )
 
         layout.addWidget(
-            self.repair_card
+            SupportLayout()
         )
-
-        layout.addStretch()

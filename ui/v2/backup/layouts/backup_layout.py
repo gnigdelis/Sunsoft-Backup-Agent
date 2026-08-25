@@ -1,12 +1,12 @@
-from pathlib import Path
+﻿from pathlib import Path
 import os
-import socket
 
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
-    QLabel,
     QHBoxLayout,
+    QLabel,
     QFileDialog,
     QMessageBox,
 )
@@ -27,7 +27,6 @@ from ui.v2.widgets.logs.live_activity_card import LiveActivityCard
 class BackupLayout(QWidget):
 
     def __init__(self):
-
         super().__init__()
 
         self.backup_controller = BackupController()
@@ -37,135 +36,245 @@ class BackupLayout(QWidget):
         )
 
         self.setup_ui()
-
         self.connect_events()
+
+        self._update_connection_status(
+            database_context.active()
+        )
 
         if database_context.is_selected():
             self._update_customer_information()
 
-    # ---------------------------------------------------------
+        self._update_backup_controls()
+
+    # ==========================================================
     # UI
-    # ---------------------------------------------------------
+    # ==========================================================
 
     def setup_ui(self):
 
-        root = QVBoxLayout(self)
+        self.setObjectName(
+            "BackupLayout"
+        )
+
+        self.setStyleSheet(
+            f"""
+            QWidget#BackupLayout {{
+                background: transparent;
+                border: none;
+            }}
+
+            QWidget#BackupLayout QLabel {{
+                background: transparent;
+                border: none;
+            }}
+            """
+        )
+
+        root = QVBoxLayout(
+            self
+        )
 
         root.setContentsMargins(
             20,
+            18,
             20,
-            20,
-            20,
+            22
         )
 
         root.setSpacing(
-            20
+            16
         )
 
-        # -----------------------------------------------------
-        # Header
-        # -----------------------------------------------------
+        # ======================================================
+        # HEADER
+        # ======================================================
 
         header = QHBoxLayout()
 
-        title = QLabel(
-            "Backup Manager"
+        header.setContentsMargins(
+            0,
+            0,
+            0,
+            4
         )
 
-        title.setFont(
-            Theme.Typography.title()
+        title_block = QVBoxLayout()
+
+        title_block.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
+        title_block.setSpacing(
+            2
+        )
+
+        title = QLabel(
+            "Backup"
         )
 
         title.setStyleSheet(
-            f"color:{Theme.Colors.TEXT};"
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT};
+                background:transparent;
+                border:none;
+                font-size:24pt;
+                font-weight:700;
+                padding:0;
+            }}
+            """
         )
 
-        self.status = QLabel(
-            "🟢 Έτοιμο"
+        subtitle = QLabel(
+            "Create, monitor and manage your system backups"
         )
 
-        self.status.setStyleSheet(
-            f"color:{Theme.Colors.SUCCESS}; font-size:11pt;"
+        subtitle.setStyleSheet(
+            f"""
+            QLabel {{
+                color:{Theme.Colors.TEXT_SECONDARY};
+                background:transparent;
+                border:none;
+                font-size:10pt;
+                padding:0;
+            }}
+            """
         )
 
-        header.addWidget(
+        title_block.addWidget(
             title
         )
 
+        title_block.addWidget(
+            subtitle
+        )
+
+        header.addLayout(
+            title_block
+        )
+
         header.addStretch()
+
+        # ======================================================
+        # CONNECTION STATUS
+        # ======================================================
+
+        self.status = QLabel(
+            "Not Connected"
+        )
+
+        self.status.setAlignment(
+            Qt.AlignmentFlag.AlignRight
+            | Qt.AlignmentFlag.AlignVCenter
+        )
+
+        self.status.setMinimumWidth(
+            120
+        )
+
+        self.status.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#ff9800;
+                font-size:10pt;
+                font-weight:700;
+                padding:0 4px;
+            }
+            """
+        )
 
         header.addWidget(
             self.status
         )
 
-        # -----------------------------------------------------
-        # Widgets
-        # -----------------------------------------------------
-
-        self.toolbar = BackupToolbar()
-
-        self.progress_card = ProgressCard()
-
-        self.customer_card = CustomerCard()
-
-        self.activity_card = LiveActivityCard()
-
-        self.statistics_card = StatisticsCard()
-
-        # -----------------------------------------------------
-        # Middle Area
-        # -----------------------------------------------------
-
-        middle = QHBoxLayout()
-
-        middle.setSpacing(
-            20
-        )
-
-        middle.addWidget(
-            self.customer_card,
-            1,
-        )
-
-        middle.addWidget(
-            self.activity_card,
-            2,
-        )
-
-        # -----------------------------------------------------
-        # Build Layout
-        # -----------------------------------------------------
-
         root.addLayout(
             header
         )
+
+        # ======================================================
+        # TOOLBAR
+        # ======================================================
+
+        self.toolbar = BackupToolbar()
 
         root.addWidget(
             self.toolbar
         )
 
+        # ======================================================
+        # PROGRESS
+        # ======================================================
+
+        self.progress_card = ProgressCard()
+
         root.addWidget(
             self.progress_card
         )
 
-        root.addLayout(
-            middle
+        # ======================================================
+        # LOWER AREA
+        # ======================================================
+
+        middle = QHBoxLayout()
+
+        middle.setContentsMargins(
+            0,
+            4,
+            0,
+            4
         )
+
+        middle.setSpacing(
+            18
+        )
+
+        self.customer_card = CustomerCard()
+
+        self.activity_card = LiveActivityCard()
+
+        middle.addWidget(
+            self.customer_card,
+            1
+        )
+
+        middle.addWidget(
+            self.activity_card,
+            2
+        )
+
+        root.addLayout(
+            middle,
+            1
+        )
+
+        # ======================================================
+        # STATISTICS
+        # ======================================================
+
+        self.statistics_card = StatisticsCard()
 
         root.addWidget(
             self.statistics_card
         )
 
-        root.addStretch()
-
-    # ---------------------------------------------------------
-    # Events
-    # ---------------------------------------------------------
+    # ==========================================================
+    # EVENTS
+    # ==========================================================
 
     def connect_events(self):
 
         self.toolbar.start_backup.connect(
             self._start_backup
+        )
+
+        self.toolbar.cancel_backup.connect(
+            self._cancel_backup
         )
 
         self.toolbar.browse_clicked.connect(
@@ -200,16 +309,90 @@ class BackupLayout(QWidget):
             self._on_database_changed
         )
 
-    # ---------------------------------------------------------
-    # Customer Information
-    # ---------------------------------------------------------
+    # ==========================================================
+    # DATABASE CHANGE
+    # ==========================================================
 
     def _on_database_changed(
         self,
-        database,
+        database
     ):
 
-        self._update_customer_information()
+        self._update_connection_status(
+            database
+        )
+
+        if database:
+            self._update_customer_information()
+        else:
+            self.customer_card.set_customer(
+                customer="-",
+                sql_server="-",
+                destination="-",
+                cloud="-",
+                last_backup="-",
+            )
+
+    # ==========================================================
+    # CONNECTION STATUS
+    # ==========================================================
+
+    def _update_connection_status(
+        self,
+        database
+    ):
+
+        if database:
+
+            self.status.setText(
+                "Connected"
+            )
+
+            self.status.setStyleSheet(
+                """
+                QLabel {
+                    background:transparent;
+                    border:none;
+                    color:#53c653;
+                    font-size:10pt;
+                    font-weight:700;
+                    padding:0 4px;
+                }
+                """
+            )
+
+        else:
+
+            self.status.setText(
+                "Not Connected"
+            )
+
+            self.status.setStyleSheet(
+                """
+                QLabel {
+                    background:transparent;
+                    border:none;
+                    color:#ff9800;
+                    font-size:10pt;
+                    font-weight:700;
+                    padding:0 4px;
+                }
+                """
+            )
+
+    # ==========================================================
+    # BACKUP CONTROLS
+    # ==========================================================
+
+    def _update_backup_controls(self):
+
+        self.toolbar.set_backup_running(
+            self.backup_controller.is_running
+        )
+
+    # ==========================================================
+    # CUSTOMER INFORMATION
+    # ==========================================================
 
     def _update_customer_information(self):
 
@@ -220,111 +403,97 @@ class BackupLayout(QWidget):
 
         destination = "-"
 
-        destination_result = (
-            self.destination_manager
-            .get_destination()
+        result = (
+            self.destination_manager.get_destination()
         )
 
-        if destination_result["success"]:
+        if result["success"]:
 
             destination = (
-                destination_result["data"]
-                .get(
+                result["data"].get(
                     "destination_path",
                     "-"
                 )
             )
 
         self.customer_card.set_customer(
-
-            customer=socket.gethostname() or "-",
-
+            customer=(
+                database.get(
+                    "name",
+                    "-"
+                )
+                or "-"
+            ),
             sql_server=(
-                database.get("server")
+                database.get(
+                    "server",
+                    "-"
+                )
                 or "-"
             ),
-
-            database=(
-                database.get("name")
-                or "-"
+            destination=str(
+                destination
             ),
-
-            database_version="-",
-
             cloud="Not configured",
-
-            destination=str(destination),
-
             last_backup="-",
-
-            next_backup="-",
         )
 
-    # ---------------------------------------------------------
-    # Start Backup
-    # ---------------------------------------------------------
+    # ==========================================================
+    # START BACKUP
+    # ==========================================================
 
     def _start_backup(self):
 
         if self.backup_controller.is_running:
-
             return
+
+        self._update_backup_controls()
+
+        self.activity_card.add_log(
+            "Starting backup..."
+        )
 
         result = (
             self.backup_controller.start_backup()
         )
 
-        if not result["success"]:
+        self._update_backup_controls()
 
-            error_message = (
-                result["errors"][0]
-                if result["errors"]
-                else "Unable to start backup."
-            )
-
-            self.activity_card.add_log(
-                error_message
-            )
-
-            QMessageBox.warning(
-                self,
-                "Database Selection Required",
-                error_message,
-            )
-
-            self.status.setText(
-                "β— Database Required"
-            )
-
-            self.status.setStyleSheet(
-                "color:#f59e0b; font-size:11pt;"
-            )
-
+        if result is not None:
             return
 
-        self._update_customer_information()
+    # ==========================================================
+    # CANCEL BACKUP
+    # ==========================================================
 
-        self.status.setText(
-            "β— Backup Running"
+    def _cancel_backup(self):
+
+        if not self.backup_controller.is_running:
+            return
+
+        cancelled = (
+            self.backup_controller.cancel_backup()
         )
 
-        self.status.setStyleSheet(
-            "color:#f59e0b; font-size:11pt;"
-        )
+        if cancelled:
 
-        self.activity_card.add_log(
-            "Database selected. Backup starting..."
-        )
+            self.activity_card.add_log(
+                "Backup cancellation requested. "
+                "Waiting for the current safe checkpoint..."
+            )
 
-    # ---------------------------------------------------------
-    # Browse Destination
-    # ---------------------------------------------------------
+            self.toolbar.cancel_button.setEnabled(
+                False
+            )
+
+    # ==========================================================
+    # BROWSE DESTINATION
+    # ==========================================================
 
     def _browse_destination(self):
 
         result = (
-            self.destination_manager
-            .get_destination()
+            self.destination_manager.get_destination()
         )
 
         if result["success"]:
@@ -342,7 +511,6 @@ class BackupLayout(QWidget):
             )
 
         if not current_path:
-
             current_path = str(
                 Path.home()
             )
@@ -357,12 +525,10 @@ class BackupLayout(QWidget):
         )
 
         if not selected_directory:
-
             return
 
         destination_result = (
-            self.destination_manager
-            .set_destination(
+            self.destination_manager.set_destination(
                 selected_directory
             )
         )
@@ -383,6 +549,8 @@ class BackupLayout(QWidget):
 
             return
 
+        self._update_customer_information()
+
         self.activity_card.add_log(
             "Backup destination changed."
         )
@@ -391,23 +559,14 @@ class BackupLayout(QWidget):
             selected_directory
         )
 
-        self.status.setText(
-            "β— Destination Ready"
-        )
-
-        self.status.setStyleSheet(
-            f"color:{Theme.Colors.SUCCESS}; font-size:11pt;"
-        )
-
-    # ---------------------------------------------------------
-    # Open Destination
-    # ---------------------------------------------------------
+    # ==========================================================
+    # OPEN DESTINATION
+    # ==========================================================
 
     def _open_destination(self):
 
         result = (
-            self.destination_manager
-            .get_destination()
+            self.destination_manager.get_destination()
         )
 
         if not result["success"]:
@@ -478,13 +637,13 @@ class BackupLayout(QWidget):
                 str(error),
             )
 
-    # ---------------------------------------------------------
-    # Live Activity
-    # ---------------------------------------------------------
+    # ==========================================================
+    # LOGGING
+    # ==========================================================
 
     def _log_info(
         self,
-        message,
+        message
     ):
 
         self.activity_card.add_log(
@@ -493,7 +652,7 @@ class BackupLayout(QWidget):
 
     def _log_success(
         self,
-        message,
+        message
     ):
 
         self.activity_card.add_log(
@@ -502,37 +661,47 @@ class BackupLayout(QWidget):
 
     def _log_error(
         self,
-        message,
+        message
     ):
 
         self.activity_card.add_log(
             message
         )
 
-    # ---------------------------------------------------------
-    # Finished
-    # ---------------------------------------------------------
+    # ==========================================================
+    # FINISHED
+    # ==========================================================
 
     def _backup_finished(
         self,
-        result,
+        result
     ):
+
+        self._update_backup_controls()
 
         self.progress_card.reset()
 
-        if not result.get(
-            "success",
-            False,
+        if result.get(
+            "cancelled",
+            False
         ):
 
+            self.activity_card.add_log(
+                "Backup cancelled by user."
+            )
+
             self.status.setText(
-                "β— Backup Failed"
+                "Not Connected"
+                if not database_context.active()
+                else "Connected"
             )
 
-            self.status.setStyleSheet(
-                "color:#dc2626; font-size:11pt;"
-            )
+            return
 
+        if not result.get(
+            "success",
+            False
+        ):
             return
 
         data = (
@@ -559,104 +728,48 @@ class BackupLayout(QWidget):
             or {}
         )
 
-        # -----------------------------------------------------
-        # Customer Information
-        # -----------------------------------------------------
-
         self.customer_card.set_customer(
-
             customer=customer.get(
                 "customer",
-                socket.gethostname(),
-            ),
-
-            sql_server=customer.get(
-                "sql_server",
-                (
-                    database_context.active().get(
-                        "server",
-                        "-"
-                    )
-                    if database_context.active()
-                    else "-"
-                )
-            ),
-
-            database=customer.get(
-                "database",
-                (
-                    database_context.active().get(
-                        "name",
-                        "-"
-                    )
-                    if database_context.active()
-                    else "-"
-                )
-            ),
-
-            database_version=customer.get(
-                "database_version",
                 "-"
             ),
-
-            cloud=customer.get(
-                "cloud",
-                "Not configured"
+            sql_server=customer.get(
+                "sql_server",
+                "-"
             ),
-
             destination=customer.get(
                 "destination",
                 "-"
             ),
-
+            cloud=customer.get(
+                "cloud",
+                "Not configured"
+            ),
             last_backup=customer.get(
                 "last_backup",
                 "-"
             ),
-
-            next_backup=customer.get(
-                "next_backup",
-                "-"
-            ),
-
         )
-
-        # -----------------------------------------------------
-        # Backup Statistics
-        # -----------------------------------------------------
 
         self.statistics_card.set_statistics(
-
             files=statistics.get(
                 "files",
-                0,
+                0
             ),
-
             size=statistics.get(
                 "zip_size",
-                "0 B",
+                "0 B"
             ),
-
             duration=statistics.get(
                 "duration",
-                "00:00",
+                "00:00"
             ),
-
             compression=statistics.get(
                 "compression",
-                "0 %",
+                "0 %"
             ),
-
         )
 
-        # -----------------------------------------------------
-        # Status
-        # -----------------------------------------------------
-
-        self.status.setText(
-            "🟢 Έτοιμο"
-        )
-
-        self.status.setStyleSheet(
-            f"color:{Theme.Colors.SUCCESS}; font-size:11pt;"
+        self._update_connection_status(
+            database_context.active()
         )

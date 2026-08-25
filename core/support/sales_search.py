@@ -5,9 +5,13 @@ from dataclasses import dataclass
 class SalesSearchResult:
 
     found: bool
-    oid: int | None = None
-    status: int | None = None
-    data: dict | None = None
+
+    rows: list[dict]
+
+    total_records: int
+
+    pending_records: int
+
     message: str = ""
 
 
@@ -17,75 +21,118 @@ class SalesSearch:
     SELECT
         SalesTransOID,
         SalesTransStatus,
-        *
+        SalesTransNoteNo,
+        SalesTransNoteCode,
+        SalesTransInitDate
     FROM TblSnSalesTrans
     WHERE SalesTransNoteNo = ?
       AND SalesTransInitDate = ?
+    ORDER BY SalesTransOID
     """
 
     def execute(
         self,
         connection,
-        invoice_number: int,
-        invoice_date: str,
+        order_number: int,
+        order_date: str,
     ) -> SalesSearchResult:
 
         cursor = connection.cursor()
 
-        cursor.execute(
+        try:
 
-            self.SQL,
+            cursor.execute(
+                self.SQL,
+                order_number,
+                order_date,
+            )
 
-            invoice_number,
+            rows = cursor.fetchall()
 
-            invoice_date,
+            if not rows:
 
-        )
+                return SalesSearchResult(
+                    found=False,
+                    rows=[],
+                    total_records=0,
+                    pending_records=0,
+                    message="Order not found.",
+                )
 
-        row = cursor.fetchone()
+            result_rows = []
 
-        cursor.close()
+            pending_count = 0
 
-        if row is None:
+            for row in rows:
+
+                oid = row[0]
+                status = row[1]
+                note_no = row[2]
+                note_code = row[3]
+                init_date = row[4]
+
+                try:
+
+                    oid = int(
+                        oid
+                    )
+
+                except (
+                    TypeError,
+                    ValueError,
+                ):
+
+                    oid = None
+
+                try:
+
+                    status = int(
+                        status
+                    )
+
+                except (
+                    TypeError,
+                    ValueError,
+                ):
+
+                    status = None
+
+                if status != 1:
+
+                    pending_count += 1
+
+                result_rows.append(
+                    {
+                        "SalesTransOID": oid,
+                        "SalesTransStatus": status,
+                        "SalesTransNoteNo": note_no,
+                        "SalesTransNoteCode": note_code,
+                        "SalesTransInitDate": init_date,
+                    }
+                )
 
             return SalesSearchResult(
+                found=True,
+                rows=result_rows,
+                total_records=len(
+                    result_rows
+                ),
+                pending_records=pending_count,
+                message="Order found.",
+            )
 
+        except Exception as error:
+
+            return SalesSearchResult(
                 found=False,
-
-                message="Invoice not found.",
-
+                rows=[],
+                total_records=0,
+                pending_records=0,
+                message=str(
+                    error
+                ),
             )
 
-        columns = [
+        finally:
 
-            column[0]
-
-            for column in cursor.description
-
-        ]
-
-        data = dict(
-
-            zip(
-
-                columns,
-
-                row,
-
-            )
-
-        )
-
-        return SalesSearchResult(
-
-            found=True,
-
-            oid=data["SalesTransOID"],
-
-            status=data["SalesTransStatus"],
-
-            data=data,
-
-            message="Invoice found.",
-
-        )
+            cursor.close()

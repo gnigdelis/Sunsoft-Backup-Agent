@@ -29,4 +29,6 @@ class DashboardPage(QWidget):
             DashboardLayout()
         )
 
-        self.setLayout(layout)
+        self.setLayout(
+            layout
+        )

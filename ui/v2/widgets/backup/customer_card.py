@@ -1,119 +1,172 @@
 from PySide6.QtWidgets import (
-    QWidget,
     QLabel,
-    QFormLayout,
-    QVBoxLayout,
+    QGridLayout,
 )
 
 from ui.v2.styles.theme import Theme
+from ui.v2.widgets.cards.base_card import BaseCard
 
 
-class CustomerCard(QWidget):
+class CustomerCard(BaseCard):
 
     def __init__(self):
-
-        super().__init__()
-
-        self.setup_ui()
-
-    def setup_ui(self):
-
-        root = QVBoxLayout(self)
-
-        root.setContentsMargins(
-            18,
-            18,
-            18,
-            18,
+        super().__init__(
+            title="Customer Information",
+            minimum_height=220,
         )
 
-        root.setSpacing(15)
+        self.build()
 
-        title = QLabel(
-            "Customer Information"
+    def build(self):
+
+        self.content_layout.setSpacing(
+            11
         )
 
-        title.setFont(
-            Theme.Typography.heading()
+        # ======================================================
+        # PURPLE ACCENT
+        # ======================================================
+
+        accent = QLabel()
+
+        accent.setFixedHeight(
+            3
         )
 
-        title.setStyleSheet(
-            f"color:{Theme.Colors.TEXT};"
+        accent.setStyleSheet(
+            """
+            QLabel {
+                background: #9C27B0;
+                border: none;
+                border-radius: 1px;
+            }
+            """
         )
 
-        form = QFormLayout()
+        self.content_layout.insertWidget(
+            0,
+            accent
+        )
 
-        form.setVerticalSpacing(12)
-        form.setHorizontalSpacing(20)
+        # ======================================================
+        # INFORMATION
+        # ======================================================
 
-        self.customer = QLabel("-")
-        self.sql_server = QLabel("-")
-        self.database = QLabel("-")
-        self.database_version = QLabel("-")
-        self.cloud = QLabel("-")
-        self.destination = QLabel("-")
-        self.last_backup = QLabel("-")
-        self.next_backup = QLabel("-")
+        self.customer = self._value()
+        self.sql_server = self._value()
+        self.destination = self._value()
+        self.cloud = self._value()
+        self.last_backup = self._value()
 
-        labels = [
-            self.customer,
-            self.sql_server,
-            self.database,
-            self.database_version,
-            self.cloud,
-            self.destination,
-            self.last_backup,
-            self.next_backup,
+        grid = QGridLayout()
+
+        grid.setContentsMargins(
+            0,
+            4,
+            0,
+            0
+        )
+
+        grid.setHorizontalSpacing(
+            22
+        )
+
+        grid.setVerticalSpacing(
+            11
+        )
+
+        rows = [
+            ("Customer", self.customer),
+            ("SQL Server", self.sql_server),
+            ("Destination", self.destination),
+            ("Cloud", self.cloud),
+            ("Last Backup", self.last_backup),
         ]
 
-        for label in labels:
-            label.setStyleSheet(
-                f"color:{Theme.Colors.TEXT};"
+        for row, (
+            title,
+            value
+        ) in enumerate(rows):
+
+            label = QLabel(
+                title
             )
 
-        form.addRow("🏪 Customer", self.customer)
-        form.addRow("🗄 SQL Server", self.sql_server)
-        form.addRow("🗃 Database", self.database)
-        form.addRow("🧩 Database Version", self.database_version)
-        form.addRow("☁ Cloud", self.cloud)
-        form.addRow("📁 Destination", self.destination)
-        form.addRow("🕒 Last Backup", self.last_backup)
-        form.addRow("⏭ Next Backup", self.next_backup)
+            label.setStyleSheet(
+                f"""
+                QLabel {{
+                    color:{Theme.Colors.TEXT_SECONDARY};
+                    font-size:8.5pt;
+                    font-weight:600;
+                }}
+                """
+            )
 
-        root.addWidget(title)
-        root.addLayout(form)
+            grid.addWidget(
+                label,
+                row,
+                0
+            )
 
-        self.setStyleSheet(
+            grid.addWidget(
+                value,
+                row,
+                1
+            )
+
+        self.content_layout.addLayout(
+            grid
+        )
+
+        self.content_layout.addStretch()
+
+    def _value(self):
+
+        label = QLabel(
+            "-"
+        )
+
+        label.setWordWrap(
+            True
+        )
+
+        label.setStyleSheet(
             f"""
-            CustomerCard {{
-                background:{Theme.Colors.SURFACE};
-                border:1px solid {Theme.Colors.BORDER};
-                border-radius:12px;
-            }}
-
             QLabel {{
                 color:{Theme.Colors.TEXT};
+                font-size:9pt;
+                font-weight:600;
             }}
             """
         )
+
+        return label
 
     def set_customer(
         self,
         customer: str,
         sql_server: str,
-        database: str,
-        database_version: str,
-        cloud: str,
         destination: str,
+        cloud: str,
         last_backup: str,
-        next_backup: str,
     ):
 
-        self.customer.setText(customer or "-")
-        self.sql_server.setText(sql_server or "-")
-        self.database.setText(database or "-")
-        self.database_version.setText(database_version or "-")
-        self.cloud.setText(cloud or "Not configured")
-        self.destination.setText(destination or "-")
-        self.last_backup.setText(last_backup or "-")
-        self.next_backup.setText(next_backup or "-")
+        self.customer.setText(
+            customer
+        )
+
+        self.sql_server.setText(
+            sql_server
+        )
+
+        self.destination.setText(
+            destination
+        )
+
+        self.cloud.setText(
+            cloud
+        )
+
+        self.last_backup.setText(
+            last_backup
+        )

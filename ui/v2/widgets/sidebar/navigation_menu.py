@@ -1,4 +1,7 @@
-﻿from PySide6.QtWidgets import QVBoxLayout, QWidget
+﻿from PySide6.QtWidgets import (
+    QVBoxLayout,
+    QWidget,
+)
 
 from ui.v2.widgets.sidebar.navigation_item import NavigationItem
 
@@ -54,21 +57,21 @@ class NavigationMenu(QWidget):
             ),
 
             (
-                "History",
-                "lucide/icons/clock-3.svg",
+                "Empty Lock",
+                "history.svg",
                 "#1e88e5",
                 False,
             ),
 
             (
-                "Support",
+                "Delete Pending Order",
                 "lucide/icons/headset.svg",
                 "#00acc1",
                 False,
             ),
 
             (
-                "MyData Sent",
+                "myDATA Manager",
                 "lucide/icons/send.svg",
                 "#757575",
                 False,
@@ -119,11 +122,27 @@ class NavigationMenu(QWidget):
                     item,
                 )
 
-            elif text == "MyData Sent":
+            elif text == "myDATA Manager":
 
                 setattr(
                     self,
                     "mydata_sent",
+                    item,
+                )
+
+            elif text == "Delete Pending Order":
+
+                setattr(
+                    self,
+                    "support",
+                    item,
+                )
+
+            elif text == "Empty Lock":
+
+                setattr(
+                    self,
+                    "history",
                     item,
                 )
 
