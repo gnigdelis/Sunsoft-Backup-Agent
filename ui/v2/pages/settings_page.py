@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 from PySide6.QtCore import Qt, QTime
 from PySide6.QtWidgets import (
@@ -19,6 +19,8 @@ from PySide6.QtWidgets import (
 
 from core.destination_manager import DestinationManager
 from core.scheduler.backup_scheduler import BackupScheduler
+from core.providers.pcloud_provider import PCloudProvider
+
 
 
 class SettingsPage(QWidget):
@@ -27,15 +29,16 @@ class SettingsPage(QWidget):
         super().__init__()
 
         self.destination_manager = DestinationManager()
-        self.scheduler = BackupScheduler(self)
+        self.scheduler = BackupScheduler(self)
 
         self._build_ui()
         self._load_settings()
-        self._load_schedule()
+        self._load_schedule()
 
         self.scheduler.schedule_changed.connect(
             self._update_schedule_status
         )
+
         self.scheduler.backup_triggered.connect(
             self._scheduled_backup_started
         )
@@ -49,10 +52,6 @@ class SettingsPage(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(20, 18, 20, 22)
         layout.setSpacing(14)
-
-        # ======================================================
-        # HEADER
-        # ======================================================
 
         header = QVBoxLayout()
         header.setSpacing(2)
@@ -74,6 +73,7 @@ class SettingsPage(QWidget):
         subtitle = QLabel(
             "Configure backup destination and automatic backup schedule"
         )
+
         subtitle.setStyleSheet(
             """
             QLabel {
@@ -88,11 +88,8 @@ class SettingsPage(QWidget):
 
         header.addWidget(title)
         header.addWidget(subtitle)
-        layout.addLayout(header)
 
-        # ======================================================
-        # CARDS
-        # ======================================================
+        layout.addLayout(header)
 
         cards_row = QHBoxLayout()
         cards_row.setContentsMargins(0, 0, 0, 0)
@@ -131,6 +128,7 @@ class SettingsPage(QWidget):
         description = QLabel(
             "Select where backup files will be stored."
         )
+
         self._muted_label(description)
         card_layout.addWidget(description)
 
@@ -141,6 +139,7 @@ class SettingsPage(QWidget):
         self.destination_input = QLineEdit()
         self.destination_input.setReadOnly(True)
         self.destination_input.setMinimumHeight(38)
+
         self.destination_input.setStyleSheet(
             """
             QLineEdit {
@@ -167,9 +166,11 @@ class SettingsPage(QWidget):
             "Browse...",
             "#F4F5F7",
         )
+
         self.browse_button.clicked.connect(
             self._browse_destination
         )
+
         destination_row.addWidget(
             self.browse_button
         )
@@ -181,28 +182,30 @@ class SettingsPage(QWidget):
         actions.setSpacing(18)
 
         self.save_button = self._flat_button(
-            "▶  Save",
+            "Save",
             "#E53935",
         )
 
         self.test_button = self._flat_button(
-            "▶  Test Destination",
+            "Test Destination",
             "#29A8FF",
         )
 
         self.reset_button = self._flat_button(
-            "↻  Reset to Default",
+            "Reset to Default",
             "#FF9800",
         )
 
         self.save_button.clicked.connect(
             self._save_destination
         )
+
         self.test_button.clicked.connect(
             lambda: self._test_destination(
                 show_message=True
             )
         )
+
         self.reset_button.clicked.connect(
             self._reset_destination
         )
@@ -214,22 +217,27 @@ class SettingsPage(QWidget):
 
         card_layout.addLayout(actions)
 
-        # ------------------------------------------------------
-        # Destination status
-        # ------------------------------------------------------
-
         self.status_label = QLabel(
             "Status: Unknown"
         )
+
         self._status_label_style(
             self.status_label,
             "#9FA4AE",
         )
-        card_layout.addWidget(self.status_label)
+
+        card_layout.addWidget(
+            self.status_label
+        )
 
         self.storage_label = QLabel("")
-        self._muted_label(self.storage_label)
-        card_layout.addWidget(self.storage_label)
+        self._muted_label(
+            self.storage_label
+        )
+
+        card_layout.addWidget(
+            self.storage_label
+        )
 
         card_layout.addStretch()
 
@@ -242,28 +250,36 @@ class SettingsPage(QWidget):
         description = QLabel(
             "Automatically run backups according to the configured schedule."
         )
+
         self._muted_label(description)
         card_layout.addWidget(description)
 
-        # ------------------------------------------------------
-        # Automatic backup
-        # ------------------------------------------------------
-
         enable_row = QHBoxLayout()
-        enable_row.setContentsMargins(0, 6, 0, 0)
+        enable_row.setContentsMargins(
+            0,
+            6,
+            0,
+            0,
+        )
 
         enable_label = QLabel(
             "Automatic Backup"
         )
-        self._field_label(enable_label)
+
+        self._field_label(
+            enable_label
+        )
 
         self.schedule_enabled = QCheckBox()
+
         self.schedule_enabled.setCursor(
             Qt.CursorShape.PointingHandCursor
         )
+
         self.schedule_enabled.setToolTip(
             "Enable or disable automatic backups"
         )
+
         self.schedule_enabled.setStyleSheet(
             """
             QCheckBox {
@@ -289,28 +305,49 @@ class SettingsPage(QWidget):
             """
         )
 
-        enable_row.addWidget(enable_label)
+        enable_row.addWidget(
+            enable_label
+        )
+
         enable_row.addStretch()
-        enable_row.addWidget(self.schedule_enabled)
 
-        card_layout.addLayout(enable_row)
+        enable_row.addWidget(
+            self.schedule_enabled
+        )
 
-        # ------------------------------------------------------
-        # Settings grid
-        # ------------------------------------------------------
+        card_layout.addLayout(
+            enable_row
+        )
 
         fields = QGridLayout()
-        fields.setContentsMargins(0, 6, 0, 0)
+        fields.setContentsMargins(
+            0,
+            6,
+            0,
+            0,
+        )
+
         fields.setHorizontalSpacing(18)
         fields.setVerticalSpacing(12)
 
-        frequency_label = QLabel("Frequency")
-        start_label = QLabel("Start Time")
+        frequency_label = QLabel(
+            "Frequency"
+        )
 
-        self._field_label(frequency_label)
-        self._field_label(start_label)
+        start_label = QLabel(
+            "Start Time"
+        )
+
+        self._field_label(
+            frequency_label
+        )
+
+        self._field_label(
+            start_label
+        )
 
         self.frequency_combo = QComboBox()
+
         self.frequency_combo.addItems(
             [
                 "Every 2 hours",
@@ -321,17 +358,27 @@ class SettingsPage(QWidget):
                 "Every 24 hours",
             ]
         )
-        self._field_widget(self.frequency_combo)
+
+        self._field_widget(
+            self.frequency_combo
+        )
 
         self.start_time = QTimeEdit()
-        self.start_time.setDisplayFormat("HH:mm")
-        self._field_widget(self.start_time)
+
+        self.start_time.setDisplayFormat(
+            "HH:mm"
+        )
+
+        self._field_widget(
+            self.start_time
+        )
 
         fields.addWidget(
             frequency_label,
             0,
             0,
         )
+
         fields.addWidget(
             self.frequency_combo,
             0,
@@ -343,27 +390,40 @@ class SettingsPage(QWidget):
             1,
             0,
         )
+
         fields.addWidget(
             self.start_time,
             1,
             1,
         )
 
-        fields.setColumnStretch(0, 1)
-        fields.setColumnStretch(1, 0)
+        fields.setColumnStretch(
+            0,
+            1,
+        )
 
-        card_layout.addLayout(fields)
+        fields.setColumnStretch(
+            1,
+            0,
+        )
 
-        # ------------------------------------------------------
-        # Save schedule
-        # ------------------------------------------------------
+        card_layout.addLayout(
+            fields
+        )
 
         schedule_actions = QHBoxLayout()
-        schedule_actions.setContentsMargins(0, 4, 0, 0)
+        schedule_actions.setContentsMargins(
+            0,
+            4,
+            0,
+            0,
+        )
 
-        self.save_schedule_button = self._flat_button(
-            "▶  Save Schedule",
-            "#E53935",
+        self.save_schedule_button = (
+            self._flat_button(
+                "Save Schedule",
+                "#E53935",
+            )
         )
 
         self.save_schedule_button.clicked.connect(
@@ -373,20 +433,21 @@ class SettingsPage(QWidget):
         schedule_actions.addWidget(
             self.save_schedule_button
         )
+
         schedule_actions.addStretch()
 
         card_layout.addLayout(
             schedule_actions
         )
 
-        # ------------------------------------------------------
-        # Schedule status
-        # ------------------------------------------------------
-
         self.schedule_status = QLabel(
             "Scheduled backup is disabled."
         )
-        self.schedule_status.setWordWrap(True)
+
+        self.schedule_status.setWordWrap(
+            True
+        )
+
         self._status_label_style(
             self.schedule_status,
             "#9FA4AE",
@@ -410,7 +471,10 @@ class SettingsPage(QWidget):
     ):
 
         card = QFrame()
-        card.setObjectName("SettingsCard")
+        card.setObjectName(
+            "SettingsCard"
+        )
+
         card.setStyleSheet(
             """
             QFrame#SettingsCard {
@@ -421,15 +485,20 @@ class SettingsPage(QWidget):
         )
 
         layout = QVBoxLayout(card)
+
         layout.setContentsMargins(
             16,
             14,
             16,
             16,
         )
+
         layout.setSpacing(12)
 
-        title_label = QLabel(title)
+        title_label = QLabel(
+            title
+        )
+
         title_label.setStyleSheet(
             """
             QLabel {
@@ -442,10 +511,14 @@ class SettingsPage(QWidget):
             }
             """
         )
-        layout.addWidget(title_label)
+
+        layout.addWidget(
+            title_label
+        )
 
         accent = QLabel()
         accent.setFixedHeight(3)
+
         accent.setStyleSheet(
             f"""
             QLabel {{
@@ -455,9 +528,14 @@ class SettingsPage(QWidget):
             }}
             """
         )
-        layout.addWidget(accent)
 
-        card.setMinimumHeight(320)
+        layout.addWidget(
+            accent
+        )
+
+        card.setMinimumHeight(
+            320
+        )
 
         return card
 
@@ -466,7 +544,9 @@ class SettingsPage(QWidget):
     # ==========================================================
 
     @staticmethod
-    def _muted_label(label):
+    def _muted_label(
+        label
+    ):
 
         label.setStyleSheet(
             """
@@ -481,7 +561,9 @@ class SettingsPage(QWidget):
         )
 
     @staticmethod
-    def _field_label(label):
+    def _field_label(
+        label
+    ):
 
         label.setStyleSheet(
             """
@@ -534,13 +616,23 @@ class SettingsPage(QWidget):
             )
 
     @staticmethod
-    def _flat_button(text, color):
+    def _flat_button(
+        text,
+        color,
+    ):
 
-        button = QPushButton(text)
+        button = QPushButton(
+            text
+        )
+
         button.setCursor(
             Qt.CursorShape.PointingHandCursor
         )
-        button.setMinimumHeight(34)
+
+        button.setMinimumHeight(
+            34
+        )
+
         button.setStyleSheet(
             f"""
             QPushButton {{
@@ -566,12 +658,18 @@ class SettingsPage(QWidget):
             }}
             """
         )
+
         return button
 
     @staticmethod
-    def _field_widget(widget):
+    def _field_widget(
+        widget
+    ):
 
-        widget.setMinimumHeight(36)
+        widget.setMinimumHeight(
+            36
+        )
+
         widget.setStyleSheet(
             """
             QComboBox,
@@ -603,74 +701,42 @@ class SettingsPage(QWidget):
         )
 
     # ==========================================================
-    # LOAD DESTINATION
+    # LOAD SETTINGS
     # ==========================================================
 
     def _load_settings(self):
 
-        result = self.destination_manager.get_destination()
+        result = (
+            self.destination_manager.get_destination()
+        )
 
         if not result["success"]:
 
             self.destination_input.setText("")
+
             self._status_label_style(
                 self.status_label,
                 "#FF5C5C",
             )
+
             self.status_label.setText(
                 "Status: Unable to load destination."
             )
+
             return
 
         self.destination_input.setText(
-            result["data"]["destination_path"]
+            result["data"][
+                "destination_path"
+            ]
         )
 
         self._test_destination(
             show_message=False
-        )
+        )
 
     # ==========================================================
-    # LOAD SCHEDULE
-    # ==========================================================
-
-    def _load_schedule(self):
-
-        self.schedule_enabled.setChecked(
-            self.scheduler.is_enabled()
-        )
-
-        hours = self.scheduler.get_frequency_hours()
-        mapping = {
-            2: 0,
-            4: 1,
-            6: 2,
-            8: 3,
-            12: 4,
-            24: 5,
-        }
-
-        self.frequency_combo.setCurrentIndex(
-            mapping.get(hours, 2)
-        )
-
-        start_time = self.scheduler.get_start_time()
-
-        try:
-            hour, minute = map(
-                int,
-                start_time.split(":")
-            )
-            self.start_time.setTime(
-                QTime(hour, minute)
-            )
-        except Exception:
-            pass
-
-        self._update_schedule_status()
-
-    # ==========================================================
-    # BROWSE
+    # DESTINATION
     # ==========================================================
 
     def _browse_destination(self):
@@ -680,16 +746,22 @@ class SettingsPage(QWidget):
         )
 
         if not current_path:
-            current_path = str(Path.home())
 
-        selected_directory = QFileDialog.getExistingDirectory(
-            self,
-            "Select Backup Destination",
-            current_path,
-            QFileDialog.Option.ShowDirsOnly,
+            current_path = str(
+                Path.home()
+            )
+
+        selected_directory = (
+            QFileDialog.getExistingDirectory(
+                self,
+                "Select Backup Destination",
+                current_path,
+                QFileDialog.Option.ShowDirsOnly,
+            )
         )
 
         if not selected_directory:
+
             return
 
         self.destination_input.setText(
@@ -699,10 +771,6 @@ class SettingsPage(QWidget):
         self._test_destination(
             show_message=False
         )
-
-    # ==========================================================
-    # SAVE DESTINATION
-    # ==========================================================
 
     def _save_destination(self):
 
@@ -717,10 +785,13 @@ class SettingsPage(QWidget):
                 "Backup Destination",
                 "Please select a backup destination.",
             )
+
             return
 
-        result = self.destination_manager.set_destination(
-            destination_path
+        result = (
+            self.destination_manager.set_destination(
+                destination_path
+            )
         )
 
         if not result["success"]:
@@ -735,6 +806,7 @@ class SettingsPage(QWidget):
                 self.status_label,
                 "#FF5C5C",
             )
+
             self.status_label.setText(
                 "Status: Destination is not ready."
             )
@@ -744,10 +816,13 @@ class SettingsPage(QWidget):
                 "Backup Destination",
                 error_message,
             )
+
             return
 
         self.destination_input.setText(
-            result["data"]["destination_path"]
+            result["data"][
+                "destination_path"
+            ]
         )
 
         self._test_destination(
@@ -760,13 +835,11 @@ class SettingsPage(QWidget):
             "Backup destination saved successfully.",
         )
 
-    # ==========================================================
-    # RESET
-    # ==========================================================
-
     def _reset_destination(self):
 
-        result = self.destination_manager.reset_destination()
+        result = (
+            self.destination_manager.reset_destination()
+        )
 
         if not result["success"]:
 
@@ -781,10 +854,13 @@ class SettingsPage(QWidget):
                 "Backup Destination",
                 error_message,
             )
+
             return
 
         self.destination_input.setText(
-            result["data"]["destination_path"]
+            result["data"][
+                "destination_path"
+            ]
         )
 
         self._test_destination(
@@ -797,11 +873,10 @@ class SettingsPage(QWidget):
             "Backup destination restored to default.",
         )
 
-    # ==========================================================
-    # TEST DESTINATION
-    # ==========================================================
-
-    def _test_destination(self, show_message=True):
+    def _test_destination(
+        self,
+        show_message=True,
+    ):
 
         destination_path = (
             self.destination_input.text().strip()
@@ -813,12 +888,15 @@ class SettingsPage(QWidget):
                 self.status_label,
                 "#FF9800",
             )
+
             self.status_label.setText(
                 "Status: No destination selected."
             )
+
             self.storage_label.setText("")
 
             if show_message:
+
                 QMessageBox.warning(
                     self,
                     "Backup Destination",
@@ -827,8 +905,10 @@ class SettingsPage(QWidget):
 
             return False
 
-        result = self.destination_manager.validate_destination(
-            destination_path
+        result = (
+            self.destination_manager.validate_destination(
+                destination_path
+            )
         )
 
         if not result["success"]:
@@ -843,12 +923,15 @@ class SettingsPage(QWidget):
                 self.status_label,
                 "#FF5C5C",
             )
+
             self.status_label.setText(
                 f"Status: {error_message}"
             )
+
             self.storage_label.setText("")
 
             if show_message:
+
                 QMessageBox.warning(
                     self,
                     "Backup Destination",
@@ -863,8 +946,9 @@ class SettingsPage(QWidget):
             self.status_label,
             "#53C653",
         )
+
         self.status_label.setText(
-            "Status: ✓ Destination is ready for backup."
+            "Status: Destination is ready for backup."
         )
 
         self.storage_label.setText(
@@ -874,6 +958,7 @@ class SettingsPage(QWidget):
         )
 
         if show_message:
+
             QMessageBox.information(
                 self,
                 "Backup Destination",
@@ -883,17 +968,28 @@ class SettingsPage(QWidget):
         return True
 
     # ==========================================================
-    # SAVE SCHEDULE
+    # SCHEDULE
     # ==========================================================
 
     def _save_schedule(self):
 
-        frequency_text = self.frequency_combo.currentText()
+        frequency_text = (
+            self.frequency_combo.currentText()
+        )
+
         frequency_hours = int(
             frequency_text.split()[1]
         )
-        start_time = self.start_time.time().toString("HH:mm")
-        enabled = self.schedule_enabled.isChecked()
+
+        start_time = (
+            self.start_time
+            .time()
+            .toString("HH:mm")
+        )
+
+        enabled = (
+            self.schedule_enabled.isChecked()
+        )
 
         if enabled and not self._test_destination(
             show_message=False
@@ -908,7 +1004,10 @@ class SettingsPage(QWidget):
                 ),
             )
 
-            self.schedule_enabled.setChecked(False)
+            self.schedule_enabled.setChecked(
+                False
+            )
+
             return
 
         self.scheduler.configure(
@@ -925,9 +1024,55 @@ class SettingsPage(QWidget):
             "Scheduled backup settings saved successfully.",
         )
 
-    # ==========================================================
-    # SCHEDULE STATUS
-    # ==========================================================
+    def _load_schedule(self):
+
+        self.schedule_enabled.setChecked(
+            self.scheduler.is_enabled()
+        )
+
+        hours = (
+            self.scheduler.get_frequency_hours()
+        )
+
+        mapping = {
+            2: 0,
+            4: 1,
+            6: 2,
+            8: 3,
+            12: 4,
+            24: 5,
+        }
+
+        self.frequency_combo.setCurrentIndex(
+            mapping.get(
+                hours,
+                2,
+            )
+        )
+
+        start_time = (
+            self.scheduler.get_start_time()
+        )
+
+        try:
+
+            hour, minute = map(
+                int,
+                start_time.split(":"),
+            )
+
+            self.start_time.setTime(
+                QTime(
+                    hour,
+                    minute,
+                )
+            )
+
+        except Exception:
+
+            pass
+
+        self._update_schedule_status()
 
     def _update_schedule_status(self):
 
@@ -938,30 +1083,39 @@ class SettingsPage(QWidget):
                 "#9FA4AE",
                 boxed=True,
             )
+
             self.schedule_status.setText(
                 "Scheduled backup is disabled."
             )
+
             return
 
-        next_backup = self.scheduler.get_next_backup()
-        frequency = self.scheduler.get_frequency_hours()
+        next_backup = (
+            self.scheduler.get_next_backup()
+        )
+
+        frequency = (
+            self.scheduler.get_frequency_hours()
+        )
 
         if next_backup:
 
-            next_text = next_backup.strftime(
-                "%d/%m/%Y  %H:%M"
+            next_text = (
+                next_backup.strftime(
+                    "%d/%m/%Y  %H:%M"
+                )
             )
 
             self.schedule_status.setText(
-                f"✓ Scheduled backup active  •  "
-                f"Every {frequency} hours  •  "
+                f"Scheduled backup active  β€Ά  "
+                f"Every {frequency} hours  β€Ά  "
                 f"Next backup: {next_text}"
             )
 
         else:
 
             self.schedule_status.setText(
-                f"✓ Scheduled backup active  •  "
+                f"Scheduled backup active  β€Ά  "
                 f"Every {frequency} hours"
             )
 
@@ -971,14 +1125,10 @@ class SettingsPage(QWidget):
             boxed=True,
         )
 
-    # ==========================================================
-    # BACKUP STARTED
-    # ==========================================================
-
     def _scheduled_backup_started(self):
 
         self.schedule_status.setText(
-            "● Scheduled backup started."
+            "Scheduled backup started."
         )
 
         self._status_label_style(
@@ -992,9 +1142,12 @@ class SettingsPage(QWidget):
     # ==========================================================
 
     @staticmethod
-    def _format_bytes(value):
+    def _format_bytes(
+        value,
+    ):
 
         value = float(value)
+
         units = [
             "B",
             "KB",
@@ -1006,8 +1159,14 @@ class SettingsPage(QWidget):
         for unit in units:
 
             if value < 1024:
-                return f"{value:.1f} {unit}"
+
+                return (
+                    f"{value:.1f} {unit}"
+                )
 
             value /= 1024
 
-        return f"{value:.1f} PB"
+        return (
+            f"{value:.1f} PB"
+        )
+

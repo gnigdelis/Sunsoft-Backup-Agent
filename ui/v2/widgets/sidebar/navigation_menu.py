@@ -4,6 +4,7 @@
 )
 
 from ui.v2.widgets.sidebar.navigation_item import NavigationItem
+from core.security.technical_access import TechnicalAccess
 
 
 class NavigationMenu(QWidget):
@@ -15,6 +16,12 @@ class NavigationMenu(QWidget):
         self.items = []
 
         self.setup_ui()
+
+        self.update_technical_access()
+
+        TechnicalAccess().access_changed.connect(
+            self.update_technical_access
+        )
 
     def setup_ui(self):
 
@@ -159,10 +166,75 @@ class NavigationMenu(QWidget):
 
         layout.addStretch()
 
+    # ==========================================================
+    # TECHNICAL ACCESS
+    # ==========================================================
+
+    def update_technical_access(
+        self,
+        unlocked=None,
+    ):
+
+        if unlocked is None:
+
+            unlocked = (
+                TechnicalAccess.is_unlocked()
+            )
+
+        protected_items = [
+
+            getattr(
+                self,
+                "history",
+                None,
+            ),
+
+            getattr(
+                self,
+                "support",
+                None,
+            ),
+
+            getattr(
+                self,
+                "database_maintenance",
+                None,
+            ),
+        ]
+
+        for item in protected_items:
+
+            if item is None:
+                continue
+
+            item.setEnabled(
+                unlocked
+            )
+
+            if unlocked:
+
+                item.setToolTip(
+                    ""
+                )
+
+            else:
+
+                item.setToolTip(
+                    "Technical access required"
+                )
+
+    # ==========================================================
+    # ACTIVE ITEM
+    # ==========================================================
+
     def set_active(
         self,
         current,
     ):
+
+        if not current.isEnabled():
+
+            return
 
         for item in self.items:
 

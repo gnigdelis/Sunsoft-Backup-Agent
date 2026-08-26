@@ -8,15 +8,18 @@ from PySide6.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QAbstractItemView,
+    QLineEdit,
 )
 
 from ui.v2.styles.theme import Theme
 from core.database.database_context import database_context
+from core.security.technical_access import TechnicalAccess
 
 
 class DatabaseSelector(QDialog):
 
     def __init__(self, parent=None):
+
         super().__init__(parent)
 
         self.selected_udl = None
@@ -28,140 +31,161 @@ class DatabaseSelector(QDialog):
 
         self.setMinimumSize(
             720,
-            500
+            590
         )
 
         self.resize(
             720,
-            500
+            590
         )
 
         self.setup_ui()
         self.load_databases()
+
+    # ==========================================================
+    # UI
+    # ==========================================================
 
     def setup_ui(self):
 
         self.setStyleSheet(
             f"""
             QDialog {{
-                background: #202125;
-                color: #ffffff;
+                background:#202125;
+                color:#ffffff;
             }}
 
             QLabel {{
-                background: transparent;
+                background:transparent;
             }}
 
             QListWidget {{
-                background: #24262b;
-                border: 1px solid #373a40;
-                border-radius: 12px;
-                padding: 8px;
-                outline: none;
+                background:#24262b;
+                border:1px solid #373a40;
+                border-radius:12px;
+                padding:8px;
+                outline:none;
             }}
 
             QListWidget::item {{
-                background: #292b30;
-                color: #ffffff;
-                border: 1px solid #373a40;
-                border-radius: 10px;
-                padding: 12px 14px;
-                margin: 4px 2px;
+                background:#292b30;
+                color:#ffffff;
+                border:1px solid #373a40;
+                border-radius:10px;
+                padding:12px 14px;
+                margin:4px 2px;
             }}
 
             QListWidget::item:hover {{
-                background: #2f3238;
-                border: 1px solid #4b4f57;
+                background:#2f3238;
+                border:1px solid #4b4f57;
             }}
 
             QListWidget::item:selected {{
-                background: #303339;
-                color: #ffffff;
-                border: 1px solid {Theme.Colors.PRIMARY};
-            }}
-
-            QListWidget::item:selected:active {{
-                background: #303339;
-                color: #ffffff;
-                border: 1px solid {Theme.Colors.PRIMARY};
+                background:#303339;
+                color:#ffffff;
+                border:1px solid {Theme.Colors.PRIMARY};
             }}
 
             QScrollBar:vertical {{
-                background: transparent;
-                width: 8px;
-                margin: 8px 2px 8px 2px;
+                background:transparent;
+                width:8px;
+                margin:8px 2px 8px 2px;
             }}
 
             QScrollBar::handle:vertical {{
-                background: #484c54;
-                border-radius: 4px;
-                min-height: 30px;
+                background:#484c54;
+                border-radius:4px;
+                min-height:30px;
             }}
 
             QScrollBar::handle:vertical:hover {{
-                background: #5b606a;
+                background:#5b606a;
             }}
 
             QScrollBar::add-line:vertical,
             QScrollBar::sub-line:vertical {{
-                height: 0px;
+                height:0px;
             }}
 
-            /* =========================================
-               ACTION BUTTONS
-               ========================================= */
-
             QPushButton {{
-                background: transparent;
-                border: none;
-                border-radius: 0px;
-                min-height: 40px;
-                padding: 0px 12px;
-                color: #d8dbe0;
-                font-size: 11pt;
-                font-weight: 600;
+                background:transparent;
+                border:none;
+                border-radius:0px;
+                min-height:40px;
+                padding:0px 12px;
+                color:#d8dbe0;
+                font-size:11pt;
+                font-weight:600;
             }}
 
             QPushButton:hover {{
-                background: #292b30;
-                color: #ffffff;
+                background:#292b30;
+                color:#ffffff;
             }}
 
             QPushButton:pressed {{
-                background: #303238;
+                background:#303238;
             }}
 
             QPushButton#connectButton {{
-                color: #4CAF50;
-                font-weight: 700;
+                color:#4CAF50;
+                font-weight:700;
             }}
 
             QPushButton#connectButton:hover {{
-                color: #66BB6A;
-                background: #242b25;
+                color:#66BB6A;
+                background:#242b25;
             }}
 
             QPushButton#connectButton:disabled {{
-                color: #666b73;
-                background: transparent;
+                color:#666b73;
+                background:transparent;
             }}
 
             QPushButton#disconnectButton {{
-                color: #ff5c5c;
-                font-weight: 700;
+                color:#ff5c5c;
+                font-weight:700;
             }}
 
             QPushButton#disconnectButton:hover {{
-                background: #2d2729;
-                color: #ff7777;
+                background:#2d2729;
+                color:#ff7777;
             }}
 
             QPushButton#cancelButton {{
-                color: #d8dbe0;
+                color:#d8dbe0;
             }}
 
             QPushButton#cancelButton:hover {{
-                color: #ffffff;
+                color:#ffffff;
+            }}
+
+            QLineEdit#passwordInput {{
+                background:#24262b;
+                border:1px solid #373a40;
+                color:#ffffff;
+                padding:0px 12px;
+                min-height:38px;
+                font-size:10pt;
+            }}
+
+            QLineEdit#passwordInput:focus {{
+                border:1px solid {Theme.Colors.PRIMARY};
+            }}
+
+            QPushButton#unlockButton {{
+                color:#29A8FF;
+                font-weight:700;
+            }}
+
+            QPushButton#unlockButton:hover {{
+                color:#66BBFF;
+                background:#202b35;
+            }}
+
+            QPushButton#unlockButton:disabled {{
+                color:#666b73;
             }}
             """
         )
@@ -181,9 +205,9 @@ class DatabaseSelector(QDialog):
             14
         )
 
-        # =========================================
+        # ======================================================
         # HEADER
-        # =========================================
+        # ======================================================
 
         header = QHBoxLayout()
 
@@ -192,7 +216,7 @@ class DatabaseSelector(QDialog):
         )
 
         icon = QLabel(
-            "▣"
+            "DB"
         )
 
         icon.setFixedSize(
@@ -207,12 +231,12 @@ class DatabaseSelector(QDialog):
         icon.setStyleSheet(
             f"""
             QLabel {{
-                background: #2b2d32;
-                color: {Theme.Colors.PRIMARY};
-                border: 1px solid #41444b;
-                border-radius: 10px;
-                font-size: 18pt;
-                font-weight: 700;
+                background:#2b2d32;
+                color:{Theme.Colors.PRIMARY};
+                border:1px solid #41444b;
+                border-radius:10px;
+                font-size:12pt;
+                font-weight:700;
             }}
             """
         )
@@ -230,9 +254,9 @@ class DatabaseSelector(QDialog):
         title.setStyleSheet(
             """
             QLabel {
-                color: #ffffff;
-                font-size: 15pt;
-                font-weight: 700;
+                color:#ffffff;
+                font-size:15pt;
+                font-weight:700;
             }
             """
         )
@@ -244,8 +268,8 @@ class DatabaseSelector(QDialog):
         description.setStyleSheet(
             """
             QLabel {
-                color: #9297a0;
-                font-size: 9.5pt;
+                color:#9297a0;
+                font-size:9.5pt;
             }
             """
         )
@@ -272,9 +296,9 @@ class DatabaseSelector(QDialog):
             header
         )
 
-        # =========================================
-        # SECTION
-        # =========================================
+        # ======================================================
+        # DATABASE SECTION
+        # ======================================================
 
         section = QLabel(
             "AVAILABLE DATABASES"
@@ -283,10 +307,10 @@ class DatabaseSelector(QDialog):
         section.setStyleSheet(
             """
             QLabel {
-                color: #747a84;
-                font-size: 8.5pt;
-                font-weight: 700;
-                letter-spacing: 1px;
+                color:#747a84;
+                font-size:8.5pt;
+                font-weight:700;
+                letter-spacing:1px;
             }
             """
         )
@@ -295,9 +319,9 @@ class DatabaseSelector(QDialog):
             section
         )
 
-        # =========================================
+        # ======================================================
         # DATABASE LIST
-        # =========================================
+        # ======================================================
 
         self.list = QListWidget()
 
@@ -326,9 +350,161 @@ class DatabaseSelector(QDialog):
             1
         )
 
-        # =========================================
+        # ======================================================
+        # TECHNICAL ACCESS
+        # ======================================================
+
+        technical_separator = QLabel()
+
+        technical_separator.setFixedHeight(
+            1
+        )
+
+        technical_separator.setStyleSheet(
+            """
+            QLabel {
+                background:#373a40;
+                border:none;
+            }
+            """
+        )
+
+        layout.addWidget(
+            technical_separator
+        )
+
+        technical_title = QLabel(
+            "TECHNICAL ACCESS"
+        )
+
+        technical_title.setStyleSheet(
+            """
+            QLabel {
+                color:#747a84;
+                font-size:8.5pt;
+                font-weight:700;
+                letter-spacing:1px;
+            }
+            """
+        )
+
+        layout.addWidget(
+            technical_title
+        )
+
+        technical_description = QLabel(
+            "Technical tools require authorized access."
+        )
+
+        technical_description.setStyleSheet(
+            """
+            QLabel {
+                color:#777d87;
+                font-size:8.5pt;
+            }
+            """
+        )
+
+        layout.addWidget(
+            technical_description
+        )
+
+        password_row = QHBoxLayout()
+
+        password_row.setSpacing(
+            8
+        )
+
+        password_label = QLabel(
+            "Password:"
+        )
+
+        password_label.setStyleSheet(
+            """
+            QLabel {
+                color:#d8dbe0;
+                font-size:9.5pt;
+                font-weight:600;
+            }
+            """
+        )
+
+        self.password_input = QLineEdit()
+
+        self.password_input.setObjectName(
+            "passwordInput"
+        )
+
+        self.password_input.setEchoMode(
+            QLineEdit.EchoMode.Password
+        )
+
+        self.password_input.setPlaceholderText(
+            "Enter technical password"
+        )
+
+        self.password_input.returnPressed.connect(
+            self.unlock_technical_access
+        )
+
+        self.unlock_button = QPushButton(
+            "Unlock"
+        )
+
+        self.unlock_button.setObjectName(
+            "unlockButton"
+        )
+
+        self.unlock_button.setCursor(
+            Qt.PointingHandCursor
+        )
+
+        self.unlock_button.setMinimumWidth(
+            90
+        )
+
+        self.unlock_button.clicked.connect(
+            self.unlock_technical_access
+        )
+
+        password_row.addWidget(
+            password_label
+        )
+
+        password_row.addWidget(
+            self.password_input,
+            1
+        )
+
+        password_row.addWidget(
+            self.unlock_button
+        )
+
+        layout.addLayout(
+            password_row
+        )
+
+        self.technical_status = QLabel(
+            "Technical access is locked."
+        )
+
+        self.technical_status.setStyleSheet(
+            """
+            QLabel {
+                color:#777d87;
+                font-size:8.5pt;
+                font-weight:600;
+            }
+            """
+        )
+
+        layout.addWidget(
+            self.technical_status
+        )
+
+        # ======================================================
         # FOOTER
-        # =========================================
+        # ======================================================
 
         footer = QHBoxLayout()
 
@@ -343,8 +519,8 @@ class DatabaseSelector(QDialog):
         self.status_label.setStyleSheet(
             """
             QLabel {
-                color: #777d87;
-                font-size: 8.5pt;
+                color:#777d87;
+                font-size:8.5pt;
             }
             """
         )
@@ -355,9 +531,9 @@ class DatabaseSelector(QDialog):
 
         footer.addStretch()
 
-        # =========================================
+        # ======================================================
         # CONNECT
-        # =========================================
+        # ======================================================
 
         connect = QPushButton(
             "Connect"
@@ -385,9 +561,9 @@ class DatabaseSelector(QDialog):
 
         self.connect_button = connect
 
-        # =========================================
+        # ======================================================
         # DISCONNECT
-        # =========================================
+        # ======================================================
 
         disconnect = QPushButton(
             "Disconnect"
@@ -411,9 +587,9 @@ class DatabaseSelector(QDialog):
 
         self.disconnect_button = disconnect
 
-        # =========================================
+        # ======================================================
         # CANCEL
-        # =========================================
+        # ======================================================
 
         cancel = QPushButton(
             "Cancel"
@@ -435,11 +611,9 @@ class DatabaseSelector(QDialog):
             self.reject
         )
 
-        # =========================================
+        # ======================================================
         # ORDER
-        #
-        # Connect -> Disconnect -> Cancel
-        # =========================================
+        # ======================================================
 
         footer.addWidget(
             connect
@@ -559,6 +733,81 @@ class DatabaseSelector(QDialog):
             )
 
     # ==========================================================
+    # TECHNICAL ACCESS
+    # ==========================================================
+
+    def unlock_technical_access(self):
+
+        password = (
+            self.password_input.text()
+        )
+
+        if not password:
+
+            self.technical_status.setText(
+                "Enter the technical password."
+            )
+
+            self.technical_status.setStyleSheet(
+                """
+                QLabel {
+                    color:#FF9800;
+                    font-size:8.5pt;
+                    font-weight:600;
+                }
+                """
+            )
+
+            return
+
+        if TechnicalAccess.unlock(
+            password
+        ):
+
+            self.technical_status.setText(
+                "Technical access unlocked."
+            )
+
+            self.technical_status.setStyleSheet(
+                """
+                QLabel {
+                    color:#53C653;
+                    font-size:8.5pt;
+                    font-weight:600;
+                }
+                """
+            )
+
+            self.password_input.clear()
+
+            self.password_input.setPlaceholderText(
+                "Technical access unlocked"
+            )
+
+            self.unlock_button.setEnabled(
+                False
+            )
+
+        else:
+
+            self.technical_status.setText(
+                "Incorrect password."
+            )
+
+            self.technical_status.setStyleSheet(
+                """
+                QLabel {
+                    color:#FF5C5C;
+                    font-size:8.5pt;
+                    font-weight:600;
+                }
+                """
+            )
+
+            self.password_input.selectAll()
+            self.password_input.setFocus()
+
+    # ==========================================================
     # CONNECT
     # ==========================================================
 
@@ -567,6 +816,7 @@ class DatabaseSelector(QDialog):
         item = self.list.currentItem()
 
         if not item:
+
             return
 
         udl_path = item.data(
@@ -574,6 +824,7 @@ class DatabaseSelector(QDialog):
         )
 
         if not udl_path:
+
             return
 
         self.selected_udl = udl_path
@@ -590,11 +841,8 @@ class DatabaseSelector(QDialog):
         self.selected_udl = None
         self.disconnect_requested = True
 
-        # Clear the currently selected database.
         database_context._active_udl = None
 
-        # Notify every UI component listening for
-        # database changes.
         database_context.database_changed.emit(
             None
         )
