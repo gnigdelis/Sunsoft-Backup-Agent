@@ -1,6 +1,6 @@
 import time
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QPainter, QPen, QFont
 from PySide6.QtWidgets import (
     QLabel,
@@ -193,6 +193,16 @@ class ProgressCard(BaseCard):
         )
 
         self.build_progress_ui()
+
+        self._elapsed_timer = QTimer(self)
+
+        self._elapsed_timer.setInterval(
+            1000
+        )
+
+        self._elapsed_timer.timeout.connect(
+            self._update_elapsed
+        )
 
     # ==========================================================
     # UI
@@ -657,6 +667,30 @@ class ProgressCard(BaseCard):
     # LIVE PROGRESS
     # ==========================================================
 
+    def _update_elapsed(self):
+
+        if self._started_at is None:
+            return
+
+        elapsed = int(
+            time.monotonic()
+            - self._started_at
+        )
+
+        hours = elapsed // 3600
+
+        minutes = (
+            elapsed % 3600
+        ) // 60
+
+        seconds = elapsed % 60
+
+        self.elapsed_value.setText(
+            f"{hours:02d}:"
+            f"{minutes:02d}:"
+            f"{seconds:02d}"
+        )
+
     def update_progress(
         self,
         percentage,
@@ -668,6 +702,8 @@ class ProgressCard(BaseCard):
         if self._started_at is None:
 
             self._started_at = time.monotonic()
+
+            self._elapsed_timer.start()
 
         self.circular.setValue(
             percentage
@@ -690,23 +726,6 @@ class ProgressCard(BaseCard):
 
         self.status_description.setText(
             "The backup process is currently running."
-        )
-
-        elapsed = int(
-            time.monotonic()
-            - self._started_at
-        )
-
-        hours = elapsed // 3600
-        minutes = (
-            elapsed % 3600
-        ) // 60
-        seconds = elapsed % 60
-
-        self.elapsed_value.setText(
-            f"{hours:02d}:"
-            f"{minutes:02d}:"
-            f"{seconds:02d}"
         )
 
         self.speed_value.setText(
@@ -739,6 +758,8 @@ class ProgressCard(BaseCard):
     # ==========================================================
 
     def reset(self):
+
+        self._elapsed_timer.stop()
 
         self._started_at = None
 
@@ -811,6 +832,8 @@ class ProgressCard(BaseCard):
         success=True,
     ):
 
+        self._elapsed_timer.stop()
+
         if success:
 
             self.circular.setValue(
@@ -827,10 +850,6 @@ class ProgressCard(BaseCard):
 
             self.task_value.setText(
                 "Backup completed successfully."
-            )
-
-            self.step_label.setText(
-                "Completed"
             )
 
             self.elapsed_value.setText(

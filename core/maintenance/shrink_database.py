@@ -5,7 +5,5 @@ class ShrinkDatabase:
     def get_sql(self):
 
         return """
-
         DBCC SHRINKDATABASE (0,10)
-
         """

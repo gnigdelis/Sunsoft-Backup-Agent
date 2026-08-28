@@ -41,7 +41,7 @@ class TechnicalAccess(QObject):
 
         configured_password = os.environ.get(
             "SUNSOFT_TECHNICAL_PASSWORD",
-            "SunsoftSupport",
+            "Sun$0ft",
         )
 
         if not password:

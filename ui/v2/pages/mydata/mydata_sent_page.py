@@ -89,7 +89,8 @@ class MyDataSentPage(QWidget):
                 color:#F4F5F7;
                 font-size:24pt;
                 font-weight:700;
-            }
+            
+                border:none;}
             """
         )
 
@@ -102,7 +103,8 @@ class MyDataSentPage(QWidget):
             QLabel {
                 color:#9FA4AE;
                 font-size:10pt;
-            }
+            
+                border:none;}
             """
         )
 

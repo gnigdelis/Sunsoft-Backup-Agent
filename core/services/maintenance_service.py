@@ -23,6 +23,10 @@ class MaintenanceService:
     Uses the UDL selected in database_context.
     """
 
+    def __init__(self):
+
+        self.engine = None
+
     def _get_database(self):
 
         udl_path = database_context.active_udl()
@@ -40,16 +44,18 @@ class MaintenanceService:
     def _execute_step(
         self,
         step,
+        progress_callback=None,
     ):
 
         database = self._get_database()
 
-        engine = MaintenanceEngine(
+        self.engine = MaintenanceEngine(
             database
         )
 
-        result = engine.execute(
-            step.get_sql()
+        result = self.engine.execute(
+            step.get_sql(),
+            progress_callback=progress_callback,
         )
 
         return {
@@ -59,34 +65,56 @@ class MaintenanceService:
             "affected_rows": result.affected_rows,
         }
 
+    def cancel(self):
+
+        engine = self.engine
+
+        if engine is None:
+
+            return
+
+        engine.request_cancel()
+
     # ==========================================================
     # Delete MyDATA Response
     # ==========================================================
 
-    def delete_mydata(self):
+    def delete_mydata(
+        self,
+        progress_callback=None,
+    ):
 
         return self._execute_step(
-            DeleteMyDataResponse()
+            DeleteMyDataResponse(),
+            progress_callback=progress_callback,
         )
 
     # ==========================================================
     # Rebuild Database
     # ==========================================================
 
-    def rebuild(self):
+    def rebuild(
+        self,
+        progress_callback=None,
+    ):
 
         return self._execute_step(
-            RebuildDatabase()
+            RebuildDatabase(),
+            progress_callback=progress_callback,
         )
 
     # ==========================================================
     # Shrink Database
     # ==========================================================
 
-    def shrink(self):
+    def shrink(
+        self,
+        progress_callback=None,
+    ):
 
         return self._execute_step(
-            ShrinkDatabase()
+            ShrinkDatabase(),
+            progress_callback=progress_callback,
         )
 
     # ==========================================================

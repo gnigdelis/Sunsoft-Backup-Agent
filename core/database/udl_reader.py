@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 
 class UDLReader:
@@ -104,9 +104,6 @@ class UDLReader:
             + connection
         )
 
-        print("\n================ CONNECTION STRING ================\n")
-        print(conn)
-        print("\n===================================================\n")
 
         return conn
 

@@ -6,6 +6,13 @@ from PySide6.QtCore import (
 
 class MaintenanceWorker(QObject):
 
+    started = Signal()
+
+    progress = Signal(
+        int,
+        str,
+    )
+
     finished = Signal(object)
 
     error = Signal(str)
@@ -26,22 +33,30 @@ class MaintenanceWorker(QObject):
 
         try:
 
+            self.started.emit()
+
             if self.operation == "delete":
 
                 result = (
-                    self.service.delete_mydata()
+                    self.service.delete_mydata(
+                        progress_callback=self.report_progress
+                    )
                 )
 
             elif self.operation == "rebuild":
 
                 result = (
-                    self.service.rebuild()
+                    self.service.rebuild(
+                        progress_callback=self.report_progress
+                    )
                 )
 
             elif self.operation == "shrink":
 
                 result = (
-                    self.service.shrink()
+                    self.service.shrink(
+                        progress_callback=self.report_progress
+                    )
                 )
 
             else:
@@ -61,10 +76,26 @@ class MaintenanceWorker(QObject):
                 str(ex)
             )
 
+    def report_progress(
+        self,
+        percent,
+        message,
+    ):
+
+        self.progress.emit(
+            int(percent),
+            str(message),
+        )
+
 
 class MaintenanceController(QObject):
 
     started = Signal()
+
+    progress = Signal(
+        int,
+        str,
+    )
 
     finished = Signal(object)
 
@@ -96,6 +127,14 @@ class MaintenanceController(QObject):
             self.worker.run
         )
 
+        self.worker.started.connect(
+            self.on_started
+        )
+
+        self.worker.progress.connect(
+            self.on_progress
+        )
+
         self.worker.finished.connect(
             self.on_finished
         )
@@ -125,6 +164,25 @@ class MaintenanceController(QObject):
         self.started.emit()
 
         self.thread.start()
+
+    def stop(self):
+
+        self.service.cancel()
+
+    def on_started(self):
+
+        self.started.emit()
+
+    def on_progress(
+        self,
+        percent,
+        message,
+    ):
+
+        self.progress.emit(
+            percent,
+            message,
+        )
 
     def on_finished(
         self,
