@@ -2,7 +2,10 @@
 
 from PySide6.QtCore import Qt, QByteArray
 from PySide6.QtSvgWidgets import QSvgWidget
-from PySide6.QtWidgets import QWidget, QHBoxLayout
+from PySide6.QtWidgets import (
+    QWidget,
+    QHBoxLayout,
+)
 
 from core.common.resource_path import resource_path
 
@@ -22,7 +25,10 @@ class SvgIcon(QWidget):
         color: str = "#ffffff",
         parent=None,
     ):
-        super().__init__(parent)
+
+        super().__init__(
+            parent
+        )
 
         self._size = size
         self._color = color
@@ -75,19 +81,76 @@ class SvgIcon(QWidget):
         filename: str,
     ):
 
+        #
+        # 1. If filename is already an absolute path.
+        #
+
+        direct_path = Path(
+            filename
+        )
+
+        if direct_path.is_absolute():
+
+            if direct_path.exists():
+
+                return direct_path
+
+        #
+        # 2. Try the bundled/application resource path.
+        #
+
+        try:
+
+            bundled_path = Path(
+                resource_path(
+                    f"assets/icons/{filename}"
+                )
+            )
+
+            if bundled_path.exists():
+
+                return bundled_path
+
+        except Exception:
+
+            pass
+
+        #
+        # 3. Try the full path under assets/icons.
+        #
+
+        try:
+
+            assets_path = Path(
+                resource_path(
+                    "assets/icons"
+                )
+            )
+
+            candidate = (
+                assets_path
+                / filename
+            )
+
+            if candidate.exists():
+
+                return candidate
+
+        except Exception:
+
+            pass
+
+        #
+        # 4. Source-project fallback.
+        #
+
         candidates = [
-            Path(
-                resource_path(
-                    "assets",
-                    "icons",
-                    filename,
-                )
-            ),
-            Path(
-                resource_path(
-                    filename,
-                )
-            ),
+
+            Path("assets")
+            / "icons"
+            / filename,
+
+            Path(filename),
         ]
 
         for candidate in candidates:
@@ -119,6 +182,7 @@ class SvgIcon(QWidget):
         #
 
         replacements = {
+
             'stroke="currentColor"':
                 f'stroke="{color}"',
 
@@ -150,6 +214,7 @@ class SvgIcon(QWidget):
         #
 
         fill_replacements = {
+
             'fill="currentColor"':
                 f'fill="{color}"',
 
@@ -215,7 +280,9 @@ class SvgIcon(QWidget):
     # RENDER
     # ==========================================================
 
-    def _render(self):
+    def _render(
+        self,
+    ):
 
         if not self._raw_data:
 
@@ -278,11 +345,15 @@ class SvgIcon(QWidget):
     # ==========================================================
 
     @property
-    def size(self):
+    def size(
+        self,
+    ):
 
         return self._size
 
     @property
-    def color(self):
+    def color(
+        self,
+    ):
 
         return self._color

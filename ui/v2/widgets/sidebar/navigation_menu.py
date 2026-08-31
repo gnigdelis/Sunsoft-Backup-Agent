@@ -44,21 +44,21 @@ class NavigationMenu(QWidget):
 
             (
                 "Dashboard",
-                "lucide/icons/house.svg",
+                "dashboard.svg",
                 "#e53935",
                 True,
             ),
 
             (
                 "Backup",
-                "lucide/icons/upload.svg",
+                "backup.svg",
                 "#8e24aa",
                 False,
             ),
 
             (
                 "Restore",
-                "lucide/icons/rotate-ccw.svg",
+                "restore.svg",
                 "#43a047",
                 False,
             ),
@@ -72,28 +72,28 @@ class NavigationMenu(QWidget):
 
             (
                 "Delete Pending Order",
-                "lucide/icons/headset.svg",
+                "logs.svg",
                 "#00acc1",
                 False,
             ),
 
             (
                 "myDATA Manager",
-                "lucide/icons/send.svg",
+                "logs.svg",
                 "#757575",
                 False,
             ),
 
             (
                 "Settings",
-                "lucide/icons/settings.svg",
+                "settings.svg",
                 "#fb8c00",
                 False,
             ),
 
             (
                 "SQL Tools",
-                "lucide/icons/database.svg",
+                "database.svg",
                 "#8e24aa",
                 False,
             ),
@@ -110,7 +110,9 @@ class NavigationMenu(QWidget):
 
             item.clicked.connect(
                 lambda current=item:
-                self.set_active(current)
+                self.set_active(
+                    current
+                )
             )
 
             layout.addWidget(
