@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Callable, Any
 
 import requests
 
@@ -49,7 +50,6 @@ class MyDataService:
         udl_path = database_context.active_udl()
 
         if not udl_path:
-
             raise RuntimeError(
                 "Δεν έχει επιλεγεί βάση δεδομένων."
             )
@@ -86,24 +86,12 @@ class MyDataService:
 
                 invoices.append(
                     MyDataInvoice(
-                        invoice_type=str(
-                            row[0] or ""
-                        ),
-                        document_name=str(
-                            row[1] or ""
-                        ),
-                        issue_date=str(
-                            row[2] or ""
-                        ),
-                        aa=str(
-                            row[3] or ""
-                        ),
-                        invoice_id=int(
-                            row[4]
-                        ),
-                        cust_afm=str(
-                            row[5] or ""
-                        ),
+                        invoice_type=str(row[0] or ""),
+                        document_name=str(row[1] or ""),
+                        issue_date=str(row[2] or ""),
+                        aa=str(row[3] or ""),
+                        invoice_id=int(row[4]),
+                        cust_afm=str(row[5] or ""),
                     )
                 )
 
@@ -147,11 +135,25 @@ class MyDataService:
     def send_invoices(
         self,
         invoices,
+        progress_callback: Callable[[int, int, Any, str], None] | None = None,
     ):
 
         results = []
+        total = len(invoices)
 
-        for invoice in invoices:
+        for index, invoice in enumerate(
+            invoices,
+            start=1,
+        ):
+
+            if progress_callback:
+
+                progress_callback(
+                    index - 1,
+                    total,
+                    invoice,
+                    "sending",
+                )
 
             try:
 
@@ -181,24 +183,35 @@ class MyDataService:
             except Exception as exc:
 
                 invoice.sent = False
+                invoice.send_status = None
+                invoice.send_message = str(exc)
 
-                invoice.send_message = str(
-                    exc
-                )
+                result = {
+                    "success": False,
+                    "status_code": None,
+                    "message": str(exc),
+                }
 
                 results.append(
                     {
                         "invoice": invoice,
-                        "result": {
-                            "success": False,
-                            "status_code": None,
-                            "message": str(exc),
-                        },
+                        "result": result,
                     }
                 )
 
+            finally:
+
+                if progress_callback:
+
+                    progress_callback(
+                        index,
+                        total,
+                        invoice,
+                        "completed",
+                    )
+
         return results
+
     def database_selected(self):
 
         return database_context.is_selected()
-

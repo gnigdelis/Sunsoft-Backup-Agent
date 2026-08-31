@@ -1,4 +1,4 @@
-from PySide6.QtGui import QIcon
+﻿from PySide6.QtGui import QIcon
 
 from PySide6.QtWidgets import (
     QWidget,
@@ -6,10 +6,10 @@ from PySide6.QtWidgets import (
     QStackedWidget,
 )
 
+from core.common.resource_path import resource_path
+
 from ui.v2.styles.theme import Theme
-
 from ui.v2.navigation.navigation_manager import NavigationManager
-
 from ui.v2.widgets.sidebar.sidebar import Sidebar
 
 from ui.v2.pages.dashboard_page import DashboardPage
@@ -42,10 +42,21 @@ class MainWindow(QWidget):
             "Sunsoft Support Agent v2.0"
         )
 
+        #
+        # Application / title-bar icon
+        #
+        # Use the same icon that is embedded in the EXE.
+        #
         try:
 
+            icon_path = resource_path(
+                "assets/branding/window/app.ico"
+            )
+
             self.setWindowIcon(
-                QIcon("assets/icons/app.ico")
+                QIcon(
+                    icon_path
+                )
             )
 
         except Exception:

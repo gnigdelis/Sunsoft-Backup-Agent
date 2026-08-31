@@ -1,3 +1,4 @@
+﻿from core.common.resource_path import resource_path
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
@@ -127,7 +128,12 @@ class Header(QWidget):
 
         self.settings_button.setIcon(
             QIcon(
-                "assets/icons/navigation/settings.svg"
+                resource_path(
+                    "assets",
+                    "icons",
+                    "navigation",
+                    "settings.svg",
+                )
             )
         )
 
@@ -268,3 +274,5 @@ class Header(QWidget):
             }
             """
         )
+
+

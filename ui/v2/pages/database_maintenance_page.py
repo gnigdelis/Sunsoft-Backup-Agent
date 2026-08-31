@@ -209,14 +209,6 @@ class DatabaseMaintenancePage(QWidget):
             )
         )
 
-        self.extra_lock_button = (
-            self.create_action_button(
-                "Extra Lock",
-                Icons.CLOCK,
-                "#AB47BC",
-            )
-        )
-
         actions_layout.addWidget(
             self.sales_trans_move_button
         )
@@ -231,10 +223,6 @@ class DatabaseMaintenancePage(QWidget):
 
         actions_layout.addWidget(
             self.shrink_button
-        )
-
-        actions_layout.addWidget(
-            self.extra_lock_button
         )
 
         actions_layout.addStretch()
@@ -257,10 +245,6 @@ class DatabaseMaintenancePage(QWidget):
 
         self.shrink_button.clicked.connect(
             self.shrink_database
-        )
-
-        self.extra_lock_button.clicked.connect(
-            self.open_extra_lock
         )
 
         # ======================================================
@@ -1736,6 +1720,7 @@ class DatabaseMaintenancePage(QWidget):
         self.status.append(
             str(message)
         )
+
 
 
 

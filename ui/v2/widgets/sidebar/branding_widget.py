@@ -1,8 +1,8 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget,
-    QLabel,
     QVBoxLayout,
+    QLabel,
 )
 
 from ui.v2.widgets.common.svg_icon import SvgIcon
@@ -16,10 +16,6 @@ class BrandingWidget(QWidget):
 
         self.setup_ui()
 
-    # ==========================================================
-    # UI
-    # ==========================================================
-
     def setup_ui(self):
 
         layout = QVBoxLayout(
@@ -27,23 +23,22 @@ class BrandingWidget(QWidget):
         )
 
         layout.setContentsMargins(
-            8,
-            10,
-            8,
-            8,
+            0,
+            20,
+            0,
+            20,
         )
 
         layout.setSpacing(
-            8
+            10
         )
 
         layout.setAlignment(
             Qt.AlignmentFlag.AlignTop
-            | Qt.AlignmentFlag.AlignHCenter
         )
 
         #
-        # Support Agent Logo
+        # Support Agent logo
         #
 
         self.logo = SvgIcon(
@@ -58,33 +53,37 @@ class BrandingWidget(QWidget):
         )
 
         #
-        # Product Name
+        # Product name
         #
 
-        self.product = QLabel(
-            "Support Αgent"
+        self.title = QLabel(
+            "Sunsoft Support Agent"
         )
 
-        self.product.setAlignment(
+        self.title.setAlignment(
             Qt.AlignmentFlag.AlignCenter
         )
 
-        self.product.setStyleSheet(
+        self.title.setStyleSheet(
             """
             QLabel {
-                background: transparent;
-                color: #F5F7FA;
-                font-size: 18px;
-                font-weight: 700;
-                border: none;
+                background:transparent;
+                border:none;
+                color:#F5F7FA;
+                font-size:12pt;
+                font-weight:700;
+                padding:0;
+                margin:0;
             }
             """
         )
 
-        layout.addWidget(
-            self.product
+        self.title.setWordWrap(
+            True
         )
 
-        self.setLayout(
-            layout
+        layout.addWidget(
+            self.title
         )
+
+        layout.addStretch()

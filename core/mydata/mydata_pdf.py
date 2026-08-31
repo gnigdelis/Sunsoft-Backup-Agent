@@ -27,8 +27,9 @@ class MyDataPDF:
         )
 
         if not file_path:
-
             return False
+
+        output_path = Path(file_path)
 
         document = QTextDocument()
 
@@ -70,66 +71,38 @@ class MyDataPDF:
             <table>
 
                 <tr>
-                    <td class="label">
-                        Τύπος
-                    </td>
-                    <td>
-                        {invoice.invoice_type}
-                    </td>
+                    <td class="label">Type</td>
+                    <td>{invoice.invoice_type}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">
-                        Παραστατικό
-                    </td>
-                    <td>
-                        {invoice.document_name}
-                    </td>
+                    <td class="label">Document</td>
+                    <td>{invoice.document_name}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">
-                        Ημερομηνία
-                    </td>
-                    <td>
-                        {invoice.issue_date}
-                    </td>
+                    <td class="label">Date</td>
+                    <td>{invoice.issue_date}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">
-                        Α/Α
-                    </td>
-                    <td>
-                        {invoice.aa}
-                    </td>
+                    <td class="label">A/A</td>
+                    <td>{invoice.aa}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">
-                        ΑΦΜ
-                    </td>
-                    <td>
-                        {invoice.cust_afm}
-                    </td>
+                    <td class="label">VAT No.</td>
+                    <td>{invoice.cust_afm}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">
-                        Invoice ID
-                    </td>
-                    <td>
-                        {invoice.invoice_id}
-                    </td>
+                    <td class="label">Invoice ID</td>
+                    <td>{invoice.invoice_id}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">
-                        Κατάσταση
-                    </td>
-                    <td>
-                        Απεστάλη
-                    </td>
+                    <td class="label">Status</td>
+                    <td>Sent</td>
                 </tr>
 
             </table>
@@ -151,13 +124,21 @@ class MyDataPDF:
         )
 
         printer.setOutputFileName(
-            str(
-                Path(file_path)
-            )
+            str(output_path)
         )
 
-        document.print(
+        document.print_(
             printer
         )
+
+        if not output_path.exists():
+            raise RuntimeError(
+                "Το PDF δεν δημιουργήθηκε."
+            )
+
+        if output_path.stat().st_size <= 0:
+            raise RuntimeError(
+                "Το PDF δημιουργήθηκε αλλά είναι κενό."
+            )
 
         return True

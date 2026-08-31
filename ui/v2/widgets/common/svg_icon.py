@@ -4,6 +4,8 @@ from PySide6.QtCore import Qt, QByteArray
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtWidgets import QWidget, QHBoxLayout
 
+from core.common.resource_path import resource_path
+
 
 class SvgIcon(QWidget):
     """
@@ -74,8 +76,18 @@ class SvgIcon(QWidget):
     ):
 
         candidates = [
-            Path("assets") / "icons" / filename,
-            Path(filename),
+            Path(
+                resource_path(
+                    "assets",
+                    "icons",
+                    filename,
+                )
+            ),
+            Path(
+                resource_path(
+                    filename,
+                )
+            ),
         ]
 
         for candidate in candidates:

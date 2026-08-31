@@ -1,4 +1,4 @@
-﻿from PySide6.QtCore import Qt, QDate
+﻿from PySide6.QtCore import Qt, QDate, QObject, QThread, Signal
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
@@ -12,6 +12,8 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QAbstractItemView,
     QApplication,
+    QProgressBar,
+    QPlainTextEdit,
 )
 
 from core.mydata.mydata_service import MyDataService
@@ -19,9 +21,142 @@ from core.mydata.mydata_pdf import MyDataPDF
 from core.database.database_context import database_context
 
 
+class MyDataSendWorker(QObject):
+
+    progress = Signal(
+        int,
+        int,
+        object,
+        dict,
+    )
+
+    finished = Signal(
+        list
+    )
+
+    failed = Signal(
+        str
+    )
+
+    def __init__(
+        self,
+        service,
+        invoices,
+    ):
+
+        super().__init__()
+
+        self.service = service
+        self.invoices = list(
+            invoices
+        )
+
+    def run(
+        self,
+    ):
+
+        results = []
+
+        total = len(
+            self.invoices
+        )
+
+        try:
+
+            for index, invoice in enumerate(
+                self.invoices,
+                start=1,
+            ):
+
+                self.progress.emit(
+                    index - 1,
+                    total,
+                    invoice,
+                    {
+                        "success": False,
+                        "status_code": None,
+                        "message": "",
+                        "started": True,
+                    },
+                )
+
+                try:
+
+                    result = self.service.send_invoice(
+                        invoice.invoice_id
+                    )
+
+                    invoice.send_status = (
+                        result.get(
+                            "status_code"
+                        )
+                    )
+
+                    invoice.send_message = (
+                        result.get(
+                            "message",
+                            ""
+                        )
+                        or ""
+                    )
+
+                    invoice.sent = bool(
+                        result.get(
+                            "success",
+                            False,
+                        )
+                    )
+
+                except Exception as exc:
+
+                    invoice.sent = False
+                    invoice.send_status = None
+                    invoice.send_message = str(
+                        exc
+                    )
+
+                    result = {
+                        "success": False,
+                        "status_code": None,
+                        "message": str(
+                            exc
+                        ),
+                    }
+
+                item = {
+                    "invoice": invoice,
+                    "result": result,
+                }
+
+                results.append(
+                    item
+                )
+
+                self.progress.emit(
+                    index,
+                    total,
+                    invoice,
+                    result,
+                )
+
+            self.finished.emit(
+                results
+            )
+
+        except Exception as exc:
+
+            self.failed.emit(
+                str(
+                    exc
+                )
+            )
+
+
 class MyDataSentPage(QWidget):
 
-    def __init__(self):
+    def __init__(
+        self,
+    ):
 
         super().__init__()
 
@@ -29,7 +164,12 @@ class MyDataSentPage(QWidget):
 
         self.invoices = []
 
+        self._send_thread = None
+        self._send_worker = None
+
         self.setup_ui()
+
+        self._clear_failure_details()
 
         database_context.database_changed.connect(
             self.update_connection_status
@@ -43,7 +183,9 @@ class MyDataSentPage(QWidget):
     # UI
     # ==========================================================
 
-    def setup_ui(self):
+    def setup_ui(
+        self,
+    ):
 
         root = QVBoxLayout(
             self
@@ -53,7 +195,7 @@ class MyDataSentPage(QWidget):
             20,
             18,
             20,
-            22
+            22,
         )
 
         root.setSpacing(
@@ -72,7 +214,7 @@ class MyDataSentPage(QWidget):
             0,
             0,
             0,
-            0
+            0,
         )
 
         title_block.setSpacing(
@@ -89,8 +231,8 @@ class MyDataSentPage(QWidget):
                 color:#F4F5F7;
                 font-size:24pt;
                 font-weight:700;
-            
-                border:none;}
+                border:none;
+            }
             """
         )
 
@@ -103,8 +245,8 @@ class MyDataSentPage(QWidget):
             QLabel {
                 color:#9FA4AE;
                 font-size:10pt;
-            
-                border:none;}
+                border:none;
+            }
             """
         )
 
@@ -166,7 +308,7 @@ class MyDataSentPage(QWidget):
             14,
             12,
             14,
-            14
+            14,
         )
 
         search_layout.setSpacing(
@@ -473,6 +615,304 @@ class MyDataSentPage(QWidget):
 
         root.addLayout(
             actions
+        )
+
+        # ======================================================
+        # SEND PROGRESS
+        # ======================================================
+
+        self.send_progress_card = QWidget()
+
+        self.send_progress_card.setObjectName(
+            "SendProgressCard"
+        )
+
+        self.send_progress_card.setStyleSheet(
+            """
+            QWidget#SendProgressCard {
+                background:#25262B;
+                border:1px solid #393C43;
+            }
+            """
+        )
+
+        progress_layout = QVBoxLayout(
+            self.send_progress_card
+        )
+
+        progress_layout.setContentsMargins(
+            12,
+            8,
+            12,
+            8
+        )
+
+        progress_layout.setSpacing(
+            5
+        )
+
+        progress_header = QHBoxLayout()
+
+        self.send_progress_title = QLabel(
+            "Ready."
+        )
+
+        self.send_progress_title.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#F4F5F7;
+                font-size:9pt;
+                font-weight:700;
+            }
+            """
+        )
+
+        self.send_progress_count = QLabel(
+            "0 / 0"
+        )
+
+        self.send_progress_count.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#9FA4AE;
+                font-size:8.5pt;
+                font-weight:600;
+            }
+            """
+        )
+
+        progress_header.addWidget(
+            self.send_progress_title
+        )
+
+        progress_header.addStretch()
+
+        progress_header.addWidget(
+            self.send_progress_count
+        )
+
+        progress_layout.addLayout(
+            progress_header
+        )
+
+        self.send_progress_bar = QProgressBar()
+
+        self.send_progress_bar.setRange(
+            0,
+            100
+        )
+
+        self.send_progress_bar.setValue(
+            0
+        )
+
+        self.send_progress_bar.setTextVisible(
+            False
+        )
+
+        self.send_progress_bar.setFixedHeight(
+            7
+        )
+
+        self.send_progress_bar.setStyleSheet(
+            """
+            QProgressBar {
+                background:#202226;
+                border:none;
+                border-radius:3px;
+            }
+
+            QProgressBar::chunk {
+                background:#29A8FF;
+                border-radius:3px;
+            }
+            """
+        )
+
+        progress_layout.addWidget(
+            self.send_progress_bar
+        )
+
+        self.send_progress_detail = QLabel(
+            ""
+        )
+
+        self.send_progress_detail.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#9FA4AE;
+                font-size:8pt;
+            }
+            """
+        )
+
+        progress_layout.addWidget(
+            self.send_progress_detail
+        )
+
+        self.send_progress_card.hide()
+
+        root.addWidget(
+            self.send_progress_card
+        )
+
+        # ======================================================
+        # FAILURE DETAILS
+        # ======================================================
+
+        self.failure_card = QWidget()
+
+        self.failure_card.setObjectName(
+            "FailureCard"
+        )
+
+        self.failure_card.setStyleSheet(
+            """
+            QWidget#FailureCard {
+                background:#25262B;
+                border:1px solid #393C43;
+            }
+            """
+        )
+
+        failure_layout = QVBoxLayout(
+            self.failure_card
+        )
+
+        failure_layout.setContentsMargins(
+            12,
+            8,
+            12,
+            8
+        )
+
+        failure_layout.setSpacing(
+            5
+        )
+
+        failure_header = QHBoxLayout()
+
+        failure_title = QLabel(
+            "Failed Documents"
+        )
+
+        failure_title.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#F4F5F7;
+                font-size:9pt;
+                font-weight:700;
+            }
+            """
+        )
+
+        self.failure_count_label = QLabel(
+            "0 failed"
+        )
+
+        self.failure_count_label.setStyleSheet(
+            """
+            QLabel {
+                background:transparent;
+                border:none;
+                color:#FF5252;
+                font-size:8.5pt;
+                font-weight:700;
+            }
+            """
+        )
+
+        failure_header.addWidget(
+            failure_title
+        )
+
+        failure_header.addStretch()
+
+        failure_header.addWidget(
+            self.failure_count_label
+        )
+
+        failure_layout.addLayout(
+            failure_header
+        )
+
+        failure_accent = QLabel()
+
+        failure_accent.setFixedHeight(
+            3
+        )
+
+        failure_accent.setStyleSheet(
+            """
+            QLabel {
+                background:#E53935;
+                border:none;
+            }
+            """
+        )
+
+        failure_layout.addWidget(
+            failure_accent
+        )
+
+        self.failure_details = QPlainTextEdit()
+
+        self.failure_details.setReadOnly(
+            True
+        )
+
+        self.failure_details.setMinimumHeight(
+            90
+        )
+
+        self.failure_details.setMaximumHeight(
+            170
+        )
+
+        self.failure_details.setStyleSheet(
+            """
+            QPlainTextEdit {
+                background:#202226;
+                border:1px solid #35383F;
+                color:#F4F5F7;
+                padding:8px;
+                font-size:8.5pt;
+            }
+
+            QScrollBar:vertical {
+                background:#202226;
+                width:10px;
+            }
+
+            QScrollBar::handle:vertical {
+                background:#494D55;
+                min-height:30px;
+            }
+
+            QScrollBar::add-line:vertical,
+            QScrollBar::sub-line:vertical {
+                height:0px;
+                border:none;
+            }
+            """
+        )
+
+        failure_layout.addWidget(
+            self.failure_details
+        )
+
+        self.failure_card.hide()
+
+        root.addWidget(
+            self.failure_card
         )
 
         # ======================================================
@@ -861,7 +1301,7 @@ class MyDataSentPage(QWidget):
 
     def update_connection_status(
         self,
-        database
+        database,
     ):
 
         if database:
@@ -906,7 +1346,9 @@ class MyDataSentPage(QWidget):
     # SEARCH
     # ==========================================================
 
-    def search(self):
+    def search(
+        self,
+    ):
 
         start = self.from_date.date().toString(
             "yyyyMMdd"
@@ -944,9 +1386,11 @@ class MyDataSentPage(QWidget):
 
         try:
 
-            self.invoices = self.service.search(
-                start,
-                end,
+            self.invoices = (
+                self.service.search(
+                    start,
+                    end,
+                )
             )
 
             self.populate_table()
@@ -960,7 +1404,9 @@ class MyDataSentPage(QWidget):
             QMessageBox.critical(
                 self,
                 "Search Error",
-                str(exc),
+                str(
+                    exc
+                ),
             )
 
             self.status_label.setText(
@@ -971,7 +1417,9 @@ class MyDataSentPage(QWidget):
     # TABLE
     # ==========================================================
 
-    def populate_table(self):
+    def populate_table(
+        self,
+    ):
 
         self.table.setRowCount(
             0
@@ -1020,7 +1468,9 @@ class MyDataSentPage(QWidget):
                     row_index,
                     column,
                     QTableWidgetItem(
-                        str(value)
+                        str(
+                            value
+                        )
                     )
                 )
 
@@ -1069,7 +1519,9 @@ class MyDataSentPage(QWidget):
     # SELECT ALL
     # ==========================================================
 
-    def select_all(self):
+    def select_all(
+        self,
+    ):
 
         if not self.invoices:
 
@@ -1127,7 +1579,9 @@ class MyDataSentPage(QWidget):
     # SELECTED
     # ==========================================================
 
-    def get_selected_invoices(self):
+    def get_selected_invoices(
+        self,
+    ):
 
         selected = []
 
@@ -1151,7 +1605,9 @@ class MyDataSentPage(QWidget):
                 ):
 
                     selected.append(
-                        self.invoices[row]
+                        self.invoices[
+                            row
+                        ]
                     )
 
         return selected
@@ -1160,7 +1616,9 @@ class MyDataSentPage(QWidget):
     # SEND SELECTED
     # ==========================================================
 
-    def send_selected(self):
+    def send_selected(
+        self,
+    ):
 
         invoices = (
             self.get_selected_invoices()
@@ -1184,7 +1642,9 @@ class MyDataSentPage(QWidget):
     # SEND ALL
     # ==========================================================
 
-    def send_all(self):
+    def send_all(
+        self,
+    ):
 
         if not self.invoices:
 
@@ -1225,119 +1685,605 @@ class MyDataSentPage(QWidget):
         invoices,
     ):
 
-        self.status_label.setText(
+        if (
+            self._send_thread
+            and self._send_thread.isRunning()
+        ):
+
+            return
+
+        invoices = list(
+            invoices
+        )
+
+        if not invoices:
+
+            return
+
+        total = len(
+            invoices
+        )
+
+        self._clear_failure_details()
+
+        self.send_progress_card.show()
+
+        self.send_progress_bar.setValue(
+            0
+        )
+
+        self.send_progress_count.setText(
+            f"0 / {total}"
+        )
+
+        self.send_progress_title.setText(
             "Sending documents..."
+        )
+
+        self.send_progress_detail.setText(
+            ""
+        )
+
+        self.status_label.setText(
+            f"Sending 0 / {total}..."
+        )
+
+        self.send_selected_button.setEnabled(
+            False
+        )
+
+        self.send_all_button.setEnabled(
+            False
+        )
+
+        self.search_button.setEnabled(
+            False
         )
 
         QApplication.setOverrideCursor(
             Qt.CursorShape.WaitCursor
         )
 
-        try:
+        self._send_thread = QThread(
+            self
+        )
 
-            results = (
-                self.service.send_invoices(
-                    invoices
-                )
-            )
+        self._send_worker = MyDataSendWorker(
+            self.service,
+            invoices,
+        )
 
-            success_count = sum(
-                1
-                for item in results
-                if item["result"]["success"]
-            )
+        self._send_worker.moveToThread(
+            self._send_thread
+        )
 
-            failed_count = (
-                len(results)
-                - success_count
-            )
+        self._send_thread.started.connect(
+            self._send_worker.run
+        )
 
-            self.status_label.setText(
+        self._send_worker.progress.connect(
+            self._on_send_progress
+        )
+
+        self._send_worker.finished.connect(
+            self._on_send_finished
+        )
+
+        self._send_worker.failed.connect(
+            self._on_send_worker_error
+        )
+
+        self._send_worker.finished.connect(
+            self._send_thread.quit
+        )
+
+        self._send_worker.failed.connect(
+            self._send_thread.quit
+        )
+
+        self._send_thread.finished.connect(
+            self._on_send_thread_finished
+        )
+
+        self._send_thread.start()
+
+    def _find_invoice_row(
+        self,
+        invoice,
+    ):
+
+        for row, current in enumerate(
+            self.invoices
+        ):
+
+            if (
+                current.invoice_id
+                == invoice.invoice_id
+            ):
+
+                return row
+
+        return -1
+
+    def _on_send_progress(
+        self,
+        index,
+        total,
+        invoice,
+        result,
+    ):
+
+        percentage = (
+            int(
                 (
-                    f"Completed: "
-                    f"{success_count} successful, "
-                    f"{failed_count} failed."
+                    index
+                    / total
+                )
+                * 100
+            )
+            if total
+            else 0
+        )
+
+        self.send_progress_bar.setValue(
+            percentage
+        )
+
+        self.send_progress_count.setText(
+            f"{index} / {total}"
+        )
+
+        aa = (
+            invoice.aa
+            or "-"
+        )
+
+        document_name = (
+            invoice.document_name
+            or "Document"
+        )
+
+        self.send_progress_title.setText(
+            "Sending document..."
+            if index < total
+            else "Sending completed."
+        )
+
+        self.send_progress_detail.setText(
+            (
+                f"{document_name} | "
+                f"A/A: {aa}"
+            )
+        )
+
+        self.status_label.setText(
+            (
+                f"Sending {index} / {total}..."
+                if index < total
+                else
+                f"Processed {total} / {total}..."
+            )
+        )
+
+        if index > 0:
+
+            row = self._find_invoice_row(
+                invoice
+            )
+
+            if row >= 0:
+
+                status_item = (
+                    self.table.item(
+                        row,
+                        7
+                    )
+                )
+
+                if status_item:
+
+                    if result.get(
+                        "success",
+                        False,
+                    ):
+
+                        status_item.setText(
+                            "SENT"
+                        )
+
+                        status_item.setForeground(
+                            Qt.GlobalColor.green
+                        )
+
+                        status_item.setToolTip(
+                            "Document sent successfully."
+                        )
+
+                    else:
+
+                        message = (
+                            result.get(
+                                "message",
+                                "",
+                            )
+                            or invoice.send_message
+                            or "Unknown error."
+                        )
+
+                        status_code = (
+                            result.get(
+                                "status_code"
+                            )
+                        )
+
+                        status_item.setText(
+                            "FAILED"
+                        )
+
+                        status_item.setForeground(
+                            Qt.GlobalColor.red
+                        )
+
+                        status_item.setToolTip(
+                            (
+                                f"HTTP {status_code}\n"
+                                f"{message}"
+                                if status_code
+                                else message
+                            )
+                        )
+
+        QApplication.processEvents()
+
+    def _on_send_finished(
+        self,
+        results,
+    ):
+
+        success_count = sum(
+            1
+            for item in results
+            if item["result"].get(
+                "success",
+                False,
+            )
+        )
+
+        failed_items = [
+            item
+            for item in results
+            if not item["result"].get(
+                "success",
+                False,
+            )
+        ]
+
+        failed_count = len(
+            failed_items
+        )
+
+        self.send_progress_bar.setValue(
+            100
+        )
+
+        self.send_progress_count.setText(
+            (
+                f"{len(results)} / "
+                f"{len(results)}"
+            )
+        )
+
+        self.send_progress_title.setText(
+            "Sending completed."
+        )
+
+        self.send_progress_detail.setText(
+            (
+                f"Successful: {success_count} | "
+                f"Failed: {failed_count}"
+            )
+        )
+
+        self.status_label.setText(
+            (
+                f"Completed: "
+                f"{success_count} successful, "
+                f"{failed_count} failed."
+            )
+        )
+
+        self.update_table_after_send()
+
+        self.send_selected_button.setEnabled(
+            True
+        )
+
+        self.send_all_button.setEnabled(
+            True
+        )
+
+        self.search_button.setEnabled(
+            True
+        )
+
+        QApplication.restoreOverrideCursor()
+
+        if failed_count:
+
+            failure_lines = []
+
+            for item in failed_items:
+
+                invoice = item["invoice"]
+                result = item["result"]
+
+                aa = (
+                    invoice.aa
+                    or "-"
+                )
+
+                document_name = (
+                    invoice.document_name
+                    or "Document"
+                )
+
+                status_code = (
+                    result.get(
+                        "status_code"
+                    )
+                    or "-"
+                )
+
+                message = (
+                    result.get(
+                        "message"
+                    )
+                    or invoice.send_message
+                    or "Unknown error."
+                )
+
+                failure_lines.append(
+                    (
+                        f"A/A {aa} - {document_name}\n"
+                        f"HTTP: {status_code}\n"
+                        f"{message}"
+                    )
+                )
+
+            details = (
+                "\n\n".join(
+                    failure_lines
                 )
             )
 
-            self.update_table_after_send()
+            self._show_failure_details(
+                failed_items
+            )
 
-            if failed_count:
-
-                QMessageBox.warning(
-                    self,
-                    "myDATA Manager",
-                    (
-                        "Sending completed.\n\n"
-                        f"Successful: {success_count}\n"
-                        f"Failed: {failed_count}"
-                    ),
-                )
-
-            else:
-
-                QMessageBox.information(
-                    self,
-                    "myDATA Manager",
-                    (
-                        "All documents were sent "
-                        f"successfully: {success_count}."
-                    ),
-                )
-
-        except Exception as exc:
-
-            QMessageBox.critical(
+            QMessageBox.warning(
                 self,
-                "Send Error",
-                str(exc),
+                "myDATA Manager",
+                (
+                    "Sending completed.\n\n"
+                    f"Successful: {success_count}\n"
+                    f"Failed: {failed_count}\n\n"
+                    "Failure details:\n"
+                    f"{details}"
+                ),
             )
 
-            self.status_label.setText(
-                "Sending failed."
+        else:
+
+            self._clear_failure_details()
+
+            QMessageBox.information(
+                self,
+                "myDATA Manager",
+                (
+                    "All documents were sent "
+                    f"successfully: {success_count}."
+                ),
             )
 
-        finally:
+    def _show_failure_details(
+        self,
+        failed_items,
+    ):
 
-            QApplication.restoreOverrideCursor()
+        lines = []
+
+        for item in failed_items:
+
+            invoice = item["invoice"]
+            result = item["result"]
+
+            aa = (
+                invoice.aa
+                or "-"
+            )
+
+            document_name = (
+                invoice.document_name
+                or "Document"
+            )
+
+            status_code = (
+                result.get(
+                    "status_code"
+                )
+                or "-"
+            )
+
+            message = (
+                result.get(
+                    "message"
+                )
+                or invoice.send_message
+                or "Unknown error."
+            )
+
+            lines.append(
+                (
+                    f"A/A: {aa}\n"
+                    f"Document: {document_name}\n"
+                    f"HTTP: {status_code}\n"
+                    f"Error: {message}"
+                )
+            )
+
+        self.failure_details.setPlainText(
+            "\n\n".join(
+                lines
+            )
+        )
+
+        self.failure_count_label.setText(
+            f"{len(failed_items)} failed"
+        )
+
+        self.failure_card.show()
+
+    def _clear_failure_details(
+        self,
+    ):
+
+        if not hasattr(
+            self,
+            "failure_card",
+        ):
+
+            return
+
+        self.failure_details.clear()
+
+        self.failure_count_label.setText(
+            "0 failed"
+        )
+
+        self.failure_card.hide()
+
+    def _on_send_worker_error(
+        self,
+        message,
+    ):
+
+        QApplication.restoreOverrideCursor()
+
+        self.send_progress_title.setText(
+            "Sending failed."
+        )
+
+        self.send_progress_detail.setText(
+            str(
+                message
+            )
+        )
+
+        self.status_label.setText(
+            "Sending failed."
+        )
+
+        self.send_selected_button.setEnabled(
+            True
+        )
+
+        self.send_all_button.setEnabled(
+            True
+        )
+
+        self.search_button.setEnabled(
+            True
+        )
+
+        QMessageBox.critical(
+            self,
+            "Send Error",
+            str(
+                message
+            ),
+        )
+
+    def _on_send_thread_finished(
+        self,
+    ):
+
+        thread = self._send_thread
+        worker = self._send_worker
+
+        self._send_thread = None
+        self._send_worker = None
+
+        if worker:
+
+            worker.deleteLater()
+
+        if thread:
+
+            thread.deleteLater()
 
     # ==========================================================
     # UPDATE TABLE
     # ==========================================================
 
-    def update_table_after_send(self):
+    def update_table_after_send(
+        self,
+    ):
 
         for row, invoice in enumerate(
             self.invoices
         ):
 
+            checkbox = self.table.item(
+                row,
+                0
+            )
+
+            if (
+                checkbox
+                and invoice.sent
+            ):
+
+                checkbox.setCheckState(
+                    Qt.CheckState.Unchecked
+                )
+
+            status_item = self.table.item(
+                row,
+                7
+            )
+
+            if not status_item:
+
+                continue
+
             if invoice.sent:
 
-                checkbox = self.table.item(
-                    row,
-                    0
+                status_item.setText(
+                    "SENT"
                 )
 
-                if checkbox:
-
-                    checkbox.setCheckState(
-                        Qt.CheckState.Unchecked
-                    )
-
-                status_item = self.table.item(
-                    row,
-                    7
+                status_item.setForeground(
+                    Qt.GlobalColor.green
                 )
 
-                if status_item:
+                status_item.setToolTip(
+                    "Document sent successfully."
+                )
 
-                    status_item.setText(
-                        "SENT"
-                    )
+            else:
 
-                    status_item.setForeground(
-                        Qt.GlobalColor.green
-                    )
+                status_item.setText(
+                    "FAILED"
+                )
+
+                status_item.setForeground(
+                    Qt.GlobalColor.red
+                )
+
+                status_item.setToolTip(
+                    invoice.send_message
+                    or "Unknown sending error."
+                )
 
         self.select_all_button.setText(
             "□  Select All"
@@ -1347,7 +2293,9 @@ class MyDataSentPage(QWidget):
     # DELETE M.A.R.K.
     # ==========================================================
 
-    def delete_mydata(self):
+    def delete_mydata(
+        self,
+    ):
 
         QMessageBox.information(
             self,
@@ -1362,7 +2310,9 @@ class MyDataSentPage(QWidget):
     # PDF
     # ==========================================================
 
-    def print_pdf(self):
+    def print_pdf(
+        self,
+    ):
 
         row = self.table.currentRow()
 
@@ -1382,7 +2332,9 @@ class MyDataSentPage(QWidget):
 
             return
 
-        invoice = self.invoices[row]
+        invoice = self.invoices[
+            row
+        ]
 
         if not invoice.sent:
 
@@ -1415,5 +2367,7 @@ class MyDataSentPage(QWidget):
             QMessageBox.critical(
                 self,
                 "PDF Error",
-                str(exc)
+                str(
+                    exc
+                )
             )
