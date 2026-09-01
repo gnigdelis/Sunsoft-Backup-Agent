@@ -39,7 +39,7 @@ class MainWindow(QWidget):
     def setup_ui(self):
 
         self.setWindowTitle(
-            "Sunsoft Support Agent v2.0"
+            "JV Toolbox v2.0"
         )
 
         #
@@ -298,3 +298,4 @@ class MainWindow(QWidget):
                 "settings"
             )
         )
+

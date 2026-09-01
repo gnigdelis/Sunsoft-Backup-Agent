@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import (
+﻿from PySide6.QtWidgets import (
     QWidget,
     QHBoxLayout,
     QVBoxLayout,
@@ -116,7 +116,7 @@ class OperationsSection(QWidget):
                     "windows_version",
                     "Unknown",
                 ),
-                "Sunsoft Support Agent v2.0",
+                "JV Toolbox v2.0",
                 "Database connection available",
             ],
             status="info",

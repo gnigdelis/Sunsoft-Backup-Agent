@@ -1,11 +1,12 @@
-from PySide6.QtCore import Qt
+﻿from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QLabel,
 )
 
-from ui.v2.widgets.common.svg_icon import SvgIcon
+from core.common.resource_path import resource_path
 
 
 class BrandingWidget(QWidget):
@@ -38,13 +39,51 @@ class BrandingWidget(QWidget):
         )
 
         #
-        # Support Agent logo
+        # JV Toolbox logo
         #
 
-        self.logo = SvgIcon(
-            "support_agent.svg",
-            size=120,
+        self.logo = QLabel()
+
+        self.logo.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
         )
+
+        self.logo.setFixedSize(
+            120,
+            120,
+        )
+
+        self.logo.setStyleSheet(
+            """
+            QLabel {
+                background: transparent;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+            """
+        )
+
+        logo_path = resource_path(
+            "assets/branding/logo/logo.png"
+        )
+
+        pixmap = QPixmap(
+            logo_path
+        )
+
+        if not pixmap.isNull():
+
+            pixmap = pixmap.scaled(
+                120,
+                120,
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation,
+            )
+
+            self.logo.setPixmap(
+                pixmap
+            )
 
         layout.addWidget(
             self.logo,
@@ -57,7 +96,7 @@ class BrandingWidget(QWidget):
         #
 
         self.title = QLabel(
-            "Sunsoft Support Agent"
+            "JV Toolbox"
         )
 
         self.title.setAlignment(
@@ -67,13 +106,13 @@ class BrandingWidget(QWidget):
         self.title.setStyleSheet(
             """
             QLabel {
-                background:transparent;
-                border:none;
-                color:#F5F7FA;
-                font-size:12pt;
-                font-weight:700;
-                padding:0;
-                margin:0;
+                background: transparent;
+                border: none;
+                color: #F5F7FA;
+                font-size: 12pt;
+                font-weight: 700;
+                padding: 0;
+                margin: 0;
             }
             """
         )
